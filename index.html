@@ -719,5 +719,27 @@
             }
         }).mount('#app');
     </script>
+    <script type="module">
+  // Importa las funciones necesarias de Firebase desde la CDN oficial
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // Tus credenciales copiadas de Firebase
+  const firebaseConfig = {
+    apiKey: "AlzaSyD4f9rBB|qxzyZZPmgNIK_twefNYLQTW4",
+    authDomain: "nuestroespacio-3f541.firebaseapp.com",
+    projectId: "nuestroespacio-3f541",
+    storageBucket: "nuestroespacio-3f541.appspot.com",
+    messagingSenderId: "482638926414",
+    appId: "1:482638926414:web:2182581df2455d95b2a91f",
+    measurementId: "G-LPC6WBQTZ0"
+  };
+
+  // Inicializar Firebase y la Base de Datos
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  console.log("Firebase conectado exitosamente:", app.name);
+</script>
 </body>
 </html>
