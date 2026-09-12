@@ -49,7 +49,15 @@
         .hand-second { width: 1.5px; height: 65px; background: #fb7185; margin-left: -0.75px; z-index: 9; }
         .clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #ffffff; border-radius: 50%; z-index: 10; border: 2px solid #f472b6; }
 
-        /* Botones 3D Estilo Reproductor (Morado-Fucsia + Glow Rosa Sutil + Ícono Negro) */
+        /* Borde Perfil Degradado (Mitad Morado Oscuro / Mitad Azul Cían) */
+        .profile-border-gradient {
+            padding: 4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b0764 0%, #3b0764 50%, #0284c7 50%, #0284c7 100%);
+            box-shadow: 0 0 15px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Botones 3D Estilo Reproductor */
         .btn-player-3d {
             background: linear-gradient(135deg, #a855f7, #ec4899);
             color: #000000;
@@ -95,10 +103,10 @@
 
         <!-- PANTALLA DE BLOQUEO -->
         <transition name="fade" mode="out-in">
-            <div v-if="!isUnlocked" key="login" class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl border border-rose-500/20 p-8 rounded-3xl text-center space-y-5">
+            <div v-if="!isUnlocked" key="login" class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl border border-rose-500/20 p-8 rounded-3xl text-center space-y-5 shadow-2xl">
                 <div class="text-5xl animate-bounce">🔐</div>
                 <h2 class="text-2xl font-bold text-white mt-3">Código de Acceso</h2>
-                <input type="password" v-model="passwordInput" @keyup.enter="checkPassword" placeholder="Tu contraseña especial..." class="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-center text-white focus:border-rose-500 transition-all">
+                <input type="password" v-model="passwordInput" @keyup.enter="checkPassword" placeholder="Tu contraseña especial..." class="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-center text-white focus:border-rose-500 transition-all outline-none">
                 <button @click="checkPassword" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold py-3 rounded-xl shadow-lg active:scale-95 transition-all">Ingresar</button>
             </div>
 
@@ -112,11 +120,9 @@
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/20 z-10 pointer-events-none"></div>
                     
-                    <!-- Flechas de navegación -->
                     <button v-if="coverImages.length > 1" @click="prevCover" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white text-3xl transition-colors">❮</button>
                     <button v-if="coverImages.length > 1" @click="nextCover" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white text-3xl transition-colors">❯</button>
 
-                    <!-- Botón Discreto para Añadir Portada -->
                     <div class="absolute top-4 right-4 z-30 flex items-center gap-2">
                         <label class="cursor-pointer bg-slate-950/60 hover:bg-slate-900/90 text-white/80 hover:text-white backdrop-blur-md border border-white/20 text-xs px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-md">
                             <span>📷 + Cambiar portada</span>
@@ -137,13 +143,13 @@
                     <!-- COLUMNA IZQUIERDA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- PERFIL Y CARTA CON ZOOM EN FOTO Y BOTÓN DISCRETO -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl text-center space-y-4">
+                        <!-- PERFIL Y CARTA CON BORDE DEGRADADO -->
+                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl text-center space-y-4 shadow-xl">
                             <div class="relative w-32 h-32 mx-auto group">
-                                <div @click="openModal(profileImg)" class="w-full h-full rounded-full overflow-hidden border-4 border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.4)] cursor-pointer">
-                                    <img :src="profileImg" class="w-full h-full object-cover hover:scale-105 transition-transform" title="Haz clic para ampliar">
+                                <!-- Borde Degradado aplicado aquí -->
+                                <div @click="openModal(profileImg)" class="w-full h-full profile-border-gradient cursor-pointer">
+                                    <img :src="profileImg" class="w-full h-full rounded-full object-cover hover:scale-105 transition-transform" title="Haz clic para ampliar">
                                 </div>
-                                <!-- Botón Discreto al costado para cambiar perfil -->
                                 <label class="absolute bottom-0 right-0 bg-slate-900 hover:bg-rose-600 border border-white/30 text-white p-2 rounded-full cursor-pointer shadow-lg transition-colors text-xs" title="Cambiar foto de perfil">
                                     <span>📷</span>
                                     <input type="file" accept="image/*" @change="uploadProfileImage" class="hidden">
@@ -160,20 +166,19 @@
                             <div class="text-left text-sm text-slate-300 space-y-3 leading-relaxed font-medium">
                                 <p>Este es un rincón secreto, un espacio al que solo tú y yo podemos acceder. 🔐✨</p>
                                 <p>No importa la distancia física 🌍, no importa la hora 🕰️, el lugar o el dispositivo desde el que entres. Donde quiera que vayas y donde quiera que estés, <strong>siempre estarás aquí conmigo</strong>. 🫂</p>
-                                <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te teneré, de manera incondicional, sin importar las circunstancias. ❤️‍🔥</p>
+                                <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te tendré, de manera incondicional, sin importar las circunstancias. ❤️‍🔥</p>
                                 <p>Quiero que sepas que esta es una huella imborrable que dejamos en el mundo digital, tal como la huella que tú has dejado en mi corazón y en mi vida. Gracias por todos estos años maravillosos y por todos los que aún nos faltan por vivir. 🥂</p>
                                 <p>Traté de dejarte esta sorpresa virtual a mi manera. Disfrútalo, porque esta es nuestra propia red social privada. 📱 Aquí puedes compartir tus pensamientos, dejar notas o lo que sientas... no importa dónde yo esté, tarde o temprano siempre me llegarán. 💌</p>
                                 <p>Feliz cumpleaños, mi niña hermosa. 🎂🎉 No solo celebro hoy, celebro todos los días que vendrán. Sé que lo digo muy a mi manera (y sé que tú también a la tuya), pero **te amo muchísimo**. 🐻💕🐷 Este regalo es de mí para ti, pero recuerda: sin ti, nada de esto existiría, porque tú eres mi única motivación. 💫</p>
                             </div>
                         </div>
 
-                        <!-- CONTADOR Y RELOJ NEÓN BLANCO (Haz clic para ver Calendario) -->
+                        <!-- CONTADOR Y RELOJ NEÓN -->
                         <div @click="openCalendarModal" class="bg-slate-900/80 backdrop-blur-md border border-white/20 p-5 rounded-2xl text-center space-y-5 shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-pointer hover:border-rose-500/40 transition-colors" title="Haz clic para abrir el calendario">
                             <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">
                                 TIEMPO JUNTOS DESDE AQUÍ HASTA LA ETERNIDAD
                             </h4>
                             
-                            <!-- Reloj Atardecer con Borde Neón Blanco -->
                             <div class="clock-face">
                                 <div v-for="n in 12" :key="n" class="clock-number" :style="{ transform: `rotate(${n * 30}deg)` }">
                                     <span :style="{ transform: `rotate(-${n * 30}deg)`, display: 'inline-block' }">{{ n }}</span>
@@ -184,7 +189,6 @@
                                 <div class="clock-center"></div>
                             </div>
 
-                            <!-- Botones Digitales Ovalados 3D -->
                             <div class="grid grid-cols-2 gap-3 pt-2">
                                 <div class="btn-3d-oval p-3 text-center">
                                     <span class="text-xl font-black text-white block drop-shadow">{{ timeElapsed.days }}</span>
@@ -207,11 +211,45 @@
                         </div>
                     </aside>
 
-                    <!-- COLUMNA CENTRAL: RED SOCIAL -->
+                    <!-- COLUMNA CENTRAL: RED SOCIAL Y MÚSICA -->
                     <main class="lg:col-span-6 space-y-4">
                         
+                        <!-- REPRODUCTOR DE MÚSICA CON SHARE REAL DE ARCHIVOS -->
+                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4 shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    🎵 Nuestra Música
+                                </h3>
+                                <label class="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition-colors flex items-center gap-1">
+                                    <span>➕ Añadir Canción</span>
+                                    <input type="file" accept="audio/*" @change="uploadSong" class="hidden">
+                                </label>
+                            </div>
+
+                            <div v-if="playlist.length > 0" class="space-y-3">
+                                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <div class="w-full sm:w-1/2 overflow-hidden">
+                                        <p class="text-sm font-semibold text-white truncate">{{ currentSong.title }}</p>
+                                        <p class="text-xs text-slate-400">Canción actual</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button @click="prevSong" class="p-2 bg-slate-800 rounded-full hover:bg-slate-700 text-xs">⏮️</button>
+                                        <button @click="togglePlay" class="p-3 btn-player-3d rounded-full text-base">
+                                            {{ isPlaying ? '⏸️' : '▶️' }}
+                                        </button>
+                                        <button @click="nextSong" class="p-2 bg-slate-800 rounded-full hover:bg-slate-700 text-xs">⏭️</button>
+                                        <!-- Botón para compartir el archivo nativo -->
+                                        <button @click="shareCurrentAudio" class="p-2 bg-slate-800 rounded-full hover:bg-slate-700 text-xs" title="Enviar archivo a otra app o dispositivo">
+                                            📤
+                                        </button>
+                                    </div>
+                                </div>
+                                <audio ref="audioPlayer" :src="currentSong.src" @ended="nextSong"></audio>
+                            </div>
+                        </div>
+
                         <!-- Creador de Publicaciones -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3 relative">
+                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3 relative shadow-xl">
                             <textarea 
                                 v-model="newPostText" 
                                 maxlength="500"
@@ -224,12 +262,10 @@
                                 <span class="text-xs text-slate-500">{{ newPostText.length }}/500</span>
                                 
                                 <div class="relative">
-                                    <!-- Único Botón de Emojis -->
                                     <button @click="toggleEmojiPicker" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-xl transition-colors shadow-md" title="Emojis">
                                         😊
                                     </button>
 
-                                    <!-- Panel Selector de Emojis -->
                                     <div v-if="showEmojiPicker" class="fixed sm:absolute right-4 sm:right-0 top-auto sm:top-11 z-50 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-72 p-3 space-y-2">
                                         <div class="flex justify-between border-b border-slate-800 pb-2 text-base">
                                             <button v-for="(cat, key) in emojiCategories" :key="key" @click="activeEmojiCategory = key" :class="activeEmojiCategory === key ? 'bg-slate-800 rounded-lg p-1' : 'opacity-60 hover:opacity-100 p-1'">
@@ -248,683 +284,437 @@
 
                             <div class="flex flex-col sm:flex-row gap-3 pt-2 border-t border-slate-800 items-center justify-between">
                                 <label class="w-full sm:w-auto cursor-pointer bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-medium px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2">
-                                    <span>📸 Subir imagen</span>
-                                    <input type="file" accept="image/*" @change="handleFileUpload" class="hidden">
+                                    <span>📸 Adjuntar Foto</span>
+                                    <input type="file" accept="image/*" @change="handlePostImage" class="hidden">
                                 </label>
                                 
-                                <div v-if="newPostImagePreview" class="text-xs text-rose-400 truncate max-w-[150px]">Imagen lista 🖼️</div>
-
-                                <button @click="addPost" class="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white text-sm font-bold px-6 py-2 rounded-xl shadow-[0_0_10px_rgba(244,63,94,0.3)] transition-all">
-                                    Publicar
+                                <button @click="createPost" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-lg active:scale-95 transition-all">
+                                    Publicar 💌
                                 </button>
                             </div>
+                            
+                            <div v-if="postImagePreview" class="relative mt-2 rounded-xl overflow-hidden max-h-48">
+                                <img :src="postImagePreview" class="w-full h-full object-cover">
+                                <button @click="postImagePreview = null" class="absolute top-2 right-2 bg-black/60 text-white rounded-full p-1 text-xs">✕</button>
+                            </div>
                         </div>
 
-                        <!-- Muro / Feed -->
+                        <!-- FEED DE PUBLICACIONES -->
                         <div class="space-y-4">
-                            <div v-for="post in posts" :key="post.id" class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4">
-                                <div class="flex items-center gap-3">
-                                    <img :src="profileImg" class="w-10 h-10 rounded-full border-2 border-rose-500 object-cover shadow-md">
-                                    <div>
-                                        <h4 class="text-sm font-bold text-white">{{ post.author }}</h4>
-                                        <span class="text-xs text-slate-400">{{ post.date }}</span>
-                                    </div>
-                                </div>
-                                
-                                <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap">{{ post.text }}</p>
-
-                                <div v-if="post.image" class="rounded-xl overflow-hidden border border-white/10 shadow-lg cursor-pointer" @click="openModal(post.image)">
-                                    <img :src="post.image" class="w-full h-auto max-h-[500px] object-cover">
-                                </div>
-
-                                <div class="pt-3 border-t border-slate-800 space-y-2">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <button @click="toggleReactionMenu(post)" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-full border border-slate-700 text-rose-300 font-semibold flex items-center gap-1 transition-all">
-                                            <span>➕</span>
-                                        </button>
-                                        
-                                        <div v-if="post.activeReaction" class="bg-rose-500/20 border border-rose-500/40 text-xs px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
-                                            <span class="text-base react-anim">{{ post.activeReaction }}</span>
-                                            <span class="text-rose-300 font-bold">1</span>
+                            <div v-for="(post, index) in posts" :key="post.id" class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4 shadow-xl">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full profile-border-gradient overflow-hidden">
+                                            <img :src="profileImg" class="w-full h-full object-cover">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-sm text-white">Nosotros</h4>
+                                            <p class="text-[10px] text-slate-400">{{ post.date }}</p>
                                         </div>
                                     </div>
+                                    <button @click="deletePost(index)" class="text-xs text-slate-500 hover:text-rose-400 transition-colors">🗑️</button>
+                                </div>
 
-                                    <div v-if="post.showMenu" class="bg-slate-950 border border-slate-800 p-2 rounded-2xl grid grid-cols-10 gap-1 mt-2 shadow-xl">
-                                        <button v-for="r in reactionList" :key="r" @click="setSingleReaction(post, r)" class="text-lg hover:bg-slate-800 p-1 rounded hover:scale-125 transition-transform">
-                                            {{ r }}
-                                        </button>
-                                    </div>
+                                <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-line">{{ post.text }}</p>
+
+                                <div v-if="post.image" class="rounded-xl overflow-hidden border border-slate-800 cursor-pointer max-h-96" @click="openModal(post.image)">
+                                    <img :src="post.image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                                </div>
+
+                                <div class="flex items-center gap-4 pt-2 border-t border-slate-800 text-xs">
+                                    <button @click="reactToPost(post, '❤️')" class="flex items-center gap-1 text-slate-400 hover:text-rose-500 transition-colors">
+                                        <span>❤️</span> <span>{{ post.reactions['❤️'] || 0 }}</span>
+                                    </button>
+                                    <button @click="reactToPost(post, '🥰')" class="flex items-center gap-1 text-slate-400 hover:text-pink-500 transition-colors">
+                                        <span>🥰</span> <span>{{ post.reactions['🥰'] || 0 }}</span>
+                                    </button>
+                                    <button @click="reactToPost(post, '✨')" class="flex items-center gap-1 text-slate-400 hover:text-yellow-500 transition-colors">
+                                        <span>✨</span> <span>{{ post.reactions['✨'] || 0 }}</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
+
                     </main>
 
                     <!-- COLUMNA DERECHA -->
                     <aside class="lg:col-span-3 space-y-4">
-                        
-                        <!-- REPRODUCTOR DE MÚSICA CON BOTONES 3D MORADO-FUCSIA E ÍCONOS NEGROS -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4 text-center">
-                            <h4 class="text-xs font-extrabold text-slate-300 uppercase tracking-widest text-center">MÚSICA</h4>
-                            
-                            <div class="w-28 h-28 mx-auto rounded-2xl bg-gradient-to-br from-pink-100 to-rose-200 shadow-[0_0_15px_rgba(244,63,94,0.15)] flex flex-col items-center justify-center border border-white/20 relative overflow-hidden">
-                                <span class="text-4xl z-10 drop-shadow-md relative -left-2">🐻</span>
-                                <span class="text-3xl z-10 drop-shadow-md relative left-3 -top-2">🐷</span>
-                            </div>
-
-                            <p class="text-xs font-bold text-slate-200 truncate px-1">{{ musicPlaylist[currentTrack].title }}</p>
-
-                            <!-- Controles 3D Morado-Fucsia con Íconos Negros -->
-                            <div class="bg-slate-950/80 p-3 rounded-2xl border border-slate-800/80 space-y-3 shadow-inner">
-                                <div class="flex items-center justify-center gap-3">
-                                    <!-- Anterior -->
-                                    <button @click="prevTrack" class="btn-player-3d w-9 h-9 rounded-full flex items-center justify-center text-xs">⏮️</button>
-                                    
-                                    <!-- Play/Pausa -->
-                                    <button @click="togglePlay" class="btn-player-3d w-12 h-12 rounded-full flex items-center justify-center text-sm">
-                                        {{ isPlaying ? '⏸️' : '▶️' }}
-                                    </button>
-
-                                    <!-- Siguiente -->
-                                    <button @click="nextTrack" class="btn-player-3d w-9 h-9 rounded-full flex items-center justify-center text-xs">⏭️</button>
+                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-3 text-center shadow-xl">
+                            <h3 class="text-base font-bold text-white">Notas Especiales 📌</h3>
+                            <div class="space-y-2 text-xs text-slate-300">
+                                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                                    "Cada día contigo es mi recuerdo favorito." 💫
                                 </div>
-
-                                <!-- Botón 3D Centrado para Mezclas -->
-                                <div class="pt-1 flex justify-center">
-                                    <button @click="cycleRepeatMode" class="btn-player-3d px-5 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
-                                        <span v-if="repeatMode === 'all'">🔁 Todas</span>
-                                        <span v-else-if="repeatMode === 'one'">🔂 Solo una</span>
-                                        <span v-else>🔀 Aleatorio</span>
-                                    </button>
+                                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                                    "Siempre serás mi lugar seguro." 🏡
                                 </div>
-
-                                <!-- Fila Inferior: Silenciar y Compartir -->
-                                <div class="flex items-center justify-between border-t border-slate-800/80 pt-2 px-2 text-xs">
-                                    <button @click="toggleMute" class="text-slate-400 hover:text-white flex items-center gap-1 transition-colors" :title="isMuted ? 'Activar Sonido' : 'Silenciar'">
-                                        <span>{{ isMuted ? '🔇' : '🔊' }}</span>
-                                    </button>
-
-                                    <button @click="shareSong" class="text-slate-400 hover:text-rose-300 flex items-center gap-1 transition-colors" title="Compartir canción">
-                                        <span>🔗 Compartir</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <audio ref="audioPlayer" :src="musicPlaylist[currentTrack].src" @ended="handleTrackEnded" class="hidden"></audio>
-                        </div>
-
-                        <!-- GALERÍA DE IMÁGENES AUTOMÁTICA -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3">
-                            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-widest text-left">Galería de imágenes</h4>
-                            
-                            <div class="relative w-full aspect-square rounded-2xl overflow-hidden border-2 border-white/10 group shadow-lg">
-                                <img :src="sideGallery[currentSideGalleryIndex]" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" @click="openModal(sideGallery[currentSideGalleryIndex])">
-                                
-                                <button @click="prevSideGallery" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100">❮</button>
-                                <button @click="nextSideGallery" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100">❯</button>
                             </div>
                         </div>
-
                     </aside>
+
                 </div>
+
             </div>
         </transition>
 
-        <!-- LIGHTBOX MODAL DE IMÁGENES -->
-        <transition name="fade">
-            <div v-if="modalImage" class="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4">
-                <div class="absolute top-4 right-4 flex gap-4 z-50">
-                    <button @click="downloadImageDirect(modalImage)" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 border border-slate-600 transition-colors">
-                        ⬇️ Descargar
-                    </button>
-                    <button @click="closeModal" class="bg-rose-600 hover:bg-rose-700 text-white w-10 h-10 rounded-lg font-bold text-xl flex items-center justify-center transition-colors">
-                        ✕
-                    </button>
-                </div>
-                <img :src="modalImage" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl border border-white/10">
+        <!-- MODAL VER IMAGEN AMPLADA -->
+        <div v-if="selectedImageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" @click.self="selectedImageModal = null">
+            <div class="relative max-w-4xl w-full max-h-[90vh]">
+                <img :src="selectedImageModal" class="w-full h-full object-contain rounded-2xl">
+                <button @click="selectedImageModal = null" class="absolute -top-10 right-0 text-white text-2xl">✕</button>
             </div>
-        </transition>
+        </div>
 
-        <!-- VENTANA EMERGENTE: CALENDARIO NATIVO INTERACTIVO -->
-        <transition name="fade">
-            <div v-if="showCalendarModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
-                <div class="bg-slate-900 border border-white/20 rounded-3xl max-w-4xl w-full p-5 sm:p-7 shadow-2xl space-y-6 relative overflow-hidden">
+        <!-- MODAL CALENDARIO CON DOMINGOS ROJOS Y FESTIVOS -->
+        <div v-if="showCalendarModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3" @click.self="showCalendarModal = false">
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-2xl p-6 space-y-4 text-white relative shadow-2xl">
+                
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 class="text-xl font-extrabold flex items-center gap-2">📅 Calendario</h3>
+                    <div class="flex items-center gap-2">
+                        <button @click="showAddEventModal = true" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-all shadow-md">
+                            + Añadir evento
+                        </button>
+                        <button @click="showCalendarModal = false" class="text-slate-400 hover:text-white text-xl">✕</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <button @click="changeMonth(-1)" class="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">❮</button>
+                    <span class="font-bold text-lg capitalize">{{ currentMonthName }} {{ currentYear }}</span>
+                    <button @click="changeMonth(1)" class="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">❯</button>
+                </div>
+
+                <!-- DÍAS DE LA SEMANA (DOMINGO EN ROJO) -->
+                <div class="grid grid-cols-7 gap-1 text-center font-bold text-xs">
+                    <span class="text-rose-500">Dom</span>
+                    <span class="text-slate-400">Lun</span>
+                    <span class="text-slate-400">Mar</span>
+                    <span class="text-slate-400">Mié</span>
+                    <span class="text-slate-400">Jue</span>
+                    <span class="text-slate-400">Vie</span>
+                    <span class="text-slate-400">Sáb</span>
+                </div>
+
+                <!-- GRILLA DEL CALENDARIO -->
+                <div class="grid grid-cols-7 gap-1 text-center text-xs">
+                    <div v-for="blank in firstDayOffset" :key="'b-'+blank" class="p-2"></div>
                     
-                    <!-- Encabezado Modal -->
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-                        <div>
-                            <h2 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-300">
-                                {{ currentMonthName }} <span class="text-white">{{ calendarYear }}</span>
-                            </h2>
-                            <p class="text-xs text-slate-400">Calendario interactivo con festivos de Colombia y Guatemala</p>
+                    <div v-for="day in daysInMonth" :key="day" 
+                         @click="selectCalendarDay(day)"
+                         :class="[
+                            'p-2 min-h-[50px] rounded-xl border flex flex-col justify-between cursor-pointer transition-all',
+                            isSunday(day) ? 'text-rose-400 font-bold border-rose-950/50 bg-rose-950/10' : 'text-slate-200 border-slate-800 bg-slate-950/40',
+                            getEventsForDay(day).length > 0 ? 'border-amber-500/50 bg-amber-950/20' : 'hover:border-slate-600'
+                         ]">
+                        <span class="text-right text-[10px]">{{ day }}</span>
+                        <div v-if="getEventsForDay(day).length > 0" class="truncate text-[9px] bg-amber-500/20 text-amber-300 rounded px-1 mt-1">
+                            {{ getEventsForDay(day)[0].title }}
                         </div>
-
-                        <div class="flex items-center gap-2">
-                            <button @click="prevCalendarMonth" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl text-lg font-bold">❮</button>
-                            <button @click="resetCalendarToToday" class="bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs px-3 py-2 rounded-xl font-bold hover:bg-rose-500/30">Hoy</button>
-                            <button @click="nextCalendarMonth" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl text-lg font-bold">❯</button>
-                            <button @click="closeCalendarModal" class="bg-rose-600 hover:bg-rose-700 text-white w-9 h-9 rounded-xl font-bold ml-2">✕</button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-                        
-                        <!-- Panel Izquierdo: Información Vital de Fecha -->
-                        <div class="md:col-span-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-4 flex flex-col justify-between">
-                            <div class="space-y-3">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-rose-400">Información del Día</span>
-                                <div class="bg-gradient-to-br from-rose-500/20 to-purple-500/20 p-4 rounded-xl border border-rose-500/30 text-center">
-                                    <span class="text-4xl font-black text-white block">{{ todayDate.getDate() }}</span>
-                                    <span class="text-xs uppercase font-bold text-rose-300">{{ todayDayName }}</span>
-                                </div>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between p-2 bg-slate-900 rounded-lg">
-                                        <span class="text-slate-400">Semana del Año:</span>
-                                        <span class="font-bold text-amber-300">Semana {{ currentWeekNumber }}</span>
-                                    </div>
-                                    <div class="flex justify-between p-2 bg-slate-900 rounded-lg">
-                                        <span class="text-slate-400">Día del Año:</span>
-                                        <span class="font-bold text-white">{{ currentDayOfYear }} / 365</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Convención de Colores Festivos -->
-                            <div class="space-y-2 pt-3 border-t border-slate-800 text-[11px]">
-                                <span class="font-bold text-slate-300 block">Leyenda de Colores:</span>
-                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-rose-500"></span><span class="text-slate-300">Domingo</span></div>
-                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-amber-400"></span><span class="text-amber-200">Festivo Colombia 🇨🇴</span></div>
-                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-sky-400"></span><span class="text-sky-200">Festivo Guatemala 🇬🇹</span></div>
-                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-purple-500"></span><span class="text-purple-200">Festivo en Ambos 🇨🇴🇬🇹</span></div>
-                            </div>
-                        </div>
-
-                        <!-- Panel Derecho: Matriz del Mes (Dom a Sáb) -->
-                        <div class="md:col-span-8 space-y-2">
-                            <!-- Días de la Semana -->
-                            <div class="grid grid-cols-7 gap-1 text-center text-xs font-extrabold py-1 border-b border-slate-800">
-                                <span class="text-rose-400">Dom</span>
-                                <span class="text-slate-300">Lun</span>
-                                <span class="text-slate-300">Mar</span>
-                                <span class="text-slate-300">Mié</span>
-                                <span class="text-slate-300">Jue</span>
-                                <span class="text-slate-300">Vie</span>
-                                <span class="text-slate-300">Sáb</span>
-                            </div>
-
-                            <!-- Grilla de Días -->
-                            <div class="grid grid-cols-7 gap-1.5 text-center">
-                                <div v-for="(day, index) in calendarDays" :key="index" 
-                                     class="min-h-[52px] p-1 rounded-xl border flex flex-col items-center justify-between transition-all"
-                                     :class="getDayClasses(day)">
-                                    
-                                    <span v-if="day" class="text-sm font-bold">{{ day.date }}</span>
-                                    
-                                    <!-- Indicadores / Etiquetas de Festivo -->
-                                    <div v-if="day && day.holidayInfo" class="text-[9px] font-semibold leading-tight line-clamp-1 truncate w-full px-0.5">
-                                        {{ day.holidayInfo.name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </transition>
+        </div>
+
+        <!-- MODAL DETALLE DE EVENTO / FESTIVO -->
+        <div v-if="selectedDayEventsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4" @click.self="selectedDayEventsModal = null">
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-5 space-y-4 text-white relative shadow-2xl">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                    <h3 class="font-bold text-lg text-rose-400">Eventos para el {{ selectedDayEventsModal.date }}</h3>
+                    <button @click="selectedDayEventsModal = null" class="text-slate-400 hover:text-white">✕</button>
+                </div>
+
+                <div class="space-y-3 max-h-60 overflow-y-auto">
+                    <div v-for="evt in selectedDayEventsModal.events" :key="evt.id" class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-white">{{ evt.title }}</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">{{ evt.type }}</span>
+                        </div>
+                        <p v-if="evt.country" class="text-xs text-rose-300"><strong>País:</strong> {{ evt.country }}</p>
+                        <p v-if="evt.history" class="text-xs text-slate-300 leading-relaxed">{{ evt.history }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL CREAR NUEVO EVENTO -->
+        <div v-if="showAddEventModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4" @click.self="showAddEventModal = false">
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm p-5 space-y-4 text-white relative shadow-2xl">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                    <h3 class="font-bold text-base">Añadir Nuevo Evento</h3>
+                    <button @click="showAddEventModal = false" class="text-slate-400 hover:text-white">✕</button>
+                </div>
+
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Nombre del Evento:</label>
+                        <input type="text" v-model="newEvent.title" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-400 mb-1">Categoría:</label>
+                        <select v-model="newEvent.type" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+                            <option value="Cumpleaños 🎂">Cumpleaños 🎂</option>
+                            <option value="Evento General 📅">Evento General 📅</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-400 mb-1">Fecha:</label>
+                        <input type="date" v-model="newEvent.date" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-400 mb-1">Breve Descripción / Historia:</label>
+                        <textarea v-model="newEvent.history" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white"></textarea>
+                    </div>
+
+                    <button @click="saveNewEvent" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-2 rounded-xl transition-all mt-2">
+                        Guardar Evento
+                    </button>
+                </div>
+            </div>
+        </div>
 
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
+        const { createApp } = Vue;
 
         createApp({
-            setup() {
-                const passwordInput = ref('');
-                const isUnlocked = ref(false);
-
-                // Perfil y Portada
-                const profileImg = ref('foto.jpg'); 
-                const coverImages = ref(['https://picsum.photos/1200/400?random=1', 'https://picsum.photos/1200/600?random=2']);
-                const currentCoverIndex = ref(0);
-                let coverInterval, sideGalleryInterval;
-
-                const uploadProfileImage = (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => { profileImg.value = e.target.result; };
-                        reader.readAsDataURL(file);
-                    }
-                };
-
-                const uploadCoverImage = (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            coverImages.value.push(e.target.result);
-                            currentCoverIndex.value = coverImages.value.length - 1;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                };
-
-                const removeCurrentCover = () => {
-                    if (coverImages.value.length > 1) {
-                        coverImages.value.splice(currentCoverIndex.value, 1);
-                        if (currentCoverIndex.value >= coverImages.value.length) {
-                            currentCoverIndex.value = coverImages.value.length - 1;
-                        }
-                    }
-                };
-
-                const sideGallery = ref(['https://picsum.photos/600/600?random=10', 'https://picsum.photos/800/800?random=11']);
-                const currentSideGalleryIndex = ref(0);
-                const modalImage = ref(null);
-
-                // Reloj Analógico y Contador
-                const startDate = new Date('2022-07-17T00:00:00');
-                const timeElapsed = ref({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-                const clock = ref({ hours: 0, minutes: 0, seconds: 0 });
-
-                const updateTime = () => {
-                    const now = new Date();
-                    const diff = now - startDate;
-                    timeElapsed.value.days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    timeElapsed.value.hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                    timeElapsed.value.minutes = Math.floor((diff / 1000 / 60) % 60);
-                    timeElapsed.value.seconds = Math.floor((diff / 1000) % 60);
-
-                    const s = now.getSeconds() + now.getMilliseconds() / 1000;
-                    const m = now.getMinutes() + s / 60;
-                    const h = now.getHours() + m / 60;
-                    clock.value.seconds = s * 6;
-                    clock.value.minutes = m * 6;
-                    clock.value.hours = h * 30;
-                };
-
-                // CALENDARIO NATIVO Y FESTIVOS DINÁMICOS
-                const showCalendarModal = ref(false);
-                const todayDate = ref(new Date());
-                const calendarMonth = ref(new Date().getMonth());
-                const calendarYear = ref(new Date().getFullYear());
-
-                const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-                const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-
-                const openCalendarModal = () => { showCalendarModal.value = true; };
-                const closeCalendarModal = () => { showCalendarModal.value = false; };
-                const prevCalendarMonth = () => {
-                    if (calendarMonth.value === 0) {
-                        calendarMonth.value = 11;
-                        calendarYear.value--;
-                    } else { calendarMonth.value--; }
-                };
-                const nextCalendarMonth = () => {
-                    if (calendarMonth.value === 11) {
-                        calendarMonth.value = 0;
-                        calendarYear.value++;
-                    } else { calendarMonth.value++; }
-                };
-                const resetCalendarToToday = () => {
-                    calendarMonth.value = new Date().getMonth();
-                    calendarYear.value = new Date().getFullYear();
-                };
-
-                const currentMonthName = computed(() => monthNames[calendarMonth.value]);
-                const todayDayName = computed(() => dayNames[todayDate.value.getDay()]);
-
-                // Cálculo de Pascua (Algoritmo de Butcher)
-                const getEasterDate = (year) => {
-                    const a = year % 19, b = Math.floor(year / 100), c = year % 100;
-                    const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
-                    const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
-                    const i = Math.floor(c / 4), k = c % 4, L = (32 + 2 * e + 2 * i - h - k) % 7;
-                    const m = Math.floor((a + 11 * h + 22 * L) / 451);
-                    const month = Math.floor((h + L - 7 * m + 114) / 31) - 1;
-                    const day = ((h + L - 7 * m + 114) % 31) + 1;
-                    return new Date(year, month, day);
-                };
-
-                const moveToNextMonday = (date) => {
-                    const res = new Date(date);
-                    const day = res.getDay();
-                    if (day !== 1) {
-                        const add = (day === 0) ? 1 : (8 - day);
-                        res.setDate(res.getDate() + add);
-                    }
-                    return res;
-                };
-
-                // Lógica de Festivos Dinámicos (Colombia + Guatemala)
-                const getHolidaysForYear = (year) => {
-                    const holidays = [];
-                    const easter = getEasterDate(year);
-
-                    // Festivos Colombia Ley Emiliani
-                    const addColFixed = (m, d, name) => holidays.push({ date: new Date(year, m, d), country: 'CO', name });
-                    const addColMov = (m, d, name) => holidays.push({ date: moveToNextMonday(new Date(year, m, d)), country: 'CO', name });
-                    const addColEasterRel = (daysOffset, name) => {
-                        const d = new Date(easter);
-                        d.setDate(d.getDate() + daysOffset);
-                        holidays.push({ date: moveToNextMonday(d), country: 'CO', name });
-                    };
-
-                    addColFixed(0, 1, 'Año Nuevo');
-                    addColMov(0, 6, 'Reyes Magos');
-                    addColMov(2, 19, 'San José');
-                    
-                    // Jueves y Viernes Santo Colombia y Guatemala
-                    const juevesSanto = new Date(easter); juevesSanto.setDate(juevesSanto.getDate() - 3);
-                    const viernesSanto = new Date(easter); viernesSanto.setDate(viernesSanto.getDate() - 2);
-                    holidays.push({ date: juevesSanto, country: 'BOTH', name: 'Jueves Santo' });
-                    holidays.push({ date: viernesSanto, country: 'BOTH', name: 'Viernes Santo' });
-
-                    addColFixed(4, 1, 'Día del Trabajo');
-                    addColEasterRel(40, 'Ascensión del Señor');
-                    addColEasterRel(60, 'Corpus Christi');
-                    addColEasterRel(68, 'Sagrado Corazón');
-                    addColMov(5, 29, 'San Pedro y San Pablo');
-                    addColFixed(6, 20, 'Independencia Colombia');
-                    addColFixed(7, 7, 'Batalla de Boyacá');
-                    addColMov(7, 15, 'Asunción de la Virgen');
-                    addColMov(9, 12, 'Día de la Raza');
-                    addColMov(10, 1, 'Todos los Santos');
-                    addColMov(10, 11, 'Independencia Cartagena');
-                    addColFixed(11, 8, 'Inmaculada Concepción');
-                    addColFixed(11, 25, 'Navidad');
-
-                    // Festivos Guatemala
-                    const addGtFixed = (m, d, name) => holidays.push({ date: new Date(year, m, d), country: 'GT', name });
-                    addGtFixed(4, 10, 'Día de la Madre (GT)');
-                    addGtFixed(5, 30, 'Día del Ejército (GT)');
-                    addGtFixed(8, 15, 'Independencia Guatemala');
-                    addGtFixed(9, 20, 'Día de la Revolución (GT)');
-                    addGtFixed(10, 1, 'Todos los Santos (GT)');
-
-                    return holidays;
-                };
-
-                const calendarDays = computed(() => {
-                    const year = calendarYear.value;
-                    const month = calendarMonth.value;
-                    const firstDay = new Date(year, month, 1).getDay();
-                    const daysInMonth = new Date(year, month + 1, 0).getDate();
-                    const holidays = getHolidaysForYear(year);
-
-                    const days = [];
-                    for (let i = 0; i < firstDay; i++) { days.push(null); }
-
-                    for (let d = 1; d <= daysInMonth; d++) {
-                        const currentDate = new Date(year, month, d);
-                        const isSunday = currentDate.getDay() === 0;
-
-                        // Buscar si es festivo
-                        const matchedHolidays = holidays.filter(h => 
-                            h.date.getFullYear() === year && 
-                            h.date.getMonth() === month && 
-                            h.date.getDate() === d
-                        );
-
-                        let holidayInfo = null;
-                        if (matchedHolidays.length > 0) {
-                            const isCo = matchedHolidays.some(h => h.country === 'CO');
-                            const isGt = matchedHolidays.some(h => h.country === 'GT');
-                            const isBoth = matchedHolidays.some(h => h.country === 'BOTH') || (isCo && isGt);
-
-                            holidayInfo = {
-                                country: isBoth ? 'BOTH' : (isCo ? 'CO' : 'GT'),
-                                name: matchedHolidays.map(h => h.name).join(' / ')
-                            };
-                        }
-
-                        const isToday = currentDate.toDateString() === todayDate.value.toDateString();
-
-                        days.push({
-                            date: d,
-                            isSunday,
-                            isToday,
-                            holidayInfo
-                        });
-                    }
-                    return days;
-                });
-
-                const getDayClasses = (day) => {
-                    if (!day) return 'border-transparent bg-transparent';
-                    let classes = 'border-slate-800 bg-slate-950/50 text-slate-200 ';
-
-                    if (day.isToday) {
-                        classes += 'ring-2 ring-rose-500 bg-rose-500/10 font-bold ';
-                    }
-
-                    if (day.holidayInfo) {
-                        if (day.holidayInfo.country === 'CO') {
-                            classes += 'bg-amber-500/20 text-amber-300 border-amber-500/40 ';
-                        } else if (day.holidayInfo.country === 'GT') {
-                            classes += 'bg-sky-500/20 text-sky-300 border-sky-500/40 ';
-                        } else {
-                            classes += 'bg-purple-500/20 text-purple-300 border-purple-500/40 ';
-                        }
-                    } else if (day.isSunday) {
-                        classes += 'text-rose-400 bg-rose-500/5 ';
-                    }
-
-                    return classes;
-                };
-
-                const currentWeekNumber = computed(() => {
-                    const d = new Date(todayDate.value);
-                    d.setHours(0, 0, 0, 0);
-                    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-                    const yearStart = new Date(d.getFullYear(), 0, 1);
-                    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-                });
-
-                const currentDayOfYear = computed(() => {
-                    const start = new Date(todayDate.value.getFullYear(), 0, 0);
-                    const diff = todayDate.value - start;
-                    const oneDay = 1000 * 60 * 60 * 24;
-                    return Math.floor(diff / oneDay);
-                });
-
-                // Publicaciones y Emojis Categorizados
-                const newPostText = ref('');
-                const newPostImagePreview = ref(null);
-                const showEmojiPicker = ref(false);
-                const activeEmojiCategory = ref('faces');
-
-                const emojiCategories = {
-                    faces: { icon: '😀', list: ['😀','😃','😄','😁','😆','🥹','😅','😂','🤣','🥲','😊','😇','🙂','🙃','😉','😍','🥰','😘','😗','😚','😋','😛','😜','🤪'] },
-                    love: { icon: '❤️', list: ['❤️','💖','💗','💓','💞','💕','💌','❣️','💔','❤️‍🔥','❤️‍🩹','🫀','💍','👑','💋','🫂','🤲','🤝','👏','🙌','🫶','✊'] },
-                    animals: { icon: '🐻', list: ['🐻','🐷','🧸','🐶','🐱','🐭','🐰','🦊','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔','🐧','🐦','🐤','🦄','🐝'] },
-                    items: { icon: '🎁', list: ['🎂','🎉','🎈','🎁','💎','🌸','🌹','🌺','🌻','🌼','🌷','💐','⭐','🌟','✨','⚡','💥','🔥','🌈','☀️','🌙','💫'] },
-                    symbols: { icon: '🔣', list: ['💯','💬','💭','🈲','🉐','🟨','🟩','🟦','🟪','⬛','⬜','🟫','🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','🟤','♾️'] }
-                };
-
-                const posts = ref([
-                    {
-                        id: 1, author: 'Nosotros', date: 'Siempre',
-                        text: 'Este es el inicio de nuestra pared digital. Un rincón donde dejar plasmado lo que sentimos.',
-                        image: null, activeReaction: '❤️', showMenu: false
-                    }
-                ]);
-
-                const reactionList = ['❤️', '🫂', '😍', '🥰', '💖', '😭', '🥺', '🎉', '🎂', '✨', '🌹', '💋', '🐻', '🐷', '🔥', '👑', '👏', '💌', '🌸', '💯'];
-
-                const toggleEmojiPicker = () => { showEmojiPicker.value = !showEmojiPicker.value; };
-                const insertEmoji = (emoji) => {
-                    newPostText.value += ' ' + emoji;
-                    showEmojiPicker.value = false;
-                };
-
-                const toggleReactionMenu = (post) => { post.showMenu = !post.showMenu; };
-                const setSingleReaction = (post, reaction) => {
-                    post.activeReaction = reaction;
-                    post.showMenu = false;
-                };
-
-                const handleFileUpload = (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => { newPostImagePreview.value = e.target.result; };
-                        reader.readAsDataURL(file);
-                    }
-                };
-
-                const addPost = () => {
-                    if (!newPostText.value.trim() && !newPostImagePreview.value) return;
-                    posts.value.unshift({
-                        id: Date.now(), author: 'Tú',
-                        date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute:'2-digit' }),
-                        text: newPostText.value, image: newPostImagePreview.value, activeReaction: null, showMenu: false
-                    });
-                    newPostText.value = '';
-                    newPostImagePreview.value = null;
-                };
-
-                // Música
-                const audioPlayer = ref(null);
-                const isPlaying = ref(false);
-                const isMuted = ref(false);
-                const currentTrack = ref(0);
-                const repeatMode = ref('all');
-
-                const musicPlaylist = ref([
-                    { title: 'Melodía Romántica (Track 2)', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-                    { title: 'Nuestra Canción Especial (Track 1)', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' }
-                ]);
-
-                const togglePlay = () => {
-                    if (!audioPlayer.value) return;
-                    if (isPlaying.value) {
-                        audioPlayer.value.pause();
-                        isPlaying.value = false;
-                    } else {
-                        audioPlayer.value.play();
-                        isPlaying.value = true;
-                    }
-                };
-
-                const toggleMute = () => {
-                    if (!audioPlayer.value) return;
-                    audioPlayer.value.muted = !audioPlayer.value.muted;
-                    isMuted.value = audioPlayer.value.muted;
-                };
-
-                const nextTrack = () => {
-                    if (repeatMode.value === 'shuffle') {
-                        currentTrack.value = Math.floor(Math.random() * musicPlaylist.value.length);
-                    } else {
-                        currentTrack.value = (currentTrack.value + 1) % musicPlaylist.value.length;
-                    }
-                    if (isPlaying.value) setTimeout(() => audioPlayer.value.play(), 100);
-                };
-
-                const prevTrack = () => {
-                    currentTrack.value = (currentTrack.value - 1 + musicPlaylist.value.length) % musicPlaylist.value.length;
-                    if (isPlaying.value) setTimeout(() => audioPlayer.value.play(), 100);
-                };
-
-                const cycleRepeatMode = () => {
-                    if (repeatMode.value === 'all') repeatMode.value = 'one';
-                    else if (repeatMode.value === 'one') repeatMode.value = 'shuffle';
-                    else repeatMode.value = 'all';
-                };
-
-                const handleTrackEnded = () => {
-                    if (repeatMode.value === 'one') {
-                        audioPlayer.value.play();
-                    } else {
-                        nextTrack();
-                    }
-                };
-
-                const shareSong = () => {
-                    const song = musicPlaylist.value[currentTrack.value];
-                    if (navigator.share) {
-                        navigator.share({
-                            title: 'Escucha nuestra canción',
-                            text: `Escuchando: ${song.title} 💖`,
-                            url: song.src
-                        }).catch(() => {});
-                    } else {
-                        navigator.clipboard.writeText(`${song.title}: ${song.src}`);
-                        alert('¡Enlace de la canción copiado al portapapeles!');
-                    }
-                };
-
-                // Descarga Directa
-                const downloadImageDirect = async (url) => {
-                    try {
-                        const res = await fetch(url);
-                        const blob = await res.blob();
-                        const blobUrl = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = blobUrl;
-                        a.download = 'nuestra_foto_especial.jpg';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(blobUrl);
-                    } catch (e) {
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'foto.jpg';
-                        a.click();
-                    }
-                };
-
-                // Carruseles y Modal
-                const nextCover = () => { currentCoverIndex.value = (currentCoverIndex.value + 1) % coverImages.value.length; };
-                const prevCover = () => { currentCoverIndex.value = (currentCoverIndex.value - 1 + coverImages.value.length) % coverImages.value.length; };
-                const nextSideGallery = () => { currentSideGalleryIndex.value = (currentSideGalleryIndex.value + 1) % sideGallery.value.length; };
-                const prevSideGallery = () => { currentSideGalleryIndex.value = (currentSideGalleryIndex.value - 1 + sideGallery.value.length) % sideGallery.value.length; };
-                
-                const openModal = (img) => { modalImage.value = img; };
-                const closeModal = () => { modalImage.value = null; };
-
-                const checkPassword = () => {
-                    if (passwordInput.value.trim() === '17dejuliode2022') {
-                        isUnlocked.value = true;
-                        setTimeout(() => confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } }), 200);
-                        coverInterval = setInterval(nextCover, 5000);
-                        sideGalleryInterval = setInterval(nextSideGallery, 5000);
-                        setTimeout(() => {
-                            if(audioPlayer.value) {
-                                audioPlayer.value.play().then(() => { isPlaying.value = true; }).catch(() => {});
-                            }
-                        }, 500);
-                    }
-                };
-
-                onMounted(() => {
-                    updateTime();
-                    setInterval(updateTime, 50);
-                });
-
-                onUnmounted(() => { 
-                    clearInterval(coverInterval); 
-                    clearInterval(sideGalleryInterval);
-                });
-
+            data() {
                 return {
-                    passwordInput, isUnlocked, checkPassword,
-                    profileImg, uploadProfileImage,
-                    coverImages, currentCoverIndex, nextCover, prevCover, uploadCoverImage, removeCurrentCover,
-                    sideGallery, currentSideGalleryIndex, nextSideGallery, prevSideGallery,
-                    modalImage, openModal, closeModal, downloadImageDirect,
-                    timeElapsed, clock,
-                    showCalendarModal, openCalendarModal, closeCalendarModal,
-                    todayDate, calendarMonth, calendarYear, currentMonthName, todayDayName,
-                    prevCalendarMonth, nextCalendarMonth, resetCalendarToToday,
-                    calendarDays, getDayClasses, currentWeekNumber, currentDayOfYear,
-                    newPostText, newPostImagePreview, posts, handleFileUpload, addPost,
-                    showEmojiPicker, emojiCategories, activeEmojiCategory, toggleEmojiPicker, insertEmoji,
-                    reactionList, toggleReactionMenu, setSingleReaction,
-                    audioPlayer, isPlaying, isMuted, currentTrack, musicPlaylist, repeatMode,
-                    togglePlay, toggleMute, nextTrack, prevTrack, cycleRepeatMode, handleTrackEnded, shareSong
-                };
+                    isUnlocked: false,
+                    passwordInput: '',
+                    profileImg: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+                    coverImages: [
+                        'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80'
+                    ],
+                    currentCoverIndex: 0,
+                    clock: { hours: 0, minutes: 0, seconds: 0 },
+                    startDate: new Date('2022-09-01T00:00:00'),
+                    timeElapsed: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+                    
+                    // MÚSICA
+                    playlist: [
+                        { title: 'Nuestra Canción Especial.mp3', src: '', fileObject: null }
+                    ],
+                    currentSongIndex: 0,
+                    isPlaying: false,
+
+                    // PUBLICACIONES
+                    newPostText: '',
+                    postImagePreview: null,
+                    posts: [
+                        { id: 1, text: 'Bienvenida a nuestro espacio secreto ❤️', date: 'Hace un momento', image: null, reactions: { '❤️': 1 } }
+                    ],
+
+                    // EMOJIS
+                    showEmojiPicker: false,
+                    activeEmojiCategory: 'hearts',
+                    emojiCategories: {
+                        hearts: { icon: '💖', list: ['❤️','💖','💕','💗','💓','🥰','😍','😻'] },
+                        faces: { icon: '😊', list: ['😊','😄','😋','😎','🥳','🙈','😇','🤗'] },
+                        gestures: { icon: '👍', list: ['👍','👏','🙌','🤝','👊','✌️','🎉','✨'] }
+                    },
+
+                    // MODALES Y CALENDARIO
+                    selectedImageModal: null,
+                    showCalendarModal: false,
+                    showAddEventModal: false,
+                    selectedDayEventsModal: null,
+                    calendarDate: new Date(),
+                    
+                    // LISTA DE EVENTOS
+                    eventsList: [
+                        { id: 1, title: 'Año Nuevo', date: '2026-01-01', type: 'Festivo', country: 'Internacional', history: 'Celebración del inicio del año en el calendario gregoriano.' },
+                        { id: 2, title: 'Día del Amor y la Amistad', date: '2026-02-14', type: 'Festivo', country: 'Internacional', history: 'Conmemoración de San Valentín y el amor.' }
+                    ],
+                    newEvent: { title: '', type: 'Cumpleaños 🎂', date: '', history: '' }
+                }
+            },
+            computed: {
+                currentSong() {
+                    return this.playlist[this.currentSongIndex] || { title: 'Sin música', src: '' };
+                },
+                currentYear() { return this.calendarDate.getFullYear(); },
+                currentMonth() { return this.calendarDate.getMonth(); },
+                currentMonthName() {
+                    return this.calendarDate.toLocaleString('es-ES', { month: 'long' });
+                },
+                daysInMonth() {
+                    return new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+                },
+                firstDayOffset() {
+                    return new Date(this.currentYear, this.currentMonth, 1).getDay();
+                }
+            },
+            methods: {
+                checkPassword() {
+                    if (this.passwordInput.length > 0) {
+                        this.isUnlocked = true;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                },
+                updateClock() {
+                    const now = new Date();
+                    const sec = now.getSeconds();
+                    const min = now.getMinutes();
+                    const hr = now.getHours();
+
+                    this.clock.seconds = sec * 6;
+                    this.clock.minutes = min * 6 + sec * 0.1;
+                    this.clock.hours = (hr % 12) * 30 + min * 0.5;
+
+                    const diff = Math.abs(now - this.startDate);
+                    this.timeElapsed.days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    this.timeElapsed.hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    this.timeElapsed.minutes = Math.floor((diff / 1000 / 60) % 60);
+                    this.timeElapsed.seconds = Math.floor((diff / 1000) % 60);
+                },
+                // MANEJO DE FOTOS Y REPRODUCTOR
+                uploadProfileImage(e) {
+                    const file = e.target.files[0];
+                    if (file) this.profileImg = URL.createObjectURL(file);
+                },
+                uploadCoverImage(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        this.coverImages.push(URL.createObjectURL(file));
+                        this.currentCoverIndex = this.coverImages.length - 1;
+                    }
+                },
+                prevCover() {
+                    this.currentCoverIndex = (this.currentCoverIndex - 1 + this.coverImages.length) % this.coverImages.length;
+                },
+                nextCover() {
+                    this.currentCoverIndex = (this.currentCoverIndex + 1) % this.coverImages.length;
+                },
+                removeCurrentCover() {
+                    if (this.coverImages.length > 1) {
+                        this.coverImages.splice(this.currentCoverIndex, 1);
+                        this.currentCoverIndex = 0;
+                    }
+                },
+                uploadSong(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const songUrl = URL.createObjectURL(file);
+                        this.playlist.push({ title: file.name, src: songUrl, fileObject: file });
+                        this.currentSongIndex = this.playlist.length - 1;
+                    }
+                },
+                togglePlay() {
+                    const player = this.$refs.audioPlayer;
+                    if (!player || !this.currentSong.src) return;
+                    if (this.isPlaying) { player.pause(); } else { player.play(); }
+                    this.isPlaying = !this.isPlaying;
+                },
+                prevSong() {
+                    this.currentSongIndex = (this.currentSongIndex - 1 + this.playlist.length) % this.playlist.length;
+                    this.isPlaying = false;
+                },
+                nextSong() {
+                    this.currentSongIndex = (this.currentSongIndex + 1) % this.playlist.length;
+                    this.isPlaying = false;
+                },
+                // COMPARTIR ARCHIVO DIRECTO
+                async shareCurrentAudio() {
+                    const song = this.currentSong;
+                    if (!song) return;
+
+                    try {
+                        let fileToShare = song.fileObject;
+                        
+                        // Si es una URL o no tenemos el objeto File nativo directo, intentamos descargarlo a Blob
+                        if (!fileToShare && song.src) {
+                            const res = await fetch(song.src);
+                            const blob = await res.blob();
+                            fileToShare = new File([blob], song.title, { type: blob.type || 'audio/mp3' });
+                        }
+
+                        if (navigator.canShare && navigator.canShare({ files: [fileToShare] })) {
+                            await navigator.share({
+                                files: [fileToShare],
+                                title: song.title,
+                                text: 'Escucha esta canción de nuestro espacio privado'
+                            });
+                        } else {
+                            alert("Tu navegador o sistema operativo no admite compartir archivos directamente.");
+                        }
+                    } catch (err) {
+                        console.error("Error al compartir:", err);
+                    }
+                },
+                // PUBLICACIONES
+                toggleEmojiPicker() { this.showEmojiPicker = !this.showEmojiPicker; },
+                insertEmoji(emoji) {
+                    this.newPostText += emoji;
+                    this.showEmojiPicker = false;
+                },
+                handlePostImage(e) {
+                    const file = e.target.files[0];
+                    if (file) this.postImagePreview = URL.createObjectURL(file);
+                },
+                createPost() {
+                    if (!this.newPostText.trim() && !this.postImagePreview) return;
+                    this.posts.unshift({
+                        id: Date.now(),
+                        text: this.newPostText,
+                        date: 'Hace un momento',
+                        image: this.postImagePreview,
+                        reactions: {}
+                    });
+                    this.newPostText = '';
+                    this.postImagePreview = null;
+                },
+                deletePost(index) { this.posts.splice(index, 1); },
+                reactToPost(post, emoji) {
+                    post.reactions[emoji] = (post.reactions[emoji] || 0) + 1;
+                },
+                openModal(imgSrc) { this.selectedImageModal = imgSrc; },
+                
+                // CALENDARIO
+                openCalendarModal() { this.showCalendarModal = true; },
+                changeMonth(dir) {
+                    this.calendarDate = new Date(this.currentYear, this.currentMonth + dir, 1);
+                },
+                isSunday(day) {
+                    const date = new Date(this.currentYear, this.currentMonth, day);
+                    return date.getDay() === 0;
+                },
+                getEventsForDay(day) {
+                    const monthFormatted = String(this.currentMonth + 1).padStart(2, '0');
+                    const dayFormatted = String(day).padStart(2, '0');
+                    const dateStr = `${this.currentYear}-${monthFormatted}-${dayFormatted}`;
+                    return this.eventsList.filter(e => e.date === dateStr);
+                },
+                selectCalendarDay(day) {
+                    const evts = this.getEventsForDay(day);
+                    if (evts.length > 0) {
+                        this.selectedDayEventsModal = {
+                            date: `${day}/${this.currentMonth + 1}/${this.currentYear}`,
+                            events: evts
+                        };
+                    }
+                },
+                saveNewEvent() {
+                    if (!this.newEvent.title || !this.newEvent.date) return;
+                    this.eventsList.push({
+                        id: Date.now(),
+                        title: this.newEvent.title,
+                        date: this.newEvent.date,
+                        type: this.newEvent.type,
+                        country: 'Personal',
+                        history: this.newEvent.history || 'Evento guardado en el calendario privado.'
+                    });
+                    this.newEvent = { title: '', type: 'Cumpleaños 🎂', date: '', history: '' };
+                    this.showAddEventModal = false;
+                }
+            },
+            mounted() {
+                this.updateClock();
+                setInterval(this.updateClock, 1000);
             }
         }).mount('#app');
     </script>
