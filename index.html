@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CAPA 1: Bloqueo absoluto para buscadores de Google/Bing -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    
+    <title>Espacio Privado 🔒</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* CAPA 3: Muro de Contraseña */
+        #password-screen {
+            display: block;
+        }
+
+        #private-content {
+            display: none; /* Oculto hasta poner la clave correcta */
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin: 18px 0;
+            border-radius: 12px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: #fff;
+            font-size: 1.1em;
+            text-align: center;
+            outline: none;
+        }
+
+        input[type="password"]:focus {
+            border-color: #f43f5e;
+        }
+
+        button {
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #fb7185;
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Estilos del contenido sorpresa */
+        h1 { color: #fda4af; margin-bottom: 10px; }
+        p { line-height: 1.6; color: #cbd5e1; font-size: 1.05em; }
+        
+        .gallery img {
+            width: 100%;
+            border-radius: 16px;
+            margin-top: 15px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(244, 63, 94, 0.2);
+            color: #fda4af;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <!-- PANTALLA DE ACCESO -->
+        <div id="password-screen">
+            <div style="font-size: 3em; margin-bottom: 10px;">🔐</div>
+            <span class="badge">Área Privada & Cifrada</span>
+            <h2>Ingresa el Código Secreto</h2>
+            <p style="font-size: 0.95em;">Este rincón es exclusivo para dos personas. Introduce la clave especial para desbloquear tu regalo.</p>
+            
+            <input type="password" id="passInput" placeholder="Escribe aquí la contraseña...">
+            <button onclick="checkPassword()">Desbloquear Espacio</button>
+            <div id="errorMsg" class="error-msg">⚠️ Código incorrecto. Intenta de nuevo.</div>
+        </div>
+
+        <!-- CONTENIDO OCULTO Y PROTEGIDO -->
+        <div id="private-content">
+            <span class="badge">❤️ ¡Acceso Concedido!</span>
+            <h1>¡Feliz Cumpleaños! 🎉</h1>
+            <p>Bienvenida a nuestro espacio virtual privado. Un lugar en la nube creado desde cero especialmente para ti.</p>
+            
+            <div class="gallery">
+                <!-- Reemplazarás foto.jpg con el nombre real de tu archivo subido -->
+                <img src="foto.jpg" alt="Nuestro Momento" onerror="this.src='https://picsum.photos/400/300'">
+            </div>
+
+            <p style="margin-top: 20px; font-style: italic;">"A pesar de la distancia, este espacio es 100% nuestro."</p>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURA AQUÍ LA CONTRASEÑA QUE TÚ QUIERAS (En minúsculas o como gustes)
+        const CLAVE_CORRECTA = "17dejuliode2022"; 
+
+        function checkPassword() {
+            const inputVal = document.getElementById("passInput").value.trim().toLowerCase();
+            const errorMsg = document.getElementById("errorMsg");
+            const screen = document.getElementById("password-screen");
+            const content = document.getElementById("private-content");
+
+            if (inputVal === CLAVE_CORRECTA.toLowerCase()) {
+                screen.style.display = "none";
+                content.style.display = "block";
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        // Permite presionar Enter en el teclado
+        document.getElementById("passInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
