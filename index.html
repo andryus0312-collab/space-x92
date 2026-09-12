@@ -10,26 +10,47 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.4s ease; }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
         .fade-enter-from, .fade-leave-to { opacity: 0; }
         
-        /* Reloj Analógico */
-        .clock-face { position: relative; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #1e293b 0%, #0f172a 100%); border: 4px solid #f43f5e; box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 0 20px rgba(244, 63, 94, 0.3); margin: 0 auto; }
-        .clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: #fb7185; border-radius: 50%; z-index: 10; }
-        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 4px; transition: transform 0.05s cubic-bezier(0.4, 2.08, 0.55, 0.44); }
-        .hand-hour { width: 6px; height: 35px; background: #cbd5e1; margin-left: -3px; z-index: 7; }
-        .hand-minute { width: 4px; height: 45px; background: #94a3b8; margin-left: -2px; z-index: 8; }
-        .hand-second { width: 2px; height: 55px; background: #f43f5e; margin-left: -1px; z-index: 9; }
-        
-        /* Animaciones */
-        @keyframes heartBeat { 0% { transform: scale(1); } 25% { transform: scale(1.8); } 50% { transform: scale(1); } 75% { transform: scale(1.8); } 100% { transform: scale(1); } }
-        .react-anim { animation: heartBeat 0.6s ease-in-out; }
+        /* Reloj Analógico Realista */
+        .clock-face {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0f172a 60%, #020617 100%);
+            border: 6px solid #e11d48;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.9), 0 0 25px rgba(225, 29, 72, 0.4);
+            margin: 0 auto;
+        }
+        .clock-number {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 800;
+            color: #f1f5f9;
+            padding: 4px;
+        }
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            border-radius: 4px;
+        }
+        .hand-hour { width: 4px; height: 38px; background: #f8fafc; margin-left: -2px; z-index: 7; }
+        .hand-minute { width: 3px; height: 52px; background: #cbd5e1; margin-left: -1.5px; z-index: 8; }
+        .hand-second { width: 1.5px; height: 60px; background: #e11d48; margin-left: -0.75px; z-index: 9; }
+        .clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #fb7185; border-radius: 50%; z-index: 10; border: 2px solid #fff; }
+
+        @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
+        .react-anim { animation: heartBeat 0.4s ease-in-out; }
         
         @keyframes float { 0% { transform: translateY(-10px) rotate(0deg); opacity: 0.8; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
         .floating-icon { position: fixed; top: -20px; pointer-events: none; z-index: 10; animation: float linear infinite; }
-        
-        /* Ocultar scrollbar en galería */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen relative font-sans selection:bg-rose-500 selection:text-white">
@@ -42,7 +63,6 @@
 
     <div id="app" class="min-h-screen flex items-center justify-center p-2 sm:p-4">
 
-        <!-- PANTALLA DE BLOQUEO -->
         <transition name="fade" mode="out-in">
             <div v-if="!isUnlocked" key="login" class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl border border-rose-500/20 p-8 rounded-3xl text-center space-y-5">
                 <div class="text-5xl animate-bounce">🔐</div>
@@ -51,17 +71,14 @@
                 <button @click="checkPassword" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold py-3 rounded-xl shadow-lg active:scale-95 transition-all">Ingresar</button>
             </div>
 
-            <!-- INTERFAZ PRINCIPAL -->
             <div v-else key="dashboard" class="w-full max-w-7xl my-4 space-y-4">
                 
-                <!-- PORTADA -->
                 <header class="relative w-full h-56 sm:h-72 rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-slate-900 flex items-center justify-center group">
                     <img :src="coverImages[currentCoverIndex]" class="absolute inset-0 w-full h-full object-contain sm:object-cover transition-opacity duration-1000 opacity-80 blur-[2px]">
                     <img :src="coverImages[currentCoverIndex]" class="relative z-10 h-full max-w-full object-contain drop-shadow-2xl transition-all duration-700">
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/10 z-10 pointer-events-none"></div>
                     
-                    <!-- Flechas sutiles -->
                     <button @click="prevCover" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/30 hover:text-white/80 text-3xl transition-colors">❮</button>
                     <button @click="nextCover" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/30 hover:text-white/80 text-3xl transition-colors">❯</button>
 
@@ -72,10 +89,8 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-                    <!-- COLUMNA IZQUIERDA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- PERFIL Y CARTA -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl text-center space-y-4">
                             <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.4)]">
                                 <img :src="profileImg" class="w-full h-full object-cover">
@@ -87,7 +102,6 @@
                             
                             <hr class="border-slate-800">
                             
-                            <!-- Carta Dedicatoria -->
                             <div class="text-left text-sm text-slate-300 space-y-3 leading-relaxed font-medium">
                                 <p>Este es un rincón secreto, un espacio al que solo tú y yo podemos acceder. 🔐✨</p>
                                 <p>No importa la distancia física 🌍, no importa la hora 🕰️, el lugar o el dispositivo desde el que entres. Donde quiera que vayas y donde quiera que estés, <strong>siempre estarás aquí conmigo</strong>. 🫂</p>
@@ -98,21 +112,21 @@
                             </div>
                         </div>
 
-                        <!-- CONTADOR Y RELOJ ANALÓGICO -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-rose-500/30 p-5 rounded-2xl text-center space-y-5">
                             <h4 class="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-300 uppercase tracking-wider">
                                 Tiempo juntos desde aquí hasta la eternidad 🌌
                             </h4>
                             
-                            <!-- Reloj Físico -->
                             <div class="clock-face">
+                                <div v-for="n in 12" :key="n" class="clock-number" :style="{ transform: `rotate(${n * 30}deg)` }">
+                                    <span :style="{ transform: `rotate(-${n * 30}deg)`, display: 'inline-block' }">{{ n }}</span>
+                                </div>
                                 <div class="hand hand-hour" :style="{ transform: `rotate(${clock.hours}deg)` }"></div>
                                 <div class="hand hand-minute" :style="{ transform: `rotate(${clock.minutes}deg)` }"></div>
                                 <div class="hand hand-second" :style="{ transform: `rotate(${clock.seconds}deg)` }"></div>
                                 <div class="clock-center"></div>
                             </div>
 
-                            <!-- Contador Digital -->
                             <div class="grid grid-cols-2 gap-2">
                                 <div class="bg-slate-950 p-2 rounded-xl border border-white/5 shadow-inner">
                                     <span class="text-xl font-extrabold text-white">{{ timeElapsed.days }}</span>
@@ -135,11 +149,9 @@
                         </div>
                     </aside>
 
-                    <!-- COLUMNA CENTRAL: RED SOCIAL -->
                     <main class="lg:col-span-6 space-y-4">
                         
-                        <!-- Creador de Publicaciones -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3">
+                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3 relative">
                             <textarea 
                                 v-model="newPostText" 
                                 maxlength="500"
@@ -151,16 +163,26 @@
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-slate-500">{{ newPostText.length }}/500</span>
                                 
-                                <div class="flex gap-2">
-                                    <!-- Botones UI estilo iOS -->
-                                    <button class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-lg transition-colors" title="Emojis">😊</button>
-                                    <button class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-sm transition-colors" title="Stickers">✨</button>
-                                    <button class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-xs font-bold transition-colors" title="GIFs">GIF</button>
+                                <div class="flex gap-2 relative">
+                                    <button @click="togglePicker('emoji')" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-lg transition-colors" title="Emojis">😊</button>
+                                    <button @click="togglePicker('sticker')" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-sm transition-colors" title="Stickers">✨</button>
+                                    <button @click="togglePicker('gif')" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-xs font-bold transition-colors" title="GIFs">GIF</button>
+
+                                    <div v-if="activePicker" class="absolute right-0 top-10 z-30 bg-slate-900 border border-slate-700 p-3 rounded-2xl shadow-2xl grid grid-cols-5 gap-2 w-64 max-h-48 overflow-y-auto">
+                                        <template v-if="activePicker === 'emoji'">
+                                            <button v-for="e in emojiList" :key="e" @click="insertText(e)" class="text-xl hover:bg-slate-800 p-1 rounded">{{ e }}</button>
+                                        </template>
+                                        <template v-if="activePicker === 'sticker'">
+                                            <button v-for="s in stickerList" :key="s" @click="insertText(s)" class="text-2xl hover:bg-slate-800 p-1 rounded">{{ s }}</button>
+                                        </template>
+                                        <template v-if="activePicker === 'gif'">
+                                            <button v-for="g in gifList" :key="g" @click="insertText(g)" class="text-xs bg-slate-800 hover:bg-slate-700 p-1 rounded text-rose-300 font-bold">{{ g }}</button>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="flex flex-col sm:flex-row gap-3 pt-2 border-t border-slate-800 items-center justify-between">
-                                <!-- Botón Subir Archivo -->
                                 <label class="w-full sm:w-auto cursor-pointer bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-medium px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2">
                                     <span>📸 Subir imagen</span>
                                     <input type="file" accept="image/*" @change="handleFileUpload" class="hidden">
@@ -174,7 +196,6 @@
                             </div>
                         </div>
 
-                        <!-- Muro / Feed -->
                         <div class="space-y-4">
                             <div v-for="post in posts" :key="post.id" class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4">
                                 <div class="flex items-center gap-3">
@@ -191,51 +212,52 @@
                                     <img :src="post.image" class="w-full h-auto max-h-[500px] object-cover">
                                 </div>
 
-                                <!-- Reacciones -->
-                                <div class="flex gap-4 pt-3 border-t border-slate-800">
-                                    <button @click="react(post, 'heart')" class="flex items-center gap-1.5 text-slate-400 hover:text-rose-400 transition-colors group">
-                                        <span class="text-2xl" :class="{ 'react-anim text-rose-500 drop-shadow-[0_0_8px_rgba(244,63,94,0.8)]': post.reacted === 'heart' }">❤️</span> 
-                                        <span class="text-xs font-semibold">{{ post.likes }}</span>
-                                    </button>
-                                    <button @click="react(post, 'care')" class="flex items-center gap-1.5 text-slate-400 hover:text-yellow-400 transition-colors">
-                                        <span class="text-2xl" :class="{ 'react-anim drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]': post.reacted === 'care' }">🫂</span>
-                                    </button>
+                                <div class="pt-3 border-t border-slate-800 space-y-2">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <button @click="toggleReactionMenu(post)" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-full border border-slate-700 text-rose-300 font-semibold flex items-center gap-1 transition-all">
+                                            <span>➕ Reaccionar</span>
+                                        </button>
+                                        
+                                        <div v-for="(count, emoji) in post.reactions" :key="emoji" class="bg-rose-500/10 border border-rose-500/30 text-xs px-2.5 py-1 rounded-full flex items-center gap-1">
+                                            <span class="text-base react-anim">{{ emoji }}</span>
+                                            <span class="text-rose-300 font-bold">{{ count }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="post.showMenu" class="bg-slate-950 border border-slate-800 p-2 rounded-2xl grid grid-cols-10 gap-1 mt-2">
+                                        <button v-for="r in reactionList" :key="r" @click="addReaction(post, r)" class="text-lg hover:bg-slate-800 p-1 rounded hover:scale-125 transition-transform">
+                                            {{ r }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </main>
 
-                    <!-- COLUMNA DERECHA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- MÚSICA -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-4 text-center">
                             <h4 class="text-xs font-bold text-slate-300 uppercase tracking-widest text-left">Música</h4>
                             
-                            <!-- Carátula Pooh & Piglet -->
                             <div class="w-32 h-32 mx-auto rounded-2xl bg-gradient-to-br from-yellow-200 to-pink-200 shadow-[0_0_20px_rgba(244,63,94,0.2)] flex flex-col items-center justify-center border-2 border-white/20 relative overflow-hidden">
-                                <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
                                 <span class="text-5xl z-10 drop-shadow-md relative -left-3">🐻</span>
                                 <span class="text-4xl z-10 drop-shadow-md relative left-4 -top-3">🐷</span>
                                 <div class="absolute bottom-1 text-[10px] font-black text-rose-500/80 tracking-widest">NUESTRA CANCIÓN</div>
                             </div>
 
-                            <p class="text-sm font-bold text-white truncate px-2">{{ musicPlaylist[0].title }}</p>
+                            <p class="text-xs font-bold text-white truncate px-2">{{ musicPlaylist[currentTrack].title }}</p>
 
-                            <!-- Controles Musicales UI -->
-                            <div class="flex items-center justify-center gap-4 bg-slate-950 py-3 px-4 rounded-full border border-slate-800 shadow-inner">
-                                <button class="text-slate-400 hover:text-white transition-colors" title="Mute">🔈</button>
-                                <button class="text-slate-400 hover:text-white transition-colors">⏮️</button>
-                                <button class="w-10 h-10 rounded-full bg-rose-500 hover:bg-rose-600 flex items-center justify-center text-white shadow-[0_0_10px_rgba(244,63,94,0.4)] transition-transform active:scale-90">
-                                    ▶️
+                            <div class="flex items-center justify-center gap-3 bg-slate-950 py-3 px-4 rounded-full border border-slate-800 shadow-inner">
+                                <button @click="toggleMute" class="text-slate-400 hover:text-white transition-colors" title="Silenciar">
+                                    {{ isMuted ? '🔇' : '🔊' }}
                                 </button>
-                                <button class="text-slate-400 hover:text-white transition-colors">⏭️</button>
+                                <button @click="togglePlay" class="w-10 h-10 rounded-full bg-rose-500 hover:bg-rose-600 flex items-center justify-center text-white shadow-[0_0_10px_rgba(244,63,94,0.4)] transition-transform active:scale-90">
+                                    {{ isPlaying ? '⏸️' : '▶️' }}
+                                </button>
                             </div>
-                            <!-- Audio oculto funcionando en background -->
-                            <audio ref="audioPlayer" :src="musicPlaylist[0].src" autoplay loop class="hidden"></audio>
+                            <audio ref="audioPlayer" :src="musicPlaylist[currentTrack].src" loop class="hidden"></audio>
                         </div>
 
-                        <!-- GALERÍA DE IMÁGENES -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3">
                             <h4 class="text-xs font-bold text-slate-300 uppercase tracking-widest text-left">Galería de imágenes</h4>
                             
@@ -252,13 +274,12 @@
             </div>
         </transition>
 
-        <!-- LIGHTBOX MODAL (VISOR DE IMAGEN) -->
         <transition name="fade">
             <div v-if="modalImage" class="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4">
-                <div class="absolute top-4 right-4 flex gap-4">
-                    <a :href="modalImage" download="nuestra_foto.jpg" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 border border-slate-600 transition-colors">
+                <div class="absolute top-4 right-4 flex gap-4 z-50">
+                    <button @click="downloadImageDirect(modalImage)" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 border border-slate-600 transition-colors">
                         ⬇️ Descargar
-                    </a>
+                    </button>
                     <button @click="closeModal" class="bg-rose-600 hover:bg-rose-700 text-white w-10 h-10 rounded-lg font-bold text-xl flex items-center justify-center transition-colors">
                         ✕
                     </button>
@@ -280,9 +301,9 @@
                 const profileImg = ref('foto.jpg'); 
                 const coverImages = ref(['https://picsum.photos/1200/400?random=1', 'https://picsum.photos/1200/600?random=2']);
                 const currentCoverIndex = ref(0);
-                let coverInterval;
+                let coverInterval, sideGalleryInterval;
 
-                const sideGallery = ref(['https://picsum.photos/600/600?random=10', 'https://picsum.photos/800/400?random=11']);
+                const sideGallery = ref(['https://picsum.photos/600/600?random=10', 'https://picsum.photos/800/800?random=11']);
                 const currentSideGalleryIndex = ref(0);
                 const modalImage = ref(null);
 
@@ -293,35 +314,58 @@
 
                 const updateTime = () => {
                     const now = new Date();
-                    
-                    // Diferencia digital
                     const diff = now - startDate;
                     timeElapsed.value.days = Math.floor(diff / (1000 * 60 * 60 * 24));
                     timeElapsed.value.hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
                     timeElapsed.value.minutes = Math.floor((diff / 1000 / 60) % 60);
                     timeElapsed.value.seconds = Math.floor((diff / 1000) % 60);
 
-                    // Manecillas analógicas (Hora actual para efecto visual realista)
-                    const s = now.getSeconds();
-                    const m = now.getMinutes();
-                    const h = now.getHours();
+                    const s = now.getSeconds() + now.getMilliseconds() / 1000;
+                    const m = now.getMinutes() + s / 60;
+                    const h = now.getHours() + m / 60;
                     clock.value.seconds = s * 6;
-                    clock.value.minutes = (m * 6) + (s * 0.1);
-                    clock.value.hours = (h * 30) + (m * 0.5);
+                    clock.value.minutes = m * 6;
+                    clock.value.hours = h * 30;
                 };
 
-                // Publicaciones
+                // Creador de Publicaciones & Selectores
                 const newPostText = ref('');
                 const newPostImagePreview = ref(null);
+                const activePicker = ref(null);
+                
+                const emojiList = ['💖', '🐻', '🐷', '🎂', '🎉', '✨', '🥺', '😍', '🌹', '💌'];
+                const stickerList = ['🧸', '🌸', '👑', '🕊️', '🎀', '🎈', '💍', '🎁', '💎', '🌈'];
+                const gifList = ['[GIF: Abrazo]', '[GIF: Te Amo]', '[GIF: Beso]', '[GIF: Baile]'];
+
                 const posts = ref([
                     {
                         id: 1, author: 'Nosotros', date: 'Siempre',
                         text: 'Este es el inicio de nuestra pared digital. Un rincón donde dejar plasmado lo que sentimos.',
-                        image: null, likes: 10, reacted: null
+                        image: null, reactions: { '❤️': 10, '🫂': 5 }, showMenu: false
                     }
                 ]);
 
-                // Leer foto desde el dispositivo (Preview en sesión)
+                const reactionList = ['❤️', '🫂', '😍', '🥰', '💖', '😭', '🥺', '🎉', '🎂', '✨', '🌹', '💋', '🐻', '🐷', '🔥', '👑', '👏', '💌', '🌸', '💯'];
+
+                const togglePicker = (type) => {
+                    activePicker.value = activePicker.value === type ? null : type;
+                };
+
+                const insertText = (val) => {
+                    newPostText.value += ' ' + val;
+                    activePicker.value = null;
+                };
+
+                const toggleReactionMenu = (post) => {
+                    post.showMenu = !post.showMenu;
+                };
+
+                const addReaction = (post, reaction) => {
+                    if (!post.reactions[reaction]) post.reactions[reaction] = 0;
+                    post.reactions[reaction]++;
+                    post.showMenu = false;
+                };
+
                 const handleFileUpload = (event) => {
                     const file = event.target.files[0];
                     if (file) {
@@ -336,15 +380,55 @@
                     posts.value.unshift({
                         id: Date.now(), author: 'Tú',
                         date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute:'2-digit' }),
-                        text: newPostText.value, image: newPostImagePreview.value, likes: 0, reacted: null
+                        text: newPostText.value, image: newPostImagePreview.value, reactions: {}, showMenu: false
                     });
                     newPostText.value = '';
                     newPostImagePreview.value = null;
                 };
 
-                const react = (post, type) => {
-                    post.reacted = post.reacted === type ? null : type;
-                    if(type === 'heart') post.likes += (post.reacted ? 1 : -1);
+                // Música Controles
+                const audioPlayer = ref(null);
+                const isPlaying = ref(false);
+                const isMuted = ref(false);
+                const currentTrack = ref(0);
+                const musicPlaylist = ref([{ title: 'Nuestra Melodía Especial (SoundHelix Track 1)', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' }]);
+
+                const togglePlay = () => {
+                    if (!audioPlayer.value) return;
+                    if (isPlaying.value) {
+                        audioPlayer.value.pause();
+                        isPlaying.value = false;
+                    } else {
+                        audioPlayer.value.play();
+                        isPlaying.value = true;
+                    }
+                };
+
+                const toggleMute = () => {
+                    if (!audioPlayer.value) return;
+                    audioPlayer.value.muted = !audioPlayer.value.muted;
+                    isMuted.value = audioPlayer.value.muted;
+                };
+
+                // Descarga de Imagen sin Salir de la Página
+                const downloadImageDirect = async (url) => {
+                    try {
+                        const res = await fetch(url);
+                        const blob = await res.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = blobUrl;
+                        a.download = 'nuestra_foto_especial.jpg';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(blobUrl);
+                    } catch (e) {
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'foto.jpg';
+                        a.click();
+                    }
                 };
 
                 // Carruseles y Modal
@@ -356,32 +440,40 @@
                 const openModal = (img) => { modalImage.value = img; };
                 const closeModal = () => { modalImage.value = null; };
 
-                // Música
-                const musicPlaylist = ref([{ title: 'Nuestra Melodía Especial', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' }]);
-
                 const checkPassword = () => {
                     if (passwordInput.value.trim() === '17dejuliode2022') {
                         isUnlocked.value = true;
                         setTimeout(() => confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } }), 200);
-                        coverInterval = setInterval(nextCover, 5000); // Portada auto-avanza
+                        coverInterval = setInterval(nextCover, 5000);
+                        sideGalleryInterval = setInterval(nextSideGallery, 5000);
+                        setTimeout(() => {
+                            if(audioPlayer.value) {
+                                audioPlayer.value.play().then(() => { isPlaying.value = true; }).catch(() => {});
+                            }
+                        }, 500);
                     }
                 };
 
                 onMounted(() => {
                     updateTime();
-                    setInterval(updateTime, 1000);
+                    setInterval(updateTime, 50);
                 });
 
-                onUnmounted(() => { clearInterval(coverInterval); });
+                onUnmounted(() => { 
+                    clearInterval(coverInterval); 
+                    clearInterval(sideGalleryInterval);
+                });
 
                 return {
                     passwordInput, isUnlocked, checkPassword,
                     profileImg, coverImages, currentCoverIndex, nextCover, prevCover,
                     sideGallery, currentSideGalleryIndex, nextSideGallery, prevSideGallery,
-                    modalImage, openModal, closeModal,
+                    modalImage, openModal, closeModal, downloadImageDirect,
                     timeElapsed, clock,
-                    newPostText, newPostImagePreview, posts, handleFileUpload, addPost, react,
-                    musicPlaylist
+                    newPostText, newPostImagePreview, posts, handleFileUpload, addPost,
+                    activePicker, emojiList, stickerList, gifList, togglePicker, insertText,
+                    reactionList, toggleReactionMenu, addReaction,
+                    audioPlayer, isPlaying, isMuted, currentTrack, musicPlaylist, togglePlay, toggleMute
                 };
             }
         }).mount('#app');
