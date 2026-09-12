@@ -13,7 +13,7 @@
         .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
         .fade-enter-from, .fade-leave-to { opacity: 0; }
         
-        /* Reloj Analógico Neón Blanco Translúcido con Atardecer */
+        /* Reloj Analógico Neón Blanco Translúcido */
         .clock-face {
             position: relative;
             width: 160px;
@@ -24,6 +24,7 @@
             border: 4px solid rgba(255, 255, 255, 0.85);
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(0,0,0,0.8);
             margin: 0 auto;
+            cursor: pointer;
         }
         .clock-number {
             position: absolute;
@@ -48,28 +49,31 @@
         .hand-second { width: 1.5px; height: 65px; background: #fb7185; margin-left: -0.75px; z-index: 9; }
         .clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #ffffff; border-radius: 50%; z-index: 10; border: 2px solid #f472b6; }
 
-        /* Botones 3D Ovalados */
+        /* Botones 3D Estilo Reproductor (Morado-Fucsia + Glow Rosa Sutil + Ícono Negro) */
+        .btn-player-3d {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: #000000;
+            font-weight: 900;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25), inset 0 2px 2px rgba(255, 255, 255, 0.4), inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(244, 114, 182, 0.35);
+            transition: all 0.15s ease;
+        }
+        .btn-player-3d:hover {
+            box-shadow: 0 0 15px rgba(244, 114, 182, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .btn-player-3d:active {
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
+            transform: translateY(1px);
+        }
+
+        /* Botones 3D Ovalados Reloj */
         .btn-3d-oval {
             background: linear-gradient(145deg, #1e293b, #0f172a);
             box-shadow: 3px 3px 8px #080d1a, -3px -3px 8px #26354a, inset 0 1px 0 rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 9999px;
             transition: all 0.15s ease;
-        }
-        .btn-3d-oval:active {
-            box-shadow: inset 2px 2px 6px #080d1a, inset -2px -2px 6px #26354a;
-            transform: translateY(1px);
-        }
-
-        .btn-3d-box {
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            box-shadow: 4px 4px 10px #080d1a, -4px -4px 10px #26354a, inset 0 1px 0 rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.15s ease;
-        }
-        .btn-3d-box:active {
-            box-shadow: inset 3px 3px 6px #080d1a, inset -3px -3px 6px #26354a;
-            transform: translateY(1px);
         }
 
         @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
@@ -133,16 +137,15 @@
                     <!-- COLUMNA IZQUIERDA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- PERFIL Y CARTA CON CAMBIO DE FOTO -->
+                        <!-- PERFIL Y CARTA CON ZOOM EN FOTO Y BOTÓN DISCRETO -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl text-center space-y-4">
                             <div class="relative w-32 h-32 mx-auto group">
-                                <div class="w-full h-full rounded-full overflow-hidden border-4 border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.4)]">
-                                    <img :src="profileImg" class="w-full h-full object-cover">
+                                <div @click="openModal(profileImg)" class="w-full h-full rounded-full overflow-hidden border-4 border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.4)] cursor-pointer">
+                                    <img :src="profileImg" class="w-full h-full object-cover hover:scale-105 transition-transform" title="Haz clic para ampliar">
                                 </div>
-                                <!-- Botón discreto sobre foto de perfil -->
-                                <label class="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center cursor-pointer text-white text-[11px] font-semibold gap-1">
-                                    <span class="text-base">📷</span>
-                                    <span>Cambiar perfil</span>
+                                <!-- Botón Discreto al costado para cambiar perfil -->
+                                <label class="absolute bottom-0 right-0 bg-slate-900 hover:bg-rose-600 border border-white/30 text-white p-2 rounded-full cursor-pointer shadow-lg transition-colors text-xs" title="Cambiar foto de perfil">
+                                    <span>📷</span>
                                     <input type="file" accept="image/*" @change="uploadProfileImage" class="hidden">
                                 </label>
                             </div>
@@ -157,15 +160,15 @@
                             <div class="text-left text-sm text-slate-300 space-y-3 leading-relaxed font-medium">
                                 <p>Este es un rincón secreto, un espacio al que solo tú y yo podemos acceder. 🔐✨</p>
                                 <p>No importa la distancia física 🌍, no importa la hora 🕰️, el lugar o el dispositivo desde el que entres. Donde quiera que vayas y donde quiera que estés, <strong>siempre estarás aquí conmigo</strong>. 🫂</p>
-                                <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te tendré, de manera incondicional, sin importar las circunstancias. ❤️‍🔥</p>
+                                <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te teneré, de manera incondicional, sin importar las circunstancias. ❤️‍🔥</p>
                                 <p>Quiero que sepas que esta es una huella imborrable que dejamos en el mundo digital, tal como la huella que tú has dejado en mi corazón y en mi vida. Gracias por todos estos años maravillosos y por todos los que aún nos faltan por vivir. 🥂</p>
                                 <p>Traté de dejarte esta sorpresa virtual a mi manera. Disfrútalo, porque esta es nuestra propia red social privada. 📱 Aquí puedes compartir tus pensamientos, dejar notas o lo que sientas... no importa dónde yo esté, tarde o temprano siempre me llegarán. 💌</p>
                                 <p>Feliz cumpleaños, mi niña hermosa. 🎂🎉 No solo celebro hoy, celebro todos los días que vendrán. Sé que lo digo muy a mi manera (y sé que tú también a la tuya), pero **te amo muchísimo**. 🐻💕🐷 Este regalo es de mí para ti, pero recuerda: sin ti, nada de esto existiría, porque tú eres mi única motivación. 💫</p>
                             </div>
                         </div>
 
-                        <!-- CONTADOR Y RELOJ NEÓN BLANCO CON ATARDECER Y BOTONES OVALADOS 3D -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/20 p-5 rounded-2xl text-center space-y-5 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                        <!-- CONTADOR Y RELOJ NEÓN BLANCO (Haz clic para ver Calendario) -->
+                        <div @click="openCalendarModal" class="bg-slate-900/80 backdrop-blur-md border border-white/20 p-5 rounded-2xl text-center space-y-5 shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-pointer hover:border-rose-500/40 transition-colors" title="Haz clic para abrir el calendario">
                             <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">
                                 TIEMPO JUNTOS DESDE AQUÍ HASTA LA ETERNIDAD
                             </h4>
@@ -200,14 +203,14 @@
                                     <span class="text-[10px] text-slate-300 font-bold block uppercase tracking-wider">Seg.</span>
                                 </div>
                             </div>
-                            <p class="text-[10px] text-slate-400 italic">"El reloj ya empezó y no se detendrá jamás."</p>
+                            <p class="text-[10px] text-slate-400 italic">"Haz clic en el reloj para ver el calendario 📅"</p>
                         </div>
                     </aside>
 
                     <!-- COLUMNA CENTRAL: RED SOCIAL -->
                     <main class="lg:col-span-6 space-y-4">
                         
-                        <!-- Creador de Publicaciones (Emojis WhatsApp con Categorías y Z-Index Superior) -->
+                        <!-- Creador de Publicaciones -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3 relative">
                             <textarea 
                                 v-model="newPostText" 
@@ -226,16 +229,14 @@
                                         😊
                                     </button>
 
-                                    <!-- Panel Selector de Emojis Por Categorías (Siempre encima de todo) -->
+                                    <!-- Panel Selector de Emojis -->
                                     <div v-if="showEmojiPicker" class="fixed sm:absolute right-4 sm:right-0 top-auto sm:top-11 z-50 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-72 p-3 space-y-2">
-                                        <!-- Pestañas de Categorías Estilo WhatsApp -->
                                         <div class="flex justify-between border-b border-slate-800 pb-2 text-base">
                                             <button v-for="(cat, key) in emojiCategories" :key="key" @click="activeEmojiCategory = key" :class="activeEmojiCategory === key ? 'bg-slate-800 rounded-lg p-1' : 'opacity-60 hover:opacity-100 p-1'">
                                                 {{ cat.icon }}
                                             </button>
                                         </div>
 
-                                        <!-- Emojis de la categoría activa -->
                                         <div class="grid grid-cols-6 gap-1.5 max-h-48 overflow-y-auto p-1">
                                             <button v-for="e in emojiCategories[activeEmojiCategory].list" :key="e" @click="insertEmoji(e)" class="text-xl hover:bg-slate-800 p-1 rounded hover:scale-125 transition-transform">
                                                 {{ e }}
@@ -259,7 +260,7 @@
                             </div>
                         </div>
 
-                        <!-- Muro / Feed (Reacciones Únicas) -->
+                        <!-- Muro / Feed -->
                         <div class="space-y-4">
                             <div v-for="post in posts" :key="post.id" class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4">
                                 <div class="flex items-center gap-3">
@@ -272,25 +273,22 @@
                                 
                                 <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap">{{ post.text }}</p>
 
-                                <div v-if="post.image" class="rounded-xl overflow-hidden border border-white/10 shadow-lg">
+                                <div v-if="post.image" class="rounded-xl overflow-hidden border border-white/10 shadow-lg cursor-pointer" @click="openModal(post.image)">
                                     <img :src="post.image" class="w-full h-auto max-h-[500px] object-cover">
                                 </div>
 
-                                <!-- Sistema de Reacciones Únicas -->
                                 <div class="pt-3 border-t border-slate-800 space-y-2">
                                     <div class="flex items-center gap-2 flex-wrap">
                                         <button @click="toggleReactionMenu(post)" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-full border border-slate-700 text-rose-300 font-semibold flex items-center gap-1 transition-all">
                                             <span>➕</span>
                                         </button>
                                         
-                                        <!-- Reacción Activa Única -->
                                         <div v-if="post.activeReaction" class="bg-rose-500/20 border border-rose-500/40 text-xs px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
                                             <span class="text-base react-anim">{{ post.activeReaction }}</span>
                                             <span class="text-rose-300 font-bold">1</span>
                                         </div>
                                     </div>
 
-                                    <!-- Selector 20 Reacciones -->
                                     <div v-if="post.showMenu" class="bg-slate-950 border border-slate-800 p-2 rounded-2xl grid grid-cols-10 gap-1 mt-2 shadow-xl">
                                         <button v-for="r in reactionList" :key="r" @click="setSingleReaction(post, r)" class="text-lg hover:bg-slate-800 p-1 rounded hover:scale-125 transition-transform">
                                             {{ r }}
@@ -304,7 +302,7 @@
                     <!-- COLUMNA DERECHA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- REPRODUCTOR DE MÚSICA MINIMALISTA SIN NARANJA Y CON BOTÓN 3D -->
+                        <!-- REPRODUCTOR DE MÚSICA CON BOTONES 3D MORADO-FUCSIA E ÍCONOS NEGROS -->
                         <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4 text-center">
                             <h4 class="text-xs font-extrabold text-slate-300 uppercase tracking-widest text-center">MÚSICA</h4>
                             
@@ -313,27 +311,26 @@
                                 <span class="text-3xl z-10 drop-shadow-md relative left-3 -top-2">🐷</span>
                             </div>
 
-                            <!-- Título de canción -->
                             <p class="text-xs font-bold text-slate-200 truncate px-1">{{ musicPlaylist[currentTrack].title }}</p>
 
-                            <!-- Controles Minimalistas Neutros/Rosa -->
+                            <!-- Controles 3D Morado-Fucsia con Íconos Negros -->
                             <div class="bg-slate-950/80 p-3 rounded-2xl border border-slate-800/80 space-y-3 shadow-inner">
                                 <div class="flex items-center justify-center gap-3">
                                     <!-- Anterior -->
-                                    <button @click="prevTrack" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition-all border border-slate-700">⏮️</button>
+                                    <button @click="prevTrack" class="btn-player-3d w-9 h-9 rounded-full flex items-center justify-center text-xs">⏮️</button>
                                     
                                     <!-- Play/Pausa -->
-                                    <button @click="togglePlay" class="w-11 h-11 rounded-full bg-rose-500 hover:bg-rose-600 flex items-center justify-center text-white shadow-[0_0_12px_rgba(244,63,94,0.4)] transition-all active:scale-95">
+                                    <button @click="togglePlay" class="btn-player-3d w-12 h-12 rounded-full flex items-center justify-center text-sm">
                                         {{ isPlaying ? '⏸️' : '▶️' }}
                                     </button>
 
                                     <!-- Siguiente -->
-                                    <button @click="nextTrack" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition-all border border-slate-700">⏭️</button>
+                                    <button @click="nextTrack" class="btn-player-3d w-9 h-9 rounded-full flex items-center justify-center text-xs">⏭️</button>
                                 </div>
 
-                                <!-- Botón 3D Centrado para Mezcla/Modo -->
+                                <!-- Botón 3D Centrado para Mezclas -->
                                 <div class="pt-1 flex justify-center">
-                                    <button @click="cycleRepeatMode" class="btn-3d-box px-4 py-1.5 rounded-xl text-xs font-bold text-rose-300 hover:text-rose-200 transition-all flex items-center gap-1.5 shadow-md">
+                                    <button @click="cycleRepeatMode" class="btn-player-3d px-5 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
                                         <span v-if="repeatMode === 'all'">🔁 Todas</span>
                                         <span v-else-if="repeatMode === 'one'">🔂 Solo una</span>
                                         <span v-else>🔀 Aleatorio</span>
@@ -341,12 +338,12 @@
                                 </div>
 
                                 <!-- Fila Inferior: Silenciar y Compartir -->
-                                <div class="flex items-center justify-between border-t border-slate-800/80 pt-2 px-2">
-                                    <button @click="toggleMute" class="text-slate-400 hover:text-white text-xs flex items-center gap-1 transition-colors" :title="isMuted ? 'Activar Sonido' : 'Silenciar'">
+                                <div class="flex items-center justify-between border-t border-slate-800/80 pt-2 px-2 text-xs">
+                                    <button @click="toggleMute" class="text-slate-400 hover:text-white flex items-center gap-1 transition-colors" :title="isMuted ? 'Activar Sonido' : 'Silenciar'">
                                         <span>{{ isMuted ? '🔇' : '🔊' }}</span>
                                     </button>
 
-                                    <button @click="shareSong" class="text-slate-400 hover:text-rose-300 text-xs flex items-center gap-1 transition-colors" title="Compartir canción">
+                                    <button @click="shareSong" class="text-slate-400 hover:text-rose-300 flex items-center gap-1 transition-colors" title="Compartir canción">
                                         <span>🔗 Compartir</span>
                                     </button>
                                 </div>
@@ -371,7 +368,7 @@
             </div>
         </transition>
 
-        <!-- LIGHTBOX MODAL CON DESCARGA DIRECTA -->
+        <!-- LIGHTBOX MODAL DE IMÁGENES -->
         <transition name="fade">
             <div v-if="modalImage" class="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4">
                 <div class="absolute top-4 right-4 flex gap-4 z-50">
@@ -386,10 +383,98 @@
             </div>
         </transition>
 
+        <!-- VENTANA EMERGENTE: CALENDARIO NATIVO INTERACTIVO -->
+        <transition name="fade">
+            <div v-if="showCalendarModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+                <div class="bg-slate-900 border border-white/20 rounded-3xl max-w-4xl w-full p-5 sm:p-7 shadow-2xl space-y-6 relative overflow-hidden">
+                    
+                    <!-- Encabezado Modal -->
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-300">
+                                {{ currentMonthName }} <span class="text-white">{{ calendarYear }}</span>
+                            </h2>
+                            <p class="text-xs text-slate-400">Calendario interactivo con festivos de Colombia y Guatemala</p>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button @click="prevCalendarMonth" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl text-lg font-bold">❮</button>
+                            <button @click="resetCalendarToToday" class="bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs px-3 py-2 rounded-xl font-bold hover:bg-rose-500/30">Hoy</button>
+                            <button @click="nextCalendarMonth" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl text-lg font-bold">❯</button>
+                            <button @click="closeCalendarModal" class="bg-rose-600 hover:bg-rose-700 text-white w-9 h-9 rounded-xl font-bold ml-2">✕</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        
+                        <!-- Panel Izquierdo: Información Vital de Fecha -->
+                        <div class="md:col-span-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-4 flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-rose-400">Información del Día</span>
+                                <div class="bg-gradient-to-br from-rose-500/20 to-purple-500/20 p-4 rounded-xl border border-rose-500/30 text-center">
+                                    <span class="text-4xl font-black text-white block">{{ todayDate.getDate() }}</span>
+                                    <span class="text-xs uppercase font-bold text-rose-300">{{ todayDayName }}</span>
+                                </div>
+                                <div class="space-y-2 text-xs">
+                                    <div class="flex justify-between p-2 bg-slate-900 rounded-lg">
+                                        <span class="text-slate-400">Semana del Año:</span>
+                                        <span class="font-bold text-amber-300">Semana {{ currentWeekNumber }}</span>
+                                    </div>
+                                    <div class="flex justify-between p-2 bg-slate-900 rounded-lg">
+                                        <span class="text-slate-400">Día del Año:</span>
+                                        <span class="font-bold text-white">{{ currentDayOfYear }} / 365</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Convención de Colores Festivos -->
+                            <div class="space-y-2 pt-3 border-t border-slate-800 text-[11px]">
+                                <span class="font-bold text-slate-300 block">Leyenda de Colores:</span>
+                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-rose-500"></span><span class="text-slate-300">Domingo</span></div>
+                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-amber-400"></span><span class="text-amber-200">Festivo Colombia 🇨🇴</span></div>
+                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-sky-400"></span><span class="text-sky-200">Festivo Guatemala 🇬🇹</span></div>
+                                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-purple-500"></span><span class="text-purple-200">Festivo en Ambos 🇨🇴🇬🇹</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Derecho: Matriz del Mes (Dom a Sáb) -->
+                        <div class="md:col-span-8 space-y-2">
+                            <!-- Días de la Semana -->
+                            <div class="grid grid-cols-7 gap-1 text-center text-xs font-extrabold py-1 border-b border-slate-800">
+                                <span class="text-rose-400">Dom</span>
+                                <span class="text-slate-300">Lun</span>
+                                <span class="text-slate-300">Mar</span>
+                                <span class="text-slate-300">Mié</span>
+                                <span class="text-slate-300">Jue</span>
+                                <span class="text-slate-300">Vie</span>
+                                <span class="text-slate-300">Sáb</span>
+                            </div>
+
+                            <!-- Grilla de Días -->
+                            <div class="grid grid-cols-7 gap-1.5 text-center">
+                                <div v-for="(day, index) in calendarDays" :key="index" 
+                                     class="min-h-[52px] p-1 rounded-xl border flex flex-col items-center justify-between transition-all"
+                                     :class="getDayClasses(day)">
+                                    
+                                    <span v-if="day" class="text-sm font-bold">{{ day.date }}</span>
+                                    
+                                    <!-- Indicadores / Etiquetas de Festivo -->
+                                    <div v-if="day && day.holidayInfo" class="text-[9px] font-semibold leading-tight line-clamp-1 truncate w-full px-0.5">
+                                        {{ day.holidayInfo.name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </transition>
+
     </div>
 
     <script>
-        const { createApp, ref, onMounted, onUnmounted } = Vue;
+        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
 
         createApp({
             setup() {
@@ -457,7 +542,192 @@
                     clock.value.hours = h * 30;
                 };
 
-                // Publicaciones y Emojis Categorizados Estilo WhatsApp
+                // CALENDARIO NATIVO Y FESTIVOS DINÁMICOS
+                const showCalendarModal = ref(false);
+                const todayDate = ref(new Date());
+                const calendarMonth = ref(new Date().getMonth());
+                const calendarYear = ref(new Date().getFullYear());
+
+                const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+                const openCalendarModal = () => { showCalendarModal.value = true; };
+                const closeCalendarModal = () => { showCalendarModal.value = false; };
+                const prevCalendarMonth = () => {
+                    if (calendarMonth.value === 0) {
+                        calendarMonth.value = 11;
+                        calendarYear.value--;
+                    } else { calendarMonth.value--; }
+                };
+                const nextCalendarMonth = () => {
+                    if (calendarMonth.value === 11) {
+                        calendarMonth.value = 0;
+                        calendarYear.value++;
+                    } else { calendarMonth.value++; }
+                };
+                const resetCalendarToToday = () => {
+                    calendarMonth.value = new Date().getMonth();
+                    calendarYear.value = new Date().getFullYear();
+                };
+
+                const currentMonthName = computed(() => monthNames[calendarMonth.value]);
+                const todayDayName = computed(() => dayNames[todayDate.value.getDay()]);
+
+                // Cálculo de Pascua (Algoritmo de Butcher)
+                const getEasterDate = (year) => {
+                    const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+                    const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+                    const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+                    const i = Math.floor(c / 4), k = c % 4, L = (32 + 2 * e + 2 * i - h - k) % 7;
+                    const m = Math.floor((a + 11 * h + 22 * L) / 451);
+                    const month = Math.floor((h + L - 7 * m + 114) / 31) - 1;
+                    const day = ((h + L - 7 * m + 114) % 31) + 1;
+                    return new Date(year, month, day);
+                };
+
+                const moveToNextMonday = (date) => {
+                    const res = new Date(date);
+                    const day = res.getDay();
+                    if (day !== 1) {
+                        const add = (day === 0) ? 1 : (8 - day);
+                        res.setDate(res.getDate() + add);
+                    }
+                    return res;
+                };
+
+                // Lógica de Festivos Dinámicos (Colombia + Guatemala)
+                const getHolidaysForYear = (year) => {
+                    const holidays = [];
+                    const easter = getEasterDate(year);
+
+                    // Festivos Colombia Ley Emiliani
+                    const addColFixed = (m, d, name) => holidays.push({ date: new Date(year, m, d), country: 'CO', name });
+                    const addColMov = (m, d, name) => holidays.push({ date: moveToNextMonday(new Date(year, m, d)), country: 'CO', name });
+                    const addColEasterRel = (daysOffset, name) => {
+                        const d = new Date(easter);
+                        d.setDate(d.getDate() + daysOffset);
+                        holidays.push({ date: moveToNextMonday(d), country: 'CO', name });
+                    };
+
+                    addColFixed(0, 1, 'Año Nuevo');
+                    addColMov(0, 6, 'Reyes Magos');
+                    addColMov(2, 19, 'San José');
+                    
+                    // Jueves y Viernes Santo Colombia y Guatemala
+                    const juevesSanto = new Date(easter); juevesSanto.setDate(juevesSanto.getDate() - 3);
+                    const viernesSanto = new Date(easter); viernesSanto.setDate(viernesSanto.getDate() - 2);
+                    holidays.push({ date: juevesSanto, country: 'BOTH', name: 'Jueves Santo' });
+                    holidays.push({ date: viernesSanto, country: 'BOTH', name: 'Viernes Santo' });
+
+                    addColFixed(4, 1, 'Día del Trabajo');
+                    addColEasterRel(40, 'Ascensión del Señor');
+                    addColEasterRel(60, 'Corpus Christi');
+                    addColEasterRel(68, 'Sagrado Corazón');
+                    addColMov(5, 29, 'San Pedro y San Pablo');
+                    addColFixed(6, 20, 'Independencia Colombia');
+                    addColFixed(7, 7, 'Batalla de Boyacá');
+                    addColMov(7, 15, 'Asunción de la Virgen');
+                    addColMov(9, 12, 'Día de la Raza');
+                    addColMov(10, 1, 'Todos los Santos');
+                    addColMov(10, 11, 'Independencia Cartagena');
+                    addColFixed(11, 8, 'Inmaculada Concepción');
+                    addColFixed(11, 25, 'Navidad');
+
+                    // Festivos Guatemala
+                    const addGtFixed = (m, d, name) => holidays.push({ date: new Date(year, m, d), country: 'GT', name });
+                    addGtFixed(4, 10, 'Día de la Madre (GT)');
+                    addGtFixed(5, 30, 'Día del Ejército (GT)');
+                    addGtFixed(8, 15, 'Independencia Guatemala');
+                    addGtFixed(9, 20, 'Día de la Revolución (GT)');
+                    addGtFixed(10, 1, 'Todos los Santos (GT)');
+
+                    return holidays;
+                };
+
+                const calendarDays = computed(() => {
+                    const year = calendarYear.value;
+                    const month = calendarMonth.value;
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+                    const holidays = getHolidaysForYear(year);
+
+                    const days = [];
+                    for (let i = 0; i < firstDay; i++) { days.push(null); }
+
+                    for (let d = 1; d <= daysInMonth; d++) {
+                        const currentDate = new Date(year, month, d);
+                        const isSunday = currentDate.getDay() === 0;
+
+                        // Buscar si es festivo
+                        const matchedHolidays = holidays.filter(h => 
+                            h.date.getFullYear() === year && 
+                            h.date.getMonth() === month && 
+                            h.date.getDate() === d
+                        );
+
+                        let holidayInfo = null;
+                        if (matchedHolidays.length > 0) {
+                            const isCo = matchedHolidays.some(h => h.country === 'CO');
+                            const isGt = matchedHolidays.some(h => h.country === 'GT');
+                            const isBoth = matchedHolidays.some(h => h.country === 'BOTH') || (isCo && isGt);
+
+                            holidayInfo = {
+                                country: isBoth ? 'BOTH' : (isCo ? 'CO' : 'GT'),
+                                name: matchedHolidays.map(h => h.name).join(' / ')
+                            };
+                        }
+
+                        const isToday = currentDate.toDateString() === todayDate.value.toDateString();
+
+                        days.push({
+                            date: d,
+                            isSunday,
+                            isToday,
+                            holidayInfo
+                        });
+                    }
+                    return days;
+                });
+
+                const getDayClasses = (day) => {
+                    if (!day) return 'border-transparent bg-transparent';
+                    let classes = 'border-slate-800 bg-slate-950/50 text-slate-200 ';
+
+                    if (day.isToday) {
+                        classes += 'ring-2 ring-rose-500 bg-rose-500/10 font-bold ';
+                    }
+
+                    if (day.holidayInfo) {
+                        if (day.holidayInfo.country === 'CO') {
+                            classes += 'bg-amber-500/20 text-amber-300 border-amber-500/40 ';
+                        } else if (day.holidayInfo.country === 'GT') {
+                            classes += 'bg-sky-500/20 text-sky-300 border-sky-500/40 ';
+                        } else {
+                            classes += 'bg-purple-500/20 text-purple-300 border-purple-500/40 ';
+                        }
+                    } else if (day.isSunday) {
+                        classes += 'text-rose-400 bg-rose-500/5 ';
+                    }
+
+                    return classes;
+                };
+
+                const currentWeekNumber = computed(() => {
+                    const d = new Date(todayDate.value);
+                    d.setHours(0, 0, 0, 0);
+                    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                    const yearStart = new Date(d.getFullYear(), 0, 1);
+                    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+                });
+
+                const currentDayOfYear = computed(() => {
+                    const start = new Date(todayDate.value.getFullYear(), 0, 0);
+                    const diff = todayDate.value - start;
+                    const oneDay = 1000 * 60 * 60 * 24;
+                    return Math.floor(diff / oneDay);
+                });
+
+                // Publicaciones y Emojis Categorizados
                 const newPostText = ref('');
                 const newPostImagePreview = ref(null);
                 const showEmojiPicker = ref(false);
@@ -513,7 +783,7 @@
                     newPostImagePreview.value = null;
                 };
 
-                // Música Controles
+                // Música
                 const audioPlayer = ref(null);
                 const isPlaying = ref(false);
                 const isMuted = ref(false);
@@ -645,6 +915,10 @@
                     sideGallery, currentSideGalleryIndex, nextSideGallery, prevSideGallery,
                     modalImage, openModal, closeModal, downloadImageDirect,
                     timeElapsed, clock,
+                    showCalendarModal, openCalendarModal, closeCalendarModal,
+                    todayDate, calendarMonth, calendarYear, currentMonthName, todayDayName,
+                    prevCalendarMonth, nextCalendarMonth, resetCalendarToToday,
+                    calendarDays, getDayClasses, currentWeekNumber, currentDayOfYear,
                     newPostText, newPostImagePreview, posts, handleFileUpload, addPost,
                     showEmojiPicker, emojiCategories, activeEmojiCategory, toggleEmojiPicker, insertEmoji,
                     reactionList, toggleReactionMenu, setSingleReaction,
