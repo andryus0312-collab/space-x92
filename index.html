@@ -447,7 +447,13 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const processImage = (file, callback) => {
+        const processImage = (file, callback, eventTarget = null) => {
+            if (!file || !file.type.match('image.*')) {
+                alert('Por favor selecciona un archivo de imagen válido (JPG o PNG).');
+                if (eventTarget) eventTarget.value = '';
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
@@ -462,9 +468,19 @@
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
+                    
+                    if (eventTarget) eventTarget.value = '';
                     callback(canvas.toDataURL('image/jpeg', 0.8));
                 };
+                img.onerror = () => {
+                    alert('No se pudo procesar la imagen. Intenta con otra.');
+                    if (eventTarget) eventTarget.value = '';
+                };
                 img.src = e.target.result;
+            };
+            reader.onerror = () => {
+                alert('Error al leer el archivo.');
+                if (eventTarget) eventTarget.value = '';
             };
             reader.readAsDataURL(file);
         };
@@ -563,7 +579,7 @@
                     }
                 });
 
-                // Sincronizar Portadas en Tiempo Real (Arreglado)
+                // Sincronizar Portadas en Tiempo Real
                 onValue(ref(db, 'coverImages'), (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
@@ -575,7 +591,6 @@
                             this.currentCoverIndex = Math.max(0, this.coverImages.length - 1);
                         }
                     } else {
-                        // Si está vacío, añadimos una portada por defecto en Firebase
                         const defaultCover = 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80';
                         push(ref(db, 'coverImages'), { url: defaultCover });
                     }
@@ -672,7 +687,7 @@
                             push(ref(db, 'coverImages'), { url: base64Url }).then(() => {
                                 this.currentCoverIndex = this.coverImages.length;
                             });
-                        });
+                        }, e.target);
                     }
                 },
                 removeCurrentCover() {
@@ -692,7 +707,7 @@
                         processImage(file, (base64Url) => {
                             this.profiles[key].img = base64Url;
                             set(ref(db, 'profiles'), this.profiles);
-                        });
+                        }, e.target);
                     }
                 },
 
@@ -703,7 +718,7 @@
                     if (file) {
                         processImage(file, (base64Url) => {
                             this.postImagePreview = base64Url;
-                        });
+                        }, e.target);
                     }
                 },
                 removePostImage() { this.postImagePreview = null; },
@@ -750,7 +765,7 @@
                     if (file) {
                         processImage(file, (base64Url) => {
                             push(ref(db, 'gallery'), { url: base64Url });
-                        });
+                        }, e.target);
                     }
                 },
 
