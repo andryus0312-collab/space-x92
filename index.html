@@ -6,14 +6,12 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Espacio Privado 🔒</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
         .fade-enter-from, .fade-leave-to { opacity: 0; }
         
-        /* NUEVO FONDO: Degradado Rosa Pastel Oscuro y Patrón Minimalista Festivo */
         body {
             background: linear-gradient(135deg, #321626 0%, #1d101e 50%, #120814 100%);
             background-attachment: fixed;
@@ -104,7 +102,7 @@
 
     <div id="app" class="min-h-screen flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4 mx-auto relative z-10">
 
-        <!-- AUDIO NATIVO (AUTOPLAY AL HACER LOGIN) -->
+        <!-- AUDIO NATIVO -->
         <audio ref="bgMusic" loop preload="auto">
             <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-guitars-112134.mp3" type="audio/mpeg">
             Tu navegador no soporta elementos de audio.
@@ -188,13 +186,12 @@
                             </div>
                         </div>
 
-                        <!-- CONTADOR Y RELOJ NEÓN CON CALENDARIO MODAL -->
+                        <!-- CONTADOR Y RELOJ NEÓN -->
                         <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-5 rounded-2xl text-center space-y-5 shadow-xl">
                             <h4 class="text-xs font-bold text-rose-200 uppercase tracking-wider mb-2">
                                 TIEMPO JUNTOS DESDE AQUÍ HASTA LA ETERNIDAD
                             </h4>
                             
-                            <!-- Reloj Interactivo -->
                             <div class="clock-face mt-4" @click="showCalendar = true" title="Ver Calendario">
                                 <div v-for="n in 12" :key="n" class="clock-number" :style="{ transform: `rotate(${n * 30}deg)` }">
                                     <span :style="{ transform: `rotate(-${n * 30}deg)`, display: 'inline-block' }">{{ n }}</span>
@@ -291,7 +288,7 @@
 
                         <!-- FEED -->
                         <div class="space-y-4 z-10 relative">
-                            <div v-for="(post, index) in posts" :key="post.id" class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 rounded-2xl p-4 space-y-3 shadow-xl">
+                            <div v-for="(post, index) in posts" :key="post.firebaseId || index" class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 rounded-2xl p-4 space-y-3 shadow-xl">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
                                         <img :src="profiles[post.authorKey].img" class="w-10 h-10 rounded-full object-cover border border-rose-500/50">
@@ -317,7 +314,7 @@
 
                     </main>
 
-                    <!-- COLUMNA DERECHA: REPRODUCTOR DE AUDIO Y GALERÍA -->
+                    <!-- COLUMNA DERECHA: MÚSICA Y GALERÍA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
                         <!-- REPRODUCTOR DE MÚSICA -->
@@ -351,7 +348,7 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 max-h-[500px] overflow-y-auto pr-1 relative z-30 pointer-events-auto">
-                                <div v-for="(img, idx) in gallery" :key="idx" @click="openGalleryLightbox(idx)" class="relative aspect-square rounded-xl overflow-hidden border border-rose-950 cursor-pointer group bg-black z-40">
+                                <div v-for="(img, idx) in gallery" :key="img.firebaseId || idx" @click="openGalleryLightbox(idx)" class="relative aspect-square rounded-xl overflow-hidden border border-rose-950 cursor-pointer group bg-black z-40">
                                     <img :src="img.url" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 pointer-events-none">
                                     <button @click.stop="deleteGalleryImage(idx)" class="absolute top-1 right-1 bg-black/60 hover:bg-rose-600 text-white rounded-full w-5 h-5 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-auto z-50">✕</button>
                                 </div>
@@ -429,17 +426,25 @@
 
     </div>
 
-    <script>
-        const { createApp } = Vue;
+    <!-- SCRIPT PRINCIPAL CON VUE Y FIREBASE EN TIEMPO REAL -->
+    <script type="module">
+        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        const loadLocalData = (key, defaultData) => {
-            try {
-                const item = localStorage.getItem('mi_espacio_' + key);
-                return item ? JSON.parse(item) : defaultData;
-            } catch (error) {
-                return defaultData;
-            }
+        const firebaseConfig = {
+            apiKey: "AlzaSyD4f9rBB|qxzyZZPmgNIK_twefNYLQTW4",
+            authDomain: "nuestroespacio-3f541.firebaseapp.com",
+            projectId: "nuestroespacio-3f541",
+            storageBucket: "nuestroespacio-3f541.appspot.com",
+            messagingSenderId: "482638926414",
+            appId: "1:482638926414:web:2182581df2455d95b2a91f",
+            measurementId: "G-LPC6WBQTZ0"
         };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        console.log("Firebase conectado exitosamente:", app.name);
 
         const processImage = (file, callback) => {
             const reader = new FileReader();
@@ -470,20 +475,18 @@
                     passwordInput: '',
                     isMusicPlaying: false,
                     
-                    coverImages: loadLocalData('covers', ['https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80']),
+                    coverImages: ['https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80'],
                     currentCoverIndex: 0,
 
-                    profiles: loadLocalData('profiles', {
+                    profiles: {
                         her: { name: 'Piggy 🐷', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
                         him: { name: 'Bear 🐻', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' }
-                    }),
+                    },
                     selectedAuthor: 'her',
 
                     newPostText: '',
                     postImagePreview: null,
-                    posts: loadLocalData('posts', [
-                        { id: 1, authorKey: 'him', text: '¡Bienvenidos a nuestro rincón secreto! Construido con todo mi amor. ❤️', image: null, date: 'Hoy', likes: 1, liked: true }
-                    ]),
+                    posts: [],
 
                     showEmojiPicker: false,
                     activeEmojiCategory: 'love',
@@ -493,10 +496,7 @@
                         gestures: { icon: '👋', list: ['👍', '🙌', '👏', '🤝', '🙏', '✌️', '🤟', '🤙', '🖐️', '👊', '🤜', '🤛'] }
                     },
 
-                    gallery: loadLocalData('gallery', [
-                        { url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80' },
-                        { url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' }
-                    ]),
+                    gallery: [],
 
                     clock: { hours: 0, minutes: 0, seconds: 0 },
                     timeElapsed: { days: 0, hours: 0, minutes: 0, seconds: 0 },
@@ -532,15 +532,55 @@
                     return days;
                 }
             },
-            watch: {
-                posts: { handler(val) { try { localStorage.setItem('mi_espacio_posts', JSON.stringify(val)); } catch(e){} }, deep: true },
-                gallery: { handler(val) { try { localStorage.setItem('mi_espacio_gallery', JSON.stringify(val)); } catch(e){ alert("Memoria de galería llena. Intenta borrar fotos antiguas."); } }, deep: true },
-                profiles: { handler(val) { try { localStorage.setItem('mi_espacio_profiles', JSON.stringify(val)); } catch(e){} }, deep: true },
-                coverImages: { handler(val) { try { localStorage.setItem('mi_espacio_covers', JSON.stringify(val)); } catch(e){} }, deep: true }
-            },
             mounted() {
                 this.startClock();
                 setInterval(this.updateTimeElapsed, 1000);
+
+                // Sincronizar Publicaciones en Tiempo Real
+                onValue(ref(db, 'posts'), (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        this.posts = Object.keys(data).map(key => ({
+                            firebaseId: key,
+                            ...data[key]
+                        })).reverse();
+                    } else {
+                        this.posts = [];
+                    }
+                });
+
+                // Sincronizar Galería en Tiempo Real
+                onValue(ref(db, 'gallery'), (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        this.gallery = Object.keys(data).map(key => ({
+                            firebaseId: key,
+                            ...data[key]
+                        })).reverse();
+                    } else {
+                        this.gallery = [];
+                    }
+                });
+
+                // Sincronizar Perfiles en Tiempo Real
+                onValue(ref(db, 'profiles'), (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        this.profiles = data;
+                    } else {
+                        set(ref(db, 'profiles'), this.profiles);
+                    }
+                });
+
+                // Sincronizar Portadas en Tiempo Real
+                onValue(ref(db, 'coverImages'), (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        this.coverImages = data;
+                    } else {
+                        set(ref(db, 'coverImages'), this.coverImages);
+                    }
+                });
             },
             methods: {
                 checkPassword() {
@@ -555,7 +595,6 @@
                                 audio.play().then(() => {
                                     this.isMusicPlaying = true;
                                 }).catch(err => {
-                                    console.log("Autoplay prevenido por el navegador, usa el botón manual.", err);
                                     this.isMusicPlaying = false;
                                 });
                             }
@@ -615,6 +654,7 @@
                         processImage(file, (base64Url) => {
                             this.coverImages.push(base64Url);
                             this.currentCoverIndex = this.coverImages.length - 1;
+                            set(ref(db, 'coverImages'), this.coverImages);
                         });
                     }
                 },
@@ -622,6 +662,7 @@
                     if (this.coverImages.length > 1) {
                         this.coverImages.splice(this.currentCoverIndex, 1);
                         this.currentCoverIndex = 0;
+                        set(ref(db, 'coverImages'), this.coverImages);
                     }
                 },
 
@@ -630,6 +671,7 @@
                     if (file) {
                         processImage(file, (base64Url) => {
                             this.profiles[key].img = base64Url;
+                            set(ref(db, 'profiles'), this.profiles);
                         });
                     }
                 },
@@ -645,38 +687,59 @@
                     }
                 },
                 removePostImage() { this.postImagePreview = null; },
+                
                 createPost() {
                     if (!this.newPostText.trim() && !this.postImagePreview) return;
                     
-                    this.posts.unshift({
-                        id: Date.now(),
+                    const newPost = {
                         authorKey: this.selectedAuthor,
                         text: this.newPostText,
                         image: this.postImagePreview,
                         date: new Date().toLocaleDateString('es-ES') + ' ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'}),
                         likes: 0,
                         liked: false
-                    });
+                    };
+
+                    push(ref(db, 'posts'), newPost);
 
                     this.newPostText = '';
                     this.postImagePreview = null;
                     this.showEmojiPicker = false;
                 },
-                deletePost(index) { this.posts.splice(index, 1); },
+
+                deletePost(index) {
+                    const post = this.posts[index];
+                    if (post && post.firebaseId) {
+                        remove(ref(db, `posts/${post.firebaseId}`));
+                    }
+                },
+
                 toggleLike(post) {
                     post.liked = !post.liked;
                     post.likes += post.liked ? 1 : -1;
+                    if (post.firebaseId) {
+                        update(ref(db, `posts/${post.firebaseId}`), {
+                            likes: post.likes,
+                            liked: post.liked
+                        });
+                    }
                 },
 
                 uploadGalleryImage(e) {
                     const file = e.target.files[0];
                     if (file) {
                         processImage(file, (base64Url) => {
-                            this.gallery.unshift({ url: base64Url });
+                            push(ref(db, 'gallery'), { url: base64Url });
                         });
                     }
                 },
-                deleteGalleryImage(idx) { this.gallery.splice(idx, 1); },
+
+                deleteGalleryImage(idx) {
+                    const item = this.gallery[idx];
+                    if (item && item.firebaseId) {
+                        remove(ref(db, `gallery/${item.firebaseId}`));
+                    }
+                },
 
                 openMediaViewer(url, title = 'Visor de Imagen') {
                     this.activeLightboxUrl = url;
@@ -719,27 +782,5 @@
             }
         }).mount('#app');
     </script>
-    <script type="module">
-  // Importa las funciones necesarias de Firebase desde la CDN oficial
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  // Tus credenciales copiadas de Firebase
-  const firebaseConfig = {
-    apiKey: "AlzaSyD4f9rBB|qxzyZZPmgNIK_twefNYLQTW4",
-    authDomain: "nuestroespacio-3f541.firebaseapp.com",
-    projectId: "nuestroespacio-3f541",
-    storageBucket: "nuestroespacio-3f541.appspot.com",
-    messagingSenderId: "482638926414",
-    appId: "1:482638926414:web:2182581df2455d95b2a91f",
-    measurementId: "G-LPC6WBQTZ0"
-  };
-
-  // Inicializar Firebase y la Base de Datos
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  console.log("Firebase conectado exitosamente:", app.name);
-</script>
 </body>
 </html>
