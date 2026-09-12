@@ -272,16 +272,29 @@
                                 </div>
                             </div>
 
+                            <!-- Vista previa de Imagen -->
                             <div v-if="postImagePreview" class="relative rounded-xl overflow-hidden border border-rose-500/30 max-h-48 bg-black z-10">
                                 <img :src="postImagePreview" class="w-full h-full object-contain">
-                                <button @click="removePostImage" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 text-xs">✕</button>
+                                <button @click="removePostImage" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 text-xs px-2">✕</button>
+                            </div>
+
+                            <!-- Vista previa de Video -->
+                            <div v-if="postVideoPreview" class="relative rounded-xl overflow-hidden border border-rose-500/30 max-h-48 bg-black z-10">
+                                <video :src="postVideoPreview" controls class="w-full h-full object-contain"></video>
+                                <button @click="removePostVideo" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 text-xs px-2">✕</button>
                             </div>
 
                             <div class="flex flex-col sm:flex-row gap-3 pt-2 border-t border-rose-950 items-center justify-between z-20 relative">
-                                <label class="w-full sm:w-auto cursor-pointer bg-[#180a18] hover:bg-[#281126] border border-rose-500/20 text-white text-xs font-medium px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2">
-                                    <span>📸 Adjuntar Foto</span>
-                                    <input type="file" accept="image/*" @change="handlePostImage" class="hidden">
-                                </label>
+                                <div class="flex items-center gap-2 w-full sm:w-auto">
+                                    <label class="cursor-pointer bg-[#180a18] hover:bg-[#281126] border border-rose-500/20 text-white text-xs font-medium px-3 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none">
+                                        <span>📸 Foto</span>
+                                        <input type="file" accept="image/*" @change="handlePostImage" class="hidden">
+                                    </label>
+                                    <label class="cursor-pointer bg-[#180a18] hover:bg-[#281126] border border-rose-500/20 text-white text-xs font-medium px-3 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none">
+                                        <span>🎥 Video</span>
+                                        <input type="file" accept="video/*" @change="handlePostVideo" class="hidden">
+                                    </label>
+                                </div>
                                 <button @click="createPost" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-lg active:scale-95 transition-all">
                                     Publicar 💌
                                 </button>
@@ -302,9 +315,15 @@
                                     <button @click="deletePost(index)" class="text-slate-500 hover:text-rose-400 text-xs">🗑️</button>
                                 </div>
                                 <p class="text-sm text-slate-200 whitespace-pre-line leading-relaxed">{{ post.text }}</p>
+                                
                                 <div v-if="post.image" class="rounded-xl overflow-hidden border border-rose-950 cursor-pointer max-h-96 bg-black z-20 relative" @click="openMediaViewer(post.image, 'Imagen compartida')">
                                     <img :src="post.image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                                 </div>
+
+                                <div v-if="post.video" class="rounded-xl overflow-hidden border border-rose-950 max-h-96 bg-black z-20 relative">
+                                    <video :src="post.video" controls class="w-full h-full object-cover"></video>
+                                </div>
+
                                 <div class="flex items-center gap-4 pt-2 border-t border-rose-950/60 text-xs text-slate-400">
                                     <button @click="toggleLike(post)" class="flex items-center gap-1 hover:text-rose-400 transition-colors">
                                         <span>{{ post.liked ? '❤️' : '🤍' }}</span>
@@ -396,11 +415,14 @@
             </div>
         </transition>
 
-        <!-- VISOR / LIGHTBOX -->
+        <!-- VISOR / LIGHTBOX CON OPCIÓN DE ELIMINAR Y PRESENTACIÓN -->
         <div v-if="activeLightbox" class="fixed inset-0 z-[300] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-between p-4">
             <div class="w-full flex justify-between items-center z-10">
                 <span class="text-white font-medium text-sm">{{ activeLightboxTitle }}</span>
                 <div class="flex items-center gap-2">
+                    <button v-if="currentGalleryIndex !== null" @click="deleteCurrentGalleryImgFromLightbox" class="bg-rose-950/80 hover:bg-rose-600 text-rose-200 hover:text-white text-xs px-3 py-1.5 rounded-lg border border-rose-500/40 transition-colors flex items-center gap-1">
+                        <span>🗑️ Eliminar</span>
+                    </button>
                     <button @click="cycleFitMode" class="bg-[#180a18] hover:bg-[#281126] text-xs px-3 py-1.5 rounded-lg text-white border border-rose-500/30">
                         Ajuste: {{ currentFitMode }}
                     </button>
@@ -416,12 +438,15 @@
                 >
             </div>
 
-            <div class="flex items-center gap-4 bg-[#20101c]/90 px-6 py-3 rounded-full border border-rose-500/30 z-10">
+            <div class="flex flex-wrap items-center justify-center gap-3 bg-[#20101c]/90 px-6 py-3 rounded-full border border-rose-500/30 z-10">
                 <button v-if="gallery.length > 1 && currentGalleryIndex !== null" @click="prevGalleryImg" class="text-white font-bold text-lg px-2">❮</button>
                 <button @click="zoomOut" class="text-white font-bold text-sm bg-[#180a18] px-3 py-1 rounded-md">zoom -</button>
-                <button @click="resetTransforms" class="text-xs text-rose-400 font-semibold px-2">Restablecer</button>
+                <button @click="resetTransforms" class="text-xs text-rose-400 font-semibold px-1">Restablecer</button>
                 <button @click="zoomIn" class="text-white font-bold text-sm bg-[#180a18] px-3 py-1 rounded-md">zoom +</button>
                 <button @click="rotateImg" class="text-white font-bold text-sm bg-[#180a18] px-3 py-1 rounded-md">🔄</button>
+                <button v-if="gallery.length > 1" @click="toggleSlideshow" class="text-white font-bold text-xs bg-rose-600 hover:bg-rose-500 px-3 py-1.5 rounded-md transition-colors">
+                    {{ isSlideshowActive ? '⏸️ Pausa' : '▶️ Presentación' }}
+                </button>
                 <button v-if="gallery.length > 1 && currentGalleryIndex !== null" @click="nextGalleryImg" class="text-white font-bold text-lg px-2">❯</button>
             </div>
         </div>
@@ -503,6 +528,7 @@
 
                     newPostText: '',
                     postImagePreview: null,
+                    postVideoPreview: null,
                     posts: [],
 
                     showEmojiPicker: false,
@@ -529,7 +555,9 @@
                     zoomLevel: 1,
                     rotation: 0,
                     fitModes: ['cover', 'contain', 'fill'],
-                    currentFitIndex: 0
+                    currentFitIndex: 0,
+                    isSlideshowActive: false,
+                    slideshowTimer: null
                 }
             },
             computed: {
@@ -553,7 +581,6 @@
                 this.startClock();
                 setInterval(this.updateTimeElapsed, 1000);
 
-                // Sincronizar Publicaciones en Tiempo Real
                 onValue(ref(db, 'posts'), (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
@@ -566,7 +593,6 @@
                     }
                 });
 
-                // Sincronizar Galería en Tiempo Real
                 onValue(ref(db, 'gallery'), (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
@@ -579,7 +605,6 @@
                     }
                 });
 
-                // Sincronizar Portadas en Tiempo Real
                 onValue(ref(db, 'coverImages'), (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
@@ -596,7 +621,6 @@
                     }
                 });
 
-                // Sincronizar Perfiles en Tiempo Real
                 onValue(ref(db, 'profiles'), (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
@@ -713,23 +737,53 @@
 
                 toggleEmojiPicker() { this.showEmojiPicker = !this.showEmojiPicker; },
                 insertEmoji(e) { this.newPostText += e; },
+                
                 handlePostImage(e) {
                     const file = e.target.files[0];
                     if (file) {
                         processImage(file, (base64Url) => {
                             this.postImagePreview = base64Url;
+                            this.postVideoPreview = null;
                         }, e.target);
                     }
                 },
                 removePostImage() { this.postImagePreview = null; },
+
+                handlePostVideo(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    if (!file.type.match('video.*')) {
+                        alert('Por favor selecciona un archivo de video válido.');
+                        e.target.value = '';
+                        return;
+                    }
+                    if (file.size > 8 * 1024 * 1024) {
+                        alert('El video es muy pesado (máximo 8 MB recomendado para Firebase). Intenta con uno más corto.');
+                        e.target.value = '';
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        this.postVideoPreview = ev.target.result;
+                        this.postImagePreview = null;
+                        e.target.value = '';
+                    };
+                    reader.onerror = () => {
+                        alert('Error al leer el archivo de video.');
+                        e.target.value = '';
+                    };
+                    reader.readAsDataURL(file);
+                },
+                removePostVideo() { this.postVideoPreview = null; },
                 
                 createPost() {
-                    if (!this.newPostText.trim() && !this.postImagePreview) return;
+                    if (!this.newPostText.trim() && !this.postImagePreview && !this.postVideoPreview) return;
                     
                     const newPost = {
                         authorKey: this.selectedAuthor,
                         text: this.newPostText,
                         image: this.postImagePreview,
+                        video: this.postVideoPreview,
                         date: new Date().toLocaleDateString('es-ES') + ' ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'}),
                         likes: 0,
                         liked: false
@@ -739,6 +793,7 @@
 
                     this.newPostText = '';
                     this.postImagePreview = null;
+                    this.postVideoPreview = null;
                     this.showEmojiPicker = false;
                 },
 
@@ -776,7 +831,26 @@
                     }
                 },
 
+                deleteCurrentGalleryImgFromLightbox() {
+                    if (this.currentGalleryIndex !== null && this.gallery.length > 0) {
+                        const idx = this.currentGalleryIndex;
+                        const item = this.gallery[idx];
+                        if (item && item.firebaseId) {
+                            remove(ref(db, `gallery/${item.firebaseId}`)).then(() => {
+                                this.stopSlideshow();
+                                if (this.gallery.length <= 1) {
+                                    this.closeLightbox();
+                                } else {
+                                    let nextIdx = idx >= this.gallery.length - 1 ? this.gallery.length - 2 : idx;
+                                    this.openGalleryLightbox(nextIdx);
+                                }
+                            });
+                        }
+                    }
+                },
+
                 openMediaViewer(url, title = 'Visor de Imagen') {
+                    this.stopSlideshow();
                     this.activeLightboxUrl = url;
                     this.activeLightboxTitle = title;
                     this.currentGalleryIndex = null;
@@ -784,24 +858,53 @@
                     this.activeLightbox = true;
                 },
                 openGalleryLightbox(idx) {
-                    this.currentGalleryIndex = idx;
-                    this.activeLightboxUrl = this.gallery[idx].url;
-                    this.activeLightboxTitle = `Recuerdo ${idx + 1} de ${this.gallery.length}`;
+                    this.stopSlideshow();
+                    if (this.gallery.length === 0) {
+                        this.closeLightbox();
+                        return;
+                    }
+                    this.currentGalleryIndex = Math.min(idx, this.gallery.length - 1);
+                    this.activeLightboxUrl = this.gallery[this.currentGalleryIndex].url;
+                    this.activeLightboxTitle = `Recuerdo ${this.currentGalleryIndex + 1} de ${this.gallery.length}`;
                     this.resetTransforms();
                     this.activeLightbox = true;
                 },
-                closeLightbox() { this.activeLightbox = false; },
+                closeLightbox() { 
+                    this.stopSlideshow();
+                    this.activeLightbox = false; 
+                },
                 prevGalleryImg() {
-                    if (this.currentGalleryIndex !== null) {
+                    if (this.currentGalleryIndex !== null && this.gallery.length > 0) {
                         this.currentGalleryIndex = (this.currentGalleryIndex - 1 + this.gallery.length) % this.gallery.length;
                         this.openGalleryLightbox(this.currentGalleryIndex);
                     }
                 },
                 nextGalleryImg() {
-                    if (this.currentGalleryIndex !== null) {
+                    if (this.currentGalleryIndex !== null && this.gallery.length > 0) {
                         this.currentGalleryIndex = (this.currentGalleryIndex + 1) % this.gallery.length;
                         this.openGalleryLightbox(this.currentGalleryIndex);
                     }
+                },
+                toggleSlideshow() {
+                    if (this.isSlideshowActive) {
+                        this.stopSlideshow();
+                    } else {
+                        this.startSlideshow();
+                    }
+                },
+                startSlideshow() {
+                    if (this.gallery.length <= 1) return;
+                    this.isSlideshowActive = true;
+                    this.slideshowTimer = setInterval(() => {
+                        this.nextGalleryImg();
+                    }, 5000);
+                },
+                stopSlideshow() {
+                    if (this.slideshowTimer) {
+                        clearInterval(this.slideshowTimer);
+                        this.slideshowTimer = null;
+                    }
+                    this.isSlideshowActive = false;
                 },
                 zoomIn() { this.zoomLevel += 0.2; },
                 zoomOut() { if (this.zoomLevel > 0.4) this.zoomLevel -= 0.2; },
