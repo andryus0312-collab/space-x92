@@ -13,18 +13,39 @@
         .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
         .fade-enter-from, .fade-leave-to { opacity: 0; }
         
-        /* Reloj Analógico Neón Blanco Translúcido */
+        /* NUEVO FONDO: Degradado Rosa Pastel Oscuro y Patrón Minimalista Festivo */
+        body {
+            background: linear-gradient(135deg, #321626 0%, #1d101e 50%, #120814 100%);
+            background-attachment: fixed;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(244, 114, 182, 0.08) 1.5px, transparent 1.5px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .clock-face {
             position: relative;
             width: 160px;
             height: 160px;
             border-radius: 50%;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(0, 0, 0, 0.4)), 
+            background: linear-gradient(to bottom, rgba(44, 22, 36, 0.5), rgba(20, 10, 20, 0.7)), 
                         url('https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=400&q=80') center/cover no-repeat;
             border: 4px solid rgba(255, 255, 255, 0.85);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(0,0,0,0.8);
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.3), 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0,0,0,0.8);
             margin: 0 auto;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .clock-face:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(244, 114, 182, 0.6), inset 0 0 15px rgba(0,0,0,0.8);
+            border-color: #f472b6;
         }
         .clock-number {
             position: absolute;
@@ -49,46 +70,31 @@
         .hand-second { width: 1.5px; height: 65px; background: #fb7185; margin-left: -0.75px; z-index: 9; }
         .clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #ffffff; border-radius: 50%; z-index: 10; border: 2px solid #f472b6; }
 
-        /* Borde Perfil Degradado (Mitad Morado Oscuro / Mitad Azul Cían) */
         .profile-border-gradient {
             padding: 4px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #3b0764 0%, #3b0764 50%, #0284c7 50%, #0284c7 100%);
-            box-shadow: 0 0 15px rgba(2, 132, 199, 0.4);
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #3b82f6 100%);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Botones 3D Estilo Reproductor */
-        .btn-player-3d {
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            color: #000000;
-            font-weight: 900;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25), inset 0 2px 2px rgba(255, 255, 255, 0.4), inset 0 -2px 4px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(244, 114, 182, 0.35);
-            transition: all 0.15s ease;
-        }
-        .btn-player-3d:hover {
-            box-shadow: 0 0 15px rgba(244, 114, 182, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.5);
-            transform: translateY(-1px);
-        }
-        .btn-player-3d:active {
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
-            transform: translateY(1px);
-        }
-
-        /* Botones 3D Ovalados Reloj */
         .btn-3d-oval {
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            box-shadow: 3px 3px 8px #080d1a, -3px -3px 8px #26354a, inset 0 1px 0 rgba(255,255,255,0.15);
+            background: linear-gradient(145deg, #2b1424, #180a18);
+            box-shadow: 3px 3px 8px #0b040a, -3px -3px 8px #3b1d2f, inset 0 1px 0 rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 9999px;
-            transition: all 0.15s ease;
         }
 
         @keyframes float { 0% { transform: translateY(-10px) rotate(0deg); opacity: 0.8; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
         .floating-icon { position: fixed; top: -20px; pointer-events: none; z-index: 10; animation: float linear infinite; }
+        
+        .fit-cover { object-fit: cover; }
+        .fit-contain { object-fit: contain; }
+        .fit-fill { object-fit: fill; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen relative font-sans selection:bg-rose-500 selection:text-white">
+<body class="text-slate-100 min-h-screen relative font-sans selection:bg-rose-500 selection:text-white">
 
     <div class="floating-icon text-lg" style="left: 10%; animation-duration: 8s;">🌈</div>
     <div class="floating-icon text-sm" style="left: 25%; animation-duration: 12s;">💖</div>
@@ -96,36 +102,42 @@
     <div class="floating-icon text-sm" style="left: 70%; animation-duration: 10s;">✨</div>
     <div class="floating-icon text-lg" style="left: 85%; animation-duration: 9s;">🌈</div>
 
-    <div id="app" class="min-h-screen flex items-center justify-center p-2 sm:p-4">
+    <div id="app" class="min-h-screen flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4 mx-auto relative z-10">
+
+        <!-- AUDIO NATIVO (AUTOPLAY AL HACER LOGIN) -->
+        <audio ref="bgMusic" loop preload="auto">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-guitars-112134.mp3" type="audio/mpeg">
+            Tu navegador no soporta elementos de audio.
+        </audio>
 
         <!-- PANTALLA DE BLOQUEO -->
         <transition name="fade" mode="out-in">
-            <div v-if="!isUnlocked" key="login" class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl border border-rose-500/20 p-8 rounded-3xl text-center space-y-5 shadow-2xl">
+            <div v-if="!isUnlocked" key="login" class="w-full max-w-md bg-[#22101e]/90 backdrop-blur-xl border border-rose-500/30 p-8 rounded-3xl text-center space-y-5 shadow-2xl mt-10 sm:mt-0">
                 <div class="text-5xl animate-bounce">🔐</div>
-                <h2 class="text-2xl font-bold text-white mt-3">Código de Acceso</h2>
-                <input type="password" v-model="passwordInput" @keyup.enter="checkPassword" placeholder="Tu contraseña especial..." class="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-center text-white focus:border-rose-500 transition-all outline-none">
-                <button @click="checkPassword" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold py-3 rounded-xl shadow-lg active:scale-95 transition-all">Ingresar</button>
+                <h2 class="text-2xl font-bold text-white mt-3">Código de Acceso Privado</h2>
+                <input type="password" v-model="passwordInput" @keyup.enter="checkPassword" placeholder="Tu contraseña especial..." class="w-full px-4 py-3 bg-[#130812] border border-rose-500/30 rounded-xl text-center text-white focus:border-rose-500 transition-all outline-none">
+                <button @click="checkPassword" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold py-3 rounded-xl shadow-lg active:scale-95 transition-all">Ingresar ✨</button>
             </div>
 
             <!-- INTERFAZ PRINCIPAL -->
             <div v-else key="dashboard" class="w-full max-w-7xl my-4 space-y-4">
                 
                 <!-- PORTADA -->
-                <header class="relative w-full h-56 sm:h-72 rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-slate-900 flex items-center justify-center group">
-                    <img :src="coverImages[currentCoverIndex]" class="absolute inset-0 w-full h-full object-contain sm:object-cover transition-opacity duration-1000 opacity-80 blur-[2px]">
+                <header class="relative w-full h-56 sm:h-72 rounded-3xl overflow-hidden border border-rose-500/20 shadow-2xl bg-[#1f0e1a] flex items-center justify-center group mx-auto">
+                    <img :src="coverImages[currentCoverIndex]" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-80 blur-[2px]">
                     <img :src="coverImages[currentCoverIndex]" class="relative z-10 h-full max-w-full object-contain drop-shadow-2xl transition-all duration-700">
                     
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/20 z-10 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#1b0c17] via-transparent to-black/20 z-10 pointer-events-none"></div>
                     
-                    <button v-if="coverImages.length > 1" @click="prevCover" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white text-3xl transition-colors">❮</button>
-                    <button v-if="coverImages.length > 1" @click="nextCover" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white text-3xl transition-colors">❯</button>
+                    <button v-if="coverImages.length > 1" @click="prevCover" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/60 hover:text-white text-3xl transition-colors bg-black/40 rounded-full w-10 h-10 flex items-center justify-center">❮</button>
+                    <button v-if="coverImages.length > 1" @click="nextCover" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/60 hover:text-white text-3xl transition-colors bg-black/40 rounded-full w-10 h-10 flex items-center justify-center">❯</button>
 
                     <div class="absolute top-4 right-4 z-30 flex items-center gap-2">
-                        <label class="cursor-pointer bg-slate-950/60 hover:bg-slate-900/90 text-white/80 hover:text-white backdrop-blur-md border border-white/20 text-xs px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-md">
+                        <label class="cursor-pointer bg-[#180a18]/70 hover:bg-[#281126] text-white/80 hover:text-white backdrop-blur-md border border-white/20 text-xs px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-md">
                             <span>📷 + Cambiar portada</span>
                             <input type="file" accept="image/*" @change="uploadCoverImage" class="hidden">
                         </label>
-                        <button v-if="coverImages.length > 1" @click="removeCurrentCover" class="bg-rose-950/60 hover:bg-rose-900 text-rose-300 backdrop-blur-md border border-rose-500/30 text-xs p-1.5 rounded-full transition-all" title="Eliminar foto actual">
+                        <button v-if="coverImages.length > 1" @click="removeCurrentCover" class="bg-rose-950/70 hover:bg-rose-900 text-rose-300 backdrop-blur-md border border-rose-500/30 text-xs p-1.5 rounded-full transition-all" title="Eliminar foto actual">
                             🗑️
                         </button>
                     </div>
@@ -140,42 +152,50 @@
                     <!-- COLUMNA IZQUIERDA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- PERFIL Y CARTA -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl text-center space-y-4 shadow-xl">
-                            <div class="relative w-32 h-32 mx-auto group">
-                                <div @click="openModal(profileImg)" class="w-full h-full profile-border-gradient cursor-pointer">
-                                    <img :src="profileImg" class="w-full h-full rounded-full object-cover hover:scale-105 transition-transform" title="Haz clic para ampliar">
+                        <!-- PERFILES DUO -->
+                        <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-5 rounded-2xl text-center space-y-4 shadow-xl">
+                            <div class="flex items-center justify-center gap-4">
+                                <div class="relative w-20 h-20 group">
+                                    <div @click="openMediaViewer(profiles.her.img, 'Perfil de ella')" class="w-full h-full profile-border-gradient cursor-pointer">
+                                        <img :src="profiles.her.img" class="w-full h-full rounded-full object-cover transition-transform" title="Perfil de Ella">
+                                    </div>
+                                    <label class="absolute -bottom-1 -right-1 bg-pink-600 hover:bg-pink-500 border border-white/30 text-white p-1.5 rounded-full cursor-pointer shadow-lg transition-colors text-xs z-20">
+                                        <span>📷</span>
+                                        <input type="file" accept="image/*" @change="uploadSpecificProfile($event, 'her')" class="hidden">
+                                    </label>
                                 </div>
-                                <label class="absolute bottom-0 right-0 bg-slate-900 hover:bg-rose-600 border border-white/30 text-white p-2 rounded-full cursor-pointer shadow-lg transition-colors text-xs" title="Cambiar foto de perfil">
-                                    <span>📷</span>
-                                    <input type="file" accept="image/*" @change="uploadProfileImage" class="hidden">
-                                </label>
+                                <span class="text-2xl font-bold text-rose-400">💞</span>
+                                <div class="relative w-20 h-20 group">
+                                    <div @click="openMediaViewer(profiles.him.img, 'Perfil de él')" class="w-full h-full profile-border-gradient cursor-pointer">
+                                        <img :src="profiles.him.img" class="w-full h-full rounded-full object-cover transition-transform" title="Perfil de Él">
+                                    </div>
+                                    <label class="absolute -bottom-1 -right-1 bg-blue-600 hover:bg-blue-500 border border-white/30 text-white p-1.5 rounded-full cursor-pointer shadow-lg transition-colors text-xs z-20">
+                                        <span>📷</span>
+                                        <input type="file" accept="image/*" @change="uploadSpecificProfile($event, 'him')" class="hidden">
+                                    </label>
+                                </div>
                             </div>
-
                             <div>
                                 <h3 class="text-xl font-bold text-white">Nosotros</h3>
                                 <span class="text-xs bg-rose-500/20 text-rose-300 px-3 py-1 rounded-full border border-rose-500/30 shadow-sm">Conectados siempre 💞</span>
                             </div>
-                            
-                            <hr class="border-slate-800">
-                            
-                            <div class="text-left text-sm text-slate-300 space-y-3 leading-relaxed font-medium">
+                            <hr class="border-rose-950">
+                            <div class="text-left text-sm text-slate-300 space-y-3 font-medium max-h-60 overflow-y-auto pr-1">
                                 <p>Este es un rincón secreto, un espacio al que solo tú y yo podemos acceder. 🔐✨</p>
                                 <p>No importa la distancia física 🌍, no importa la hora 🕰️, el lugar o el dispositivo desde el que entres. Donde quiera que vayas y donde quiera que estés, <strong>siempre estarás aquí conmigo</strong>. 🫂</p>
-                                <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te tendré, de manera incondicional, sin importar las circunstancias. ❤️‍FA</p>
-                                <p>Quiero que sepas que esta es una huella imborrable que dejamos en el mundo digital, tal como la huella que tú has dejado en mi corazón y en mi vida. Gracias por todos estos años maravillosos y por todos los que aún nos faltan por vivir. 🥂</p>
-                                <p>Traté de dejarte esta sorpresa virtual a mi manera. Disfrútalo, porque esta es nuestra propia red social privada. 📱 Aquí puedes compartir tus pensamientos, dejar notas o lo que sientas... no importa dónde yo esté, tarde o temprano siempre me llegarán. 💌</p>
-                                <p>Feliz cumpleaños, mi niña hermosa. 🎂🎉 No solo celebro hoy, celebro todos los días que vendrán. Sé que lo digo muy a mi manera (y sé que tú también a la tuya), pero **te amo muchísimo**. 🐻💕🐷 Este regalo es de mí para ti, pero recuerda: sin ti, nada de esto existiría, porque tú eres mi única motivación. 💫</p>
+                                <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te tendré, de manera incondicional, sin importar las circunstancias. ❤️</p>
+                                <p>Feliz cumpleaños, mi niña hermosa. 🎂🎉 No solo celebro hoy, celebro todos los días que vendrán. **Te amo muchísimo**. 🐻💕🐷</p>
                             </div>
                         </div>
 
-                        <!-- CONTADOR Y RELOJ NEÓN -->
-                        <div @click="openCalendarModal" class="bg-slate-900/80 backdrop-blur-md border border-white/20 p-5 rounded-2xl text-center space-y-5 shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-pointer hover:border-rose-500/40 transition-colors" title="Haz clic para abrir el calendario">
-                            <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                        <!-- CONTADOR Y RELOJ NEÓN CON CALENDARIO MODAL -->
+                        <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-5 rounded-2xl text-center space-y-5 shadow-xl">
+                            <h4 class="text-xs font-bold text-rose-200 uppercase tracking-wider mb-2">
                                 TIEMPO JUNTOS DESDE AQUÍ HASTA LA ETERNIDAD
                             </h4>
                             
-                            <div class="clock-face">
+                            <!-- Reloj Interactivo -->
+                            <div class="clock-face mt-4" @click="showCalendar = true" title="Ver Calendario">
                                 <div v-for="n in 12" :key="n" class="clock-number" :style="{ transform: `rotate(${n * 30}deg)` }">
                                     <span :style="{ transform: `rotate(-${n * 30}deg)`, display: 'inline-block' }">{{ n }}</span>
                                 </div>
@@ -203,40 +223,49 @@
                                     <span class="text-[10px] text-slate-300 font-bold block uppercase tracking-wider">Seg.</span>
                                 </div>
                             </div>
-                            <p class="text-[10px] text-slate-400 italic">"Haz clic en el reloj para ver el calendario 📅"</p>
                         </div>
+
                     </aside>
 
-                    <!-- COLUMNA CENTRAL: RED SOCIAL -->
+                    <!-- COLUMNA CENTRAL: RED SOCIAL Y GALERÍA -->
                     <main class="lg:col-span-6 space-y-4">
                         
                         <!-- Creador de Publicaciones -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl space-y-3 relative shadow-xl">
+                        <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-4 rounded-2xl space-y-3 relative shadow-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs text-slate-400">Publicar como:</span>
+                                <button @click="selectedAuthor = 'her'" :class="selectedAuthor === 'her' ? 'bg-pink-600 text-white border-pink-400' : 'bg-[#180a18] text-slate-400 border-transparent'" class="px-3 py-1 rounded-full text-xs font-bold border transition-all">
+                                    {{ profiles.her.name }}
+                                </button>
+                                <button @click="selectedAuthor = 'him'" :class="selectedAuthor === 'him' ? 'bg-blue-600 text-white border-blue-400' : 'bg-[#180a18] text-slate-400 border-transparent'" class="px-3 py-1 rounded-full text-xs font-bold border transition-all">
+                                    {{ profiles.him.name }}
+                                </button>
+                            </div>
+
                             <textarea 
                                 v-model="newPostText" 
                                 maxlength="500"
                                 rows="3" 
                                 placeholder="¿Qué estás pensando hoy?..."
-                                class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 resize-none transition-all shadow-inner"
+                                class="w-full bg-[#130812] border border-rose-500/20 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 resize-none transition-all shadow-inner"
                             ></textarea>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between relative z-20">
                                 <span class="text-xs text-slate-500">{{ newPostText.length }}/500</span>
                                 
                                 <div class="relative">
-                                    <button @click="toggleEmojiPicker" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-xl transition-colors shadow-md" title="Emojis">
+                                    <button @click="toggleEmojiPicker" class="w-9 h-9 rounded-full bg-[#180a18] hover:bg-[#281126] flex items-center justify-center text-xl transition-colors shadow-md" title="Emojis">
                                         😊
                                     </button>
 
-                                    <div v-if="showEmojiPicker" class="fixed sm:absolute right-4 sm:right-0 top-auto sm:top-11 z-50 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-72 p-3 space-y-2">
-                                        <div class="flex justify-between border-b border-slate-800 pb-2 text-base">
-                                            <button v-for="(cat, key) in emojiCategories" :key="key" @click="activeEmojiCategory = key" :class="activeEmojiCategory === key ? 'bg-slate-800 rounded-lg p-1' : 'opacity-60 hover:opacity-100 p-1'">
+                                    <div v-if="showEmojiPicker" class="absolute right-0 bottom-12 z-50 bg-[#22101e] border border-rose-500/30 rounded-2xl shadow-2xl w-72 p-3 space-y-2">
+                                        <div class="flex justify-between border-b border-rose-950 pb-2 text-base">
+                                            <button v-for="(cat, key) in emojiCategories" :key="key" @click="activeEmojiCategory = key" :class="activeEmojiCategory === key ? 'bg-[#180a18] rounded-lg p-1' : 'opacity-60 hover:opacity-100 p-1'">
                                                 {{ cat.icon }}
                                             </button>
                                         </div>
-
                                         <div class="grid grid-cols-6 gap-1.5 max-h-48 overflow-y-auto p-1">
-                                            <button v-for="e in emojiCategories[activeEmojiCategory].list" :key="e" @click="insertEmoji(e)" class="text-xl hover:bg-slate-800 p-1 rounded hover:scale-125 transition-transform">
+                                            <button v-for="e in emojiCategories[activeEmojiCategory].list" :key="e" @click="insertEmoji(e)" class="text-xl hover:bg-[#180a18] p-1 rounded hover:scale-125 transition-transform">
                                                 {{ e }}
                                             </button>
                                         </div>
@@ -244,54 +273,43 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-col sm:flex-row gap-3 pt-2 border-t border-slate-800 items-center justify-between">
-                                <label class="w-full sm:w-auto cursor-pointer bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-medium px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <div v-if="postImagePreview" class="relative rounded-xl overflow-hidden border border-rose-500/30 max-h-48 bg-black z-10">
+                                <img :src="postImagePreview" class="w-full h-full object-contain">
+                                <button @click="removePostImage" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 text-xs">✕</button>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-3 pt-2 border-t border-rose-950 items-center justify-between z-20 relative">
+                                <label class="w-full sm:w-auto cursor-pointer bg-[#180a18] hover:bg-[#281126] border border-rose-500/20 text-white text-xs font-medium px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2">
                                     <span>📸 Adjuntar Foto</span>
                                     <input type="file" accept="image/*" @change="handlePostImage" class="hidden">
                                 </label>
-                                
                                 <button @click="createPost" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-lg active:scale-95 transition-all">
                                     Publicar 💌
                                 </button>
                             </div>
-                            
-                            <div v-if="postImagePreview" class="relative mt-2 rounded-xl overflow-hidden max-h-48">
-                                <img :src="postImagePreview" class="w-full h-full object-cover">
-                                <button @click="postImagePreview = null" class="absolute top-2 right-2 bg-black/60 text-white rounded-full p-1 text-xs">✕</button>
-                            </div>
                         </div>
 
-                        <!-- FEED DE PUBLICACIONES -->
-                        <div class="space-y-4">
-                            <div v-for="(post, index) in posts" :key="post.id" class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4 shadow-xl">
+                        <!-- FEED -->
+                        <div class="space-y-4 z-10 relative">
+                            <div v-for="(post, index) in posts" :key="post.id" class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 rounded-2xl p-4 space-y-3 shadow-xl">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-full profile-border-gradient overflow-hidden">
-                                            <img :src="profileImg" class="w-full h-full object-cover">
-                                        </div>
+                                        <img :src="profiles[post.authorKey].img" class="w-10 h-10 rounded-full object-cover border border-rose-500/50">
                                         <div>
-                                            <h4 class="font-bold text-sm text-white">Nosotros</h4>
-                                            <p class="text-[10px] text-slate-400">{{ post.date }}</p>
+                                            <h4 class="text-sm font-bold text-white leading-none">{{ profiles[post.authorKey].name }}</h4>
+                                            <span class="text-[10px] text-slate-400">{{ post.date }}</span>
                                         </div>
                                     </div>
-                                    <button @click="deletePost(index)" class="text-xs text-slate-500 hover:text-rose-400 transition-colors">🗑️</button>
+                                    <button @click="deletePost(index)" class="text-slate-500 hover:text-rose-400 text-xs">🗑️</button>
                                 </div>
-
-                                <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-line">{{ post.text }}</p>
-
-                                <div v-if="post.image" class="rounded-xl overflow-hidden border border-slate-800 cursor-pointer max-h-96" @click="openModal(post.image)">
-                                    <img :src="post.image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                                <p class="text-sm text-slate-200 whitespace-pre-line leading-relaxed">{{ post.text }}</p>
+                                <div v-if="post.image" class="rounded-xl overflow-hidden border border-rose-950 cursor-pointer max-h-96 bg-black z-20 relative" @click="openMediaViewer(post.image, 'Imagen compartida')">
+                                    <img :src="post.image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                                 </div>
-
-                                <div class="flex items-center gap-4 pt-2 border-t border-slate-800 text-xs">
-                                    <button @click="reactToPost(post, '❤️')" class="flex items-center gap-1 text-slate-400 hover:text-rose-500 transition-colors">
-                                        <span>❤️</span> <span>{{ post.reactions['❤️'] || 0 }}</span>
-                                    </button>
-                                    <button @click="reactToPost(post, '🥰')" class="flex items-center gap-1 text-slate-400 hover:text-pink-500 transition-colors">
-                                        <span>🥰</span> <span>{{ post.reactions['🥰'] || 0 }}</span>
-                                    </button>
-                                    <button @click="reactToPost(post, '✨')" class="flex items-center gap-1 text-slate-400 hover:text-yellow-500 transition-colors">
-                                        <span>✨</span> <span>{{ post.reactions['✨'] || 0 }}</span>
+                                <div class="flex items-center gap-4 pt-2 border-t border-rose-950/60 text-xs text-slate-400">
+                                    <button @click="toggleLike(post)" class="flex items-center gap-1 hover:text-rose-400 transition-colors">
+                                        <span>{{ post.liked ? '❤️' : '🤍' }}</span>
+                                        <span>{{ post.likes }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -299,60 +317,46 @@
 
                     </main>
 
-                    <!-- COLUMNA DERECHA: MÚSICA Y NOTAS -->
+                    <!-- COLUMNA DERECHA: REPRODUCTOR DE AUDIO Y GALERÍA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
                         <!-- REPRODUCTOR DE MÚSICA -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-4 shadow-xl">
+                        <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-4 rounded-2xl space-y-3 shadow-xl text-center">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                                    🎵 Nuestra Música
+                                <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
+                                    <span>🎵 Melodía de Paz</span>
+                                </h4>
+                                <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-full">Reproduciendo 🎧</span>
+                            </div>
+                            
+                            <p class="text-xs text-slate-300 italic">"Guitarras Románticas y Tranquilas"</p>
+
+                            <div class="flex items-center justify-center gap-3 pt-1">
+                                <button @click="toggleMusicPlay" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all flex items-center gap-2 mx-auto">
+                                    <span>{{ isMusicPlaying ? '⏸️ Pausar Música' : '▶️ Reproducir Música' }}</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- GALERÍA DE RECUERDOS -->
+                        <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-4 rounded-2xl space-y-3 shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                    <span>🖼️ Galería</span>
                                 </h3>
-                                <label class="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white text-[10px] px-2.5 py-1 rounded-lg border border-slate-700 transition-colors flex items-center gap-1">
-                                    <span>+ Añadir</span>
-                                    <input type="file" accept="audio/*" @change="uploadSong" class="hidden">
+                                <label class="cursor-pointer text-xs bg-rose-600/30 hover:bg-rose-600 text-rose-200 border border-rose-500/30 px-2.5 py-1 rounded-full transition-all">
+                                    + Añadir
+                                    <input type="file" accept="image/*" @change="uploadGalleryImage" class="hidden">
                                 </label>
                             </div>
 
-                            <div v-if="playlist.length > 0" class="space-y-3">
-                                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex flex-col items-center gap-3">
-                                    <div class="w-full text-center overflow-hidden">
-                                        <p class="text-xs font-semibold text-white truncate">{{ currentSong.title }}</p>
-                                        <p class="text-[10px] text-slate-400">Canción actual</p>
-                                    </div>
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button @click="prevSong" class="p-1.5 bg-slate-800 rounded-full hover:bg-slate-700 text-xs">⏮️</button>
-                                        <button @click="togglePlay" class="p-2.5 btn-player-3d rounded-full text-sm">
-                                            {{ isPlaying ? '⏸️' : '▶️' }}
-                                        </button>
-                                        <button @click="nextSong" class="p-1.5 bg-slate-800 rounded-full hover:bg-slate-700 text-xs">⏭️</button>
-                                        <button @click="shareCurrentAudio" class="p-1.5 bg-slate-800 rounded-full hover:bg-slate-700 text-xs" title="Enviar archivo">
-                                            📤
-                                        </button>
-                                    </div>
-                                </div>
-                                <audio ref="audioPlayer" :src="currentSong.src" @ended="nextSong"></audio>
-                            </div>
-                        </div>
-
-                        <!-- NOTAS ESPECIALES DEBAJO DE LA MÚSICA -->
-                        <div class="bg-slate-900/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-3 text-center shadow-xl">
-                            <h3 class="text-base font-bold text-white flex items-center justify-center gap-1.5">
-                                📌 Notas Especiales
-                            </h3>
-                            <div class="space-y-2 text-xs text-slate-300">
-                                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
-                                    "Cada día contigo es mi recuerdo favorito." 💫
-                                </div>
-                                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
-                                    "La fortaleza del osito 🐻 y la cerdita 🐷. Siempre juntos." ❤️
-                                </div>
-                                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
-                                    "Siempre serás mi lugar seguro." 🏡
+                            <div class="grid grid-cols-2 gap-2 max-h-[500px] overflow-y-auto pr-1 relative z-30 pointer-events-auto">
+                                <div v-for="(img, idx) in gallery" :key="idx" @click="openGalleryLightbox(idx)" class="relative aspect-square rounded-xl overflow-hidden border border-rose-950 cursor-pointer group bg-black z-40">
+                                    <img :src="img.url" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 pointer-events-none">
+                                    <button @click.stop="deleteGalleryImage(idx)" class="absolute top-1 right-1 bg-black/60 hover:bg-rose-600 text-white rounded-full w-5 h-5 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-auto z-50">✕</button>
                                 </div>
                             </div>
                         </div>
-
                     </aside>
 
                 </div>
@@ -360,144 +364,66 @@
             </div>
         </transition>
 
-        <!-- MODAL VER IMAGEN AMPLIADA -->
-        <div v-if="selectedImageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" @click.self="selectedImageModal = null">
-            <div class="relative max-w-4xl w-full max-h-[90vh]">
-                <img :src="selectedImageModal" class="w-full h-full object-contain rounded-2xl">
-                <button @click="selectedImageModal = null" class="absolute -top-10 right-0 text-white text-2xl">✕</button>
-            </div>
-        </div>
-
-        <!-- MODAL CALENDARIO INTERACTIVO CON DETALLES DE FESTIVOS Y DOMINGOS ROJOS -->
-        <div v-if="showCalendarModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3" @click.self="showCalendarModal = false">
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-2xl p-6 space-y-4 text-white relative shadow-2xl max-h-[90vh] overflow-y-auto">
-                
-                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <h3 class="text-xl font-extrabold flex items-center gap-2">📅 Calendario</h3>
-                    <div class="flex items-center gap-2">
-                        <button @click="showAddEventModal = true" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-all shadow-md">
-                            + Añadir evento
-                        </button>
-                        <button @click="showCalendarModal = false" class="text-slate-400 hover:text-white text-xl">✕</button>
+        <!-- CALENDARIO MODAL -->
+        <transition name="fade">
+            <div v-if="showCalendar" class="fixed inset-0 z-[200] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4" @click.self="showCalendar = false">
+                <div class="bg-[#22101e] border border-rose-500/30 p-6 rounded-3xl shadow-[0_0_40px_rgba(244,114,182,0.2)] w-full max-w-sm transform transition-all">
+                    <div class="flex justify-between items-center mb-5">
+                        <button @click="prevMonth" class="text-rose-400 hover:text-white bg-[#180a18] hover:bg-[#281126] p-2 rounded-full w-9 h-9 flex items-center justify-center transition-colors">❮</button>
+                        <h3 class="text-lg font-bold text-white capitalize tracking-wide">{{ calMonthName }} {{ calYear }}</h3>
+                        <button @click="nextMonth" class="text-rose-400 hover:text-white bg-[#180a18] hover:bg-[#281126] p-2 rounded-full w-9 h-9 flex items-center justify-center transition-colors">❯</button>
                     </div>
-                </div>
-
-                <div class="flex items-center justify-between">
-                    <button @click="changeMonth(-1)" class="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">❮</button>
-                    <span class="font-bold text-lg capitalize">{{ currentMonthName }} {{ currentYear }}</span>
-                    <button @click="changeMonth(1)" class="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">❯</button>
-                </div>
-
-                <!-- DÍAS DE LA SEMANA -->
-                <div class="grid grid-cols-7 gap-1 text-center font-bold text-xs">
-                    <span class="text-rose-500">Dom</span>
-                    <span class="text-slate-400">Lun</span>
-                    <span class="text-slate-400">Mar</span>
-                    <span class="text-slate-400">Mié</span>
-                    <span class="text-slate-400">Jue</span>
-                    <span class="text-slate-400">Vie</span>
-                    <span class="text-slate-400">Sáb</span>
-                </div>
-
-                <!-- GRILLA DEL CALENDARIO -->
-                <div class="grid grid-cols-7 gap-1.5 text-center text-xs">
-                    <div v-for="blank in firstDayOffset" :key="'b-'+blank" class="p-2"></div>
                     
-                    <div v-for="day in daysInMonth" :key="day" 
-                         @click="selectCalendarDay(day)"
-                         :class="[
-                            'p-2 min-h-[55px] rounded-xl border flex flex-col justify-between cursor-pointer transition-all relative overflow-hidden',
-                            isSunday(day) ? 'text-rose-400 font-bold border-rose-950/60 bg-rose-950/20' : 'text-slate-200 border-slate-800 bg-slate-950/50',
-                            getEventsForDay(day).length > 0 ? 'border-amber-500/60 bg-amber-950/30' : 'hover:border-slate-600'
-                         ]">
-                        <span class="text-right text-[11px] block font-bold">{{ day }}</span>
-                        
-                        <div v-if="getEventsForDay(day).length > 0" class="mt-1 space-y-0.5">
-                            <div v-for="e in getEventsForDay(day)" :key="e.id" class="text-[9px] truncate bg-amber-500/20 text-amber-300 rounded px-1 text-left font-semibold">
-                                {{ e.title }}
-                            </div>
+                    <div class="grid grid-cols-7 gap-1 text-center mb-2">
+                        <span v-for="day in ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']" :key="day" class="text-[10px] uppercase font-bold text-slate-400">{{ day }}</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-7 gap-1 text-center">
+                        <div v-for="(day, idx) in calendarDays" :key="idx" 
+                             class="w-10 h-10 flex items-center justify-center rounded-xl text-sm transition-all"
+                             :class="{
+                                 'bg-rose-500/20 text-rose-300 font-bold border border-rose-500/50 shadow-[0_0_15px_rgba(244,114,182,0.4)]': isToday(day),
+                                 'text-slate-300 hover:bg-[#180a18] cursor-pointer': day && !isToday(day),
+                                 'opacity-0': !day
+                             }">
+                            {{ day || '' }}
                         </div>
                     </div>
-                </div>
-
-                <!-- SECCIÓN DE DETALLES Y FESTIVOS EN EL CALENDARIO -->
-                <div class="pt-4 border-t border-slate-800 space-y-2">
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Eventos y Festivos de este mes:</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-36 overflow-y-auto pr-1">
-                        <div v-for="evt in currentMonthEvents" :key="evt.id" @click="openEventDetail(evt)" class="p-2.5 bg-slate-950/70 border border-slate-800 rounded-xl hover:border-slate-600 cursor-pointer transition-colors text-xs flex justify-between items-center">
-                            <div>
-                                <p class="font-bold text-white">{{ evt.title }}</p>
-                                <p class="text-[10px] text-slate-400">{{ evt.date }} • {{ evt.type }}</p>
-                            </div>
-                            <span class="text-rose-400 text-xs">➔</span>
-                        </div>
-                        <div v-if="currentMonthEvents.length === 0" class="text-xs text-slate-500 italic col-span-2">
-                            No hay festivos o eventos registrados para este mes.
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- MODAL DETALLE DE EVENTO / FESTIVO -->
-        <div v-if="selectedEventModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4" @click.self="selectedEventModal = null">
-            <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-5 space-y-4 text-white relative shadow-2xl">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <h3 class="font-bold text-base text-rose-400">{{ selectedEventModal.title }}</h3>
-                    <button @click="selectedEventModal = null" class="text-slate-400 hover:text-white">✕</button>
-                </div>
-
-                <div class="space-y-2 text-xs">
-                    <p class="text-slate-300"><strong>Fecha:</strong> {{ selectedEventModal.date }}</p>
-                    <p class="text-slate-300"><strong>Categoría:</strong> {{ selectedEventModal.type }}</p>
-                    <p v-if="selectedEventModal.country" class="text-slate-300"><strong>Origen / País:</strong> {{ selectedEventModal.country }}</p>
-                    <hr class="border-slate-800 my-2">
-                    <p class="text-slate-300 leading-relaxed"><strong>Reseña / Historia:</strong></p>
-                    <p class="text-slate-400 leading-relaxed bg-slate-950 p-3 rounded-xl border border-slate-800">
-                        {{ selectedEventModal.history }}
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL CREAR NUEVO EVENTO -->
-        <div v-if="showAddEventModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4" @click.self="showAddEventModal = false">
-            <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm p-5 space-y-4 text-white relative shadow-2xl">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <h3 class="font-bold text-base">Añadir Nuevo Evento</h3>
-                    <button @click="showAddEventModal = false" class="text-slate-400 hover:text-white">✕</button>
-                </div>
-
-                <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="block text-slate-400 mb-1">Nombre del Evento:</label>
-                        <input type="text" v-model="newEvent.title" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white outline-none focus:border-rose-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-slate-400 mb-1">Categoría:</label>
-                        <select v-model="newEvent.type" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white outline-none focus:border-rose-500">
-                            <option value="Cumpleaños 🎂">Cumpleaños 🎂</option>
-                            <option value="Aniversario ❤️">Aniversario ❤️</option>
-                            <option value="Evento General 📅">Evento General 📅</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-slate-400 mb-1">Fecha:</label>
-                        <input type="date" v-model="newEvent.date" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white outline-none focus:border-rose-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-slate-400 mb-1">Breve Descripción / Historia:</label>
-                        <textarea v-model="newEvent.history" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white outline-none focus:border-rose-500"></textarea>
-                    </div>
-
-                    <button @click="saveNewEvent" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-2 rounded-xl transition-all mt-2 shadow-lg">
-                        Guardar Evento
+                    
+                    <button @click="showCalendar = false" class="mt-6 w-full bg-[#180a18] hover:bg-[#281126] text-slate-300 py-3 rounded-xl text-sm font-semibold border border-rose-500/20 transition-colors">
+                        Volver a Nuestro Espacio
                     </button>
                 </div>
+            </div>
+        </transition>
+
+        <!-- VISOR / LIGHTBOX -->
+        <div v-if="activeLightbox" class="fixed inset-0 z-[300] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-between p-4">
+            <div class="w-full flex justify-between items-center z-10">
+                <span class="text-white font-medium text-sm">{{ activeLightboxTitle }}</span>
+                <div class="flex items-center gap-2">
+                    <button @click="cycleFitMode" class="bg-[#180a18] hover:bg-[#281126] text-xs px-3 py-1.5 rounded-lg text-white border border-rose-500/30">
+                        Ajuste: {{ currentFitMode }}
+                    </button>
+                    <button @click="closeLightbox" class="text-white text-2xl bg-[#180a18] hover:bg-rose-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors">✕</button>
+                </div>
+            </div>
+
+            <div class="relative flex-1 w-full flex items-center justify-center my-4 overflow-hidden">
+                <img 
+                    :src="activeLightboxUrl" 
+                    :class="['max-w-full max-h-full transition-all duration-300', 'fit-' + currentFitMode]"
+                    :style="{ transform: `scale(${zoomLevel}) rotate(${rotation}deg)` }"
+                >
+            </div>
+
+            <div class="flex items-center gap-4 bg-[#20101c]/90 px-6 py-3 rounded-full border border-rose-500/30 z-10">
+                <button v-if="gallery.length > 1 && currentGalleryIndex !== null" @click="prevGalleryImg" class="text-white font-bold text-lg px-2">❮</button>
+                <button @click="zoomOut" class="text-white font-bold text-sm bg-[#180a18] px-3 py-1 rounded-md">zoom -</button>
+                <button @click="resetTransforms" class="text-xs text-rose-400 font-semibold px-2">Restablecer</button>
+                <button @click="zoomIn" class="text-white font-bold text-sm bg-[#180a18] px-3 py-1 rounded-md">zoom +</button>
+                <button @click="rotateImg" class="text-white font-bold text-sm bg-[#180a18] px-3 py-1 rounded-md">🔄</button>
+                <button v-if="gallery.length > 1 && currentGalleryIndex !== null" @click="nextGalleryImg" class="text-white font-bold text-lg px-2">❯</button>
             </div>
         </div>
 
@@ -506,122 +432,191 @@
     <script>
         const { createApp } = Vue;
 
+        const loadLocalData = (key, defaultData) => {
+            try {
+                const item = localStorage.getItem('mi_espacio_' + key);
+                return item ? JSON.parse(item) : defaultData;
+            } catch (error) {
+                return defaultData;
+            }
+        };
+
+        const processImage = (file, callback) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxSize = 1200;
+                    if (width > height && width > maxSize) { height *= maxSize / width; width = maxSize; }
+                    else if (height > maxSize) { width *= maxSize / height; height = maxSize; }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', 0.8));
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
         createApp({
             data() {
                 return {
                     isUnlocked: false,
                     passwordInput: '',
-                    profileImg: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
-                    coverImages: [
-                        'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80'
-                    ],
-                    currentCoverIndex: 0,
-                    clock: { hours: 0, minutes: 0, seconds: 0 },
-                    startDate: new Date('2022-09-01T00:00:00'),
-                    timeElapsed: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+                    isMusicPlaying: false,
                     
-                    // MÚSICA
-                    playlist: [
-                        { title: 'Nuestra Canción Especial.mp3', src: '', fileObject: null }
-                    ],
-                    currentSongIndex: 0,
-                    isPlaying: false,
+                    coverImages: loadLocalData('covers', ['https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80']),
+                    currentCoverIndex: 0,
 
-                    // PUBLICACIONES
+                    profiles: loadLocalData('profiles', {
+                        her: { name: 'Piggy 🐷', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+                        him: { name: 'Bear 🐻', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' }
+                    }),
+                    selectedAuthor: 'her',
+
                     newPostText: '',
                     postImagePreview: null,
-                    posts: [
-                        { id: 1, text: 'Bienvenida a nuestro espacio secreto ❤️', date: 'Hace un momento', image: null, reactions: { '❤️': 1 } }
-                    ],
+                    posts: loadLocalData('posts', [
+                        { id: 1, authorKey: 'him', text: '¡Bienvenidos a nuestro rincón secreto! Construido con todo mi amor. ❤️', image: null, date: 'Hoy', likes: 1, liked: true }
+                    ]),
 
-                    // EMOJIS
                     showEmojiPicker: false,
-                    activeEmojiCategory: 'hearts',
+                    activeEmojiCategory: 'love',
                     emojiCategories: {
-                        hearts: { icon: '💖', list: ['❤️','💖','💕','💗','💓','🥰','😍','😻'] },
-                        faces: { icon: '😊', list: ['😊','😄','😋','😎','🥳','🙈','😇','🤗'] },
-                        gestures: { icon: '👍', list: ['👍','👏','🙌','🤝','👊','✌️','🎉','✨'] }
+                        love: { icon: '❤️', list: ['❤️', '💖', '💕', '💗', '💓', '💞', '🌹', '👩‍❤️‍👨', '👩‍❤️‍💋‍👨', '💋', '💌', '🧸'] },
+                        happy: { icon: '😊', list: ['😊', '😀', '😃', '😄', '😁', '🥳', '😍', '🤩', '😋', '😜', '😇', '🤗'] },
+                        gestures: { icon: '👋', list: ['👍', '🙌', '👏', '🤝', '🙏', '✌️', '🤟', '🤙', '🖐️', '👊', '🤜', '🤛'] }
                     },
 
-                    // MODALES Y CALENDARIO
-                    selectedImageModal: null,
-                    showCalendarModal: false,
-                    showAddEventModal: false,
-                    selectedEventModal: null,
-                    calendarDate: new Date(),
-                    
-                    // LISTA COMPLETA DE FESTIVOS Y EVENTOS
-                    eventsList: [
-                        { id: 1, title: 'Año Nuevo 🎆', date: '2026-01-01', type: 'Festivo', country: 'Internacional', history: 'Celebración global del comienzo del nuevo año.' },
-                        { id: 2, title: 'San Valentín ❤️', date: '2026-02-14', type: 'Festivo', country: 'Internacional', history: 'Día conmemorativo del amor y la amistad.' },
-                        { id: 3, title: 'Día de la Mujer 🌷', date: '2026-03-08', type: 'Festivo', country: 'Internacional', history: 'Conmemoración de la lucha por la igualdad y los derechos de la mujer.' },
-                        { id: 4, title: 'Día del Trabajo 🛠️', date: '2026-05-01', type: 'Festivo', country: 'Internacional', history: 'Día internacional de los trabajadores.' },
-                        { id: 5, title: 'Navidad 🎄', date: '2026-12-25', type: 'Festivo', country: 'Internacional', history: 'Celebración navideña de unión y alegría.' }
-                    ],
-                    newEvent: { title: '', type: 'Cumpleaños 🎂', date: '', history: '' }
+                    gallery: loadLocalData('gallery', [
+                        { url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80' },
+                        { url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' }
+                    ]),
+
+                    clock: { hours: 0, minutes: 0, seconds: 0 },
+                    timeElapsed: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+                    startDate: new Date('2022-07-01T00:00:00'),
+
+                    showCalendar: false,
+                    calDate: new Date(),
+
+                    activeLightbox: false,
+                    activeLightboxUrl: '',
+                    activeLightboxTitle: '',
+                    currentGalleryIndex: null,
+                    zoomLevel: 1,
+                    rotation: 0,
+                    fitModes: ['cover', 'contain', 'fill'],
+                    currentFitIndex: 0
                 }
             },
             computed: {
-                currentSong() {
-                    return this.playlist[this.currentSongIndex] || { title: 'Sin música', src: '' };
-                },
-                currentYear() { return this.calendarDate.getFullYear(); },
-                currentMonth() { return this.calendarDate.getMonth(); },
-                currentMonthName() {
-                    return this.calendarDate.toLocaleString('es-ES', { month: 'long' });
-                },
-                daysInMonth() {
-                    return new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-                },
-                firstDayOffset() {
-                    return new Date(this.currentYear, this.currentMonth, 1).getDay();
-                },
-                currentMonthEvents() {
-                    const monthFormatted = String(this.currentMonth + 1).padStart(2, '0');
-                    const prefix = `${this.currentYear}-${monthFormatted}`;
-                    return this.eventsList.filter(e => e.date.startsWith(prefix));
+                currentFitMode() { return this.fitModes[this.currentFitIndex]; },
+                calMonthName() { return this.calDate.toLocaleDateString('es-ES', { month: 'long' }); },
+                calYear() { return this.calDate.getFullYear(); },
+                calendarDays() {
+                    const year = this.calDate.getFullYear();
+                    const month = this.calDate.getMonth();
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+                    
+                    let days = [];
+                    let emptyDays = firstDay === 0 ? 6 : firstDay - 1; 
+                    for (let i = 0; i < emptyDays; i++) days.push(null);
+                    for (let i = 1; i <= daysInMonth; i++) days.push(i);
+                    return days;
                 }
+            },
+            watch: {
+                posts: { handler(val) { try { localStorage.setItem('mi_espacio_posts', JSON.stringify(val)); } catch(e){} }, deep: true },
+                gallery: { handler(val) { try { localStorage.setItem('mi_espacio_gallery', JSON.stringify(val)); } catch(e){ alert("Memoria de galería llena. Intenta borrar fotos antiguas."); } }, deep: true },
+                profiles: { handler(val) { try { localStorage.setItem('mi_espacio_profiles', JSON.stringify(val)); } catch(e){} }, deep: true },
+                coverImages: { handler(val) { try { localStorage.setItem('mi_espacio_covers', JSON.stringify(val)); } catch(e){} }, deep: true }
+            },
+            mounted() {
+                this.startClock();
+                setInterval(this.updateTimeElapsed, 1000);
             },
             methods: {
                 checkPassword() {
-                    if (this.passwordInput.length > 0) {
+                    if (this.passwordInput.trim() !== '') {
                         this.isUnlocked = true;
                         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                        
+                        this.$nextTick(() => {
+                            const audio = this.$refs.bgMusic;
+                            if (audio) {
+                                audio.volume = 0.5;
+                                audio.play().then(() => {
+                                    this.isMusicPlaying = true;
+                                }).catch(err => {
+                                    console.log("Autoplay prevenido por el navegador, usa el botón manual.", err);
+                                    this.isMusicPlaying = false;
+                                });
+                            }
+                        });
                     }
                 },
-                updateClock() {
-                    const now = new Date();
-                    const sec = now.getSeconds();
-                    const min = now.getMinutes();
-                    const hr = now.getHours();
 
-                    this.clock.seconds = sec * 6;
-                    this.clock.minutes = min * 6 + sec * 0.1;
-                    this.clock.hours = (hr % 12) * 30 + min * 0.5;
+                toggleMusicPlay() {
+                    const audio = this.$refs.bgMusic;
+                    if (!audio) return;
+                    if (this.isMusicPlaying) {
+                        audio.pause();
+                        this.isMusicPlaying = false;
+                    } else {
+                        audio.play().then(() => {
+                            this.isMusicPlaying = true;
+                        });
+                    }
+                },
 
-                    const diff = Math.abs(now - this.startDate);
+                startClock() {
+                    const update = () => {
+                        const now = new Date();
+                        const sec = now.getSeconds();
+                        const min = now.getMinutes();
+                        const hr = now.getHours();
+                        this.clock.seconds = sec * 6;
+                        this.clock.minutes = min * 6 + sec * 0.1;
+                        this.clock.hours = (hr % 12) * 30 + min * 0.5;
+                    };
+                    update();
+                    setInterval(update, 1000);
+                },
+                updateTimeElapsed() {
+                    const diff = new Date() - this.startDate;
                     this.timeElapsed.days = Math.floor(diff / (1000 * 60 * 60 * 24));
                     this.timeElapsed.hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
                     this.timeElapsed.minutes = Math.floor((diff / 1000 / 60) % 60);
                     this.timeElapsed.seconds = Math.floor((diff / 1000) % 60);
                 },
-                // MANEJO DE FOTOS
-                uploadProfileImage(e) {
-                    const file = e.target.files[0];
-                    if (file) this.profileImg = URL.createObjectURL(file);
+
+                prevMonth() { this.calDate = new Date(this.calDate.getFullYear(), this.calDate.getMonth() - 1, 1); },
+                nextMonth() { this.calDate = new Date(this.calDate.getFullYear(), this.calDate.getMonth() + 1, 1); },
+                isToday(day) {
+                    if (!day) return false;
+                    const today = new Date();
+                    return day === today.getDate() && 
+                           this.calDate.getMonth() === today.getMonth() && 
+                           this.calDate.getFullYear() === today.getFullYear();
                 },
+
+                prevCover() { this.currentCoverIndex = (this.currentCoverIndex - 1 + this.coverImages.length) % this.coverImages.length; },
+                nextCover() { this.currentCoverIndex = (this.currentCoverIndex + 1) % this.coverImages.length; },
                 uploadCoverImage(e) {
                     const file = e.target.files[0];
                     if (file) {
-                        this.coverImages.push(URL.createObjectURL(file));
-                        this.currentCoverIndex = this.coverImages.length - 1;
+                        processImage(file, (base64Url) => {
+                            this.coverImages.push(base64Url);
+                            this.currentCoverIndex = this.coverImages.length - 1;
+                        });
                     }
-                },
-                prevCover() {
-                    this.currentCoverIndex = (this.currentCoverIndex - 1 + this.coverImages.length) % this.coverImages.length;
-                },
-                nextCover() {
-                    this.currentCoverIndex = (this.currentCoverIndex + 1) % this.coverImages.length;
                 },
                 removeCurrentCover() {
                     if (this.coverImages.length > 1) {
@@ -629,123 +624,98 @@
                         this.currentCoverIndex = 0;
                     }
                 },
-                // REPRODUCTOR DE MÚSICA
-                uploadSong(e) {
+
+                uploadSpecificProfile(e, key) {
                     const file = e.target.files[0];
                     if (file) {
-                        const songUrl = URL.createObjectURL(file);
-                        this.playlist.push({ title: file.name, src: songUrl, fileObject: file });
-                        this.currentSongIndex = this.playlist.length - 1;
+                        processImage(file, (base64Url) => {
+                            this.profiles[key].img = base64Url;
+                        });
                     }
                 },
-                togglePlay() {
-                    const player = this.$refs.audioPlayer;
-                    if (!player || !this.currentSong.src) return;
-                    if (this.isPlaying) { player.pause(); } else { player.play(); }
-                    this.isPlaying = !this.isPlaying;
-                },
-                prevSong() {
-                    this.currentSongIndex = (this.currentSongIndex - 1 + this.playlist.length) % this.playlist.length;
-                    this.isPlaying = false;
-                },
-                nextSong() {
-                    this.currentSongIndex = (this.currentSongIndex + 1) % this.playlist.length;
-                    this.isPlaying = false;
-                },
-                async shareCurrentAudio() {
-                    const song = this.currentSong;
-                    if (!song) return;
 
-                    try {
-                        let fileToShare = song.fileObject;
-                        if (!fileToShare && song.src) {
-                            const res = await fetch(song.src);
-                            const blob = await res.blob();
-                            fileToShare = new File([blob], song.title, { type: blob.type || 'audio/mp3' });
-                        }
-
-                        if (navigator.canShare && navigator.canShare({ files: [fileToShare] })) {
-                            await navigator.share({
-                                files: [fileToShare],
-                                title: song.title,
-                                text: 'Escucha esta canción de nuestro espacio privado'
-                            });
-                        } else {
-                            alert("Tu navegador o dispositivo no soporta compartir archivos directamente.");
-                        }
-                    } catch (err) {
-                        console.error("Error al compartir:", err);
-                    }
-                },
-                // PUBLICACIONES
                 toggleEmojiPicker() { this.showEmojiPicker = !this.showEmojiPicker; },
-                insertEmoji(emoji) {
-                    this.newPostText += emoji;
-                    this.showEmojiPicker = false;
-                },
+                insertEmoji(e) { this.newPostText += e; },
                 handlePostImage(e) {
                     const file = e.target.files[0];
-                    if (file) this.postImagePreview = URL.createObjectURL(file);
-                },
-                createPost() {
-                    if (!this.newPostText.trim() && !this.postImagePreview) return;
-                    this.posts.unshift({
-                        id: Date.now(),
-                        text: this.newPostText,
-                        date: 'Hace un momento',
-                        image: this.postImagePreview,
-                        reactions: {}
-                    });
-                    this.newPostText = '';
-                    this.postImagePreview = null;
-                },
-                deletePost(index) { this.posts.splice(index, 1); },
-                reactToPost(post, emoji) {
-                    post.reactions[emoji] = (post.reactions[emoji] || 0) + 1;
-                },
-                openModal(imgSrc) { this.selectedImageModal = imgSrc; },
-                
-                // CALENDARIO
-                openCalendarModal() { this.showCalendarModal = true; },
-                changeMonth(dir) {
-                    this.calendarDate = new Date(this.currentYear, this.currentMonth + dir, 1);
-                },
-                isSunday(day) {
-                    const date = new Date(this.currentYear, this.currentMonth, day);
-                    return date.getDay() === 0;
-                },
-                getEventsForDay(day) {
-                    const monthFormatted = String(this.currentMonth + 1).padStart(2, '0');
-                    const dayFormatted = String(day).padStart(2, '0');
-                    const dateStr = `${this.currentYear}-${monthFormatted}-${dayFormatted}`;
-                    return this.eventsList.filter(e => e.date === dateStr);
-                },
-                selectCalendarDay(day) {
-                    const evts = this.getEventsForDay(day);
-                    if (evts.length > 0) {
-                        this.selectedEventModal = evts[0];
+                    if (file) {
+                        processImage(file, (base64Url) => {
+                            this.postImagePreview = base64Url;
+                        });
                     }
                 },
-                openEventDetail(evt) {
-                    this.selectedEventModal = evt;
-                },
-                saveNewEvent() {
-                    if (!this.newEvent.title || !this.newEvent.date) return;
-                    this.eventsList.push({
+                removePostImage() { this.postImagePreview = null; },
+                createPost() {
+                    if (!this.newPostText.trim() && !this.postImagePreview) return;
+                    
+                    this.posts.unshift({
                         id: Date.now(),
-                        title: this.newEvent.title,
-                        date: this.newEvent.date,
-                        type: this.newEvent.type,
-                        country: 'Personal',
-                        history: this.newEvent.history || 'Evento guardado en el calendario privado.'
+                        authorKey: this.selectedAuthor,
+                        text: this.newPostText,
+                        image: this.postImagePreview,
+                        date: new Date().toLocaleDateString('es-ES') + ' ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'}),
+                        likes: 0,
+                        liked: false
                     });
-                    this.newEvent = { title: '', type: 'Cumpleaños 🎂', date: '', history: '' };
-                    this.showAddEventModal = false;
+
+                    this.newPostText = '';
+                    this.postImagePreview = null;
+                    this.showEmojiPicker = false;
+                },
+                deletePost(index) { this.posts.splice(index, 1); },
+                toggleLike(post) {
+                    post.liked = !post.liked;
+                    post.likes += post.liked ? 1 : -1;
+                },
+
+                uploadGalleryImage(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        processImage(file, (base64Url) => {
+                            this.gallery.unshift({ url: base64Url });
+                        });
+                    }
+                },
+                deleteGalleryImage(idx) { this.gallery.splice(idx, 1); },
+
+                openMediaViewer(url, title = 'Visor de Imagen') {
+                    this.activeLightboxUrl = url;
+                    this.activeLightboxTitle = title;
+                    this.currentGalleryIndex = null;
+                    this.resetTransforms();
+                    this.activeLightbox = true;
+                },
+                openGalleryLightbox(idx) {
+                    this.currentGalleryIndex = idx;
+                    this.activeLightboxUrl = this.gallery[idx].url;
+                    this.activeLightboxTitle = `Recuerdo ${idx + 1} de ${this.gallery.length}`;
+                    this.resetTransforms();
+                    this.activeLightbox = true;
+                },
+                closeLightbox() { this.activeLightbox = false; },
+                prevGalleryImg() {
+                    if (this.currentGalleryIndex !== null) {
+                        this.currentGalleryIndex = (this.currentGalleryIndex - 1 + this.gallery.length) % this.gallery.length;
+                        this.openGalleryLightbox(this.currentGalleryIndex);
+                    }
+                },
+                nextGalleryImg() {
+                    if (this.currentGalleryIndex !== null) {
+                        this.currentGalleryIndex = (this.currentGalleryIndex + 1) % this.gallery.length;
+                        this.openGalleryLightbox(this.currentGalleryIndex);
+                    }
+                },
+                zoomIn() { this.zoomLevel += 0.2; },
+                zoomOut() { if (this.zoomLevel > 0.4) this.zoomLevel -= 0.2; },
+                rotateImg() { this.rotation = (this.rotation + 90) % 360; },
+                resetTransforms() {
+                    this.zoomLevel = 1;
+                    this.rotation = 0;
+                    this.currentFitIndex = 0;
+                },
+                cycleFitMode() {
+                    this.currentFitIndex = (this.currentFitIndex + 1) % this.fitModes.length;
                 }
-            },
-            mounted() {
-                this.updateClock();
-                setInterval(this.updateClock, 1000);
             }
         }).mount('#app');
     </script>
