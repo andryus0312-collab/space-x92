@@ -1,36 +1,62 @@
-# 💖 Tú y Yo — Espacio Privado
+# 💖 espacio-x92 — Espacio Privado & Personal 💖
 
-Un espacio web íntimo y personalizado diseñado para registrar momentos especiales, almacenar recuerdos interactivos y celebrar el tiempo compartido en pareja.
+![Estado](https://img.shields.io/badge/Acceso-Privado-red?style=for-the-badge)
+![Propósito](https://img.shields.io/badge/Proyecto-Personal%20%26%20Exclusivo-pink?style=for-the-badge)
+
+---
+
+## 📖 Descripción del Proyecto
+
+**espacio-x92** es un rincón digital diseñado como un espacio íntimo, interactivo y conmemora momentos especiales entre dos personas. Permite llevar un registro del tiempo transcurrido, compartir cartas, guardar recuerdos fotográficos y reproducir música con valor sentimental.
 
 ---
 
 ## ✨ Características Principales
 
-
-* ⏳ **Contador en Tiempo Real:** Reloj dinámico que calcula los días, horas, minutos y segundos exactos transcurridos desde una fecha especial.
-
-* 📝 **Muro de Publicaciones:** Sección interactiva para compartir mensajes, cartas de amor, pensamientos, fotos y videos con fechas conmemorativas.
-
-* 🎵 **Reproductor de Música:** Módulo multimedia integrado para reproducir canciones y notas de voz significativas.
-
-* 🖼️ **Galería de Recuerdos:** Álbum de fotos interactivo con diseño estilo *polaroid*, organizado cronológicamente.
-
-* 🔒 **Entorno Exclusivo:** Plataforma web con diseño personalizado orientada a la privacidad y la experiencia en pareja.
+* ⏱️ **Contador de Tiempo en Vivo:** Visualización en tiempo real de días, horas, minutos y segundos compartidos juntos.
+* ✍️ **Muro de Publicaciones & Cartas:** Sección interactiva para compartir mensajes, fechas especiales y dedicatorias.
+* 📸 **Galería de Recuerdos:** Álbum fotográfico organizado por fechas para preservar momentos inolvidables.
+* 🎵 **Reproductor de Melodías:** Integración de reproductor musical para acompañar la experiencia visual.
+* 🎨 **Interfaz Personalizada:** Diseño visual detallado con paleta de colores cálidos y adaptable.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **HTML5:** Maquetación e infraestructura de la plataforma.
-* **CSS3:** Diseño responsivo, efectos visuales tipo Polaroid y paleta de colores personalizada.
-* **JavaScript:** Lógica del contador dinámico en tiempo real y componentes interactivos del muro y reproductor.
+* 🌐 **HTML5:** Estructura semántica del espacio digital.
+* 🎨 **CSS3:** Estilos visuales, maquetación responsiva y efectos visuales.
+* ⚡ **JavaScript:** Lógica del contador dinámico en tiempo real e interactividad.
 
 ---
 
-## 💻 Ejecución Local
+## 🚨 ⚠️ AVISO IMPORTANTE: PRIVACIDAD Y DERECHOS DE AUTOR ⚠️ 🚨
 
-Para visualizar o editar el proyecto de forma local en tu equipo:
+> [!CAUTION]
+> **POR FAVOR LEER CON ATENCIÓN ANTES DE EXPLORAR ESTE REPOSICIONAL**
 
-1. Clona el repositorio:
-   ```bash
-   git clone [https://github.com/andryus0312-collab/espacio-x92.git](https://github.com/andryus0312-collab/espacio-x92.git)
+---
+
+### 🔒 1. Naturaleza del Repositorio y Contenido Sensible
+* 📌 **Publicación Obligatoria:** Este repositorio se encuentra alojado de forma pública **únicamente por razones técnicas y de alojamiento**, pero **su contenido, imágenes, textos y datos son 100% PRIVADOS**.
+* 👥 **Exclusividad:** Todo el material multimedia y los datos contenidos dentro de este proyecto fueron creados **única y exclusivamente para el uso de dos (2) personas específicas**.
+
+---
+
+### ✅ 2. Lo que SÍ está Autorizado (Uso Educativo / Inspiración)
+* 💡 **Inspiración de Código:** Se autoriza únicamente el análisis o uso de la **estructura del código fuente** como guía o referencia para personas curiosas que deseen desarrollar sus propios proyectos o realizar sus propias modificaciones para uso personal.
+
+---
+
+### ❌ 3. Lo que está ESTRICTAMENTE PROHIBIDO
+* 🚫 **Prohibido Clonar o Replicar:** Queda terminantemente prohibida la clonación, redistribución o difusión idéntica de este repositorio tal cual como se encuentra.
+* 🚫 **Prohibida la Extracción de Datos:** Ningún dato personal, imagen, texto o elemento sensible albergado en este código puede ser extraído, copiado, manipulado o difundido bajo **ningún concepto ni contexto**.
+* 🛑 **Sin Excepciones:** No se concede ningún derecho de uso sobre el contenido o la identidad visual original de este proyecto.
+
+---
+
+### ⚖️ 4. Advertencia Legal y Sanciones
+* ⚠️ Cualquier acceso no autorizado con fines de copia explícita, uso indebido de datos o difusión sin consentimiento de la información aquí albergada **no está permitido** y estará expuesto a las **sanciones legales o medidas correspondientes** por parte del autor y dueño absoluto de este material.
+
+---
+
+✨ *Creado con dedicación por el propietario y desarrollador del proyecto.* ✨
