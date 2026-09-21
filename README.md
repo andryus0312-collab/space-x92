@@ -1,41 +1,36 @@
-# 💖 Tú y Yo — Espacio Privado & Álbum Interactivo (`espacio-x92`)
+# 💖 Tú y Yo — Espacio Privado
 
-Un rincón web exclusivo, interactivo y personalizado, diseñado como un espacio digital de pareja para atesorar recuerdos, contar el tiempo transcurrido y compartir momentos especiales.
-
-🌐 **Demo en vivo:** [Visitar espacio-x92 en GitHub Pages](https://andryus0312-collab.github.io/espacio-x92/)
+Un espacio web íntimo y personalizado diseñado para registrar momentos especiales, almacenar recuerdos interactivos y celebrar el tiempo compartido en pareja.
 
 ---
 
 ## ✨ Características Principales
 
-* ⏳ **Contador de Tiempo en Tiempo Real:** Reloj dinámico que calcula exactamente los días, horas, minutos y segundos compartidos juntos.
-* 📝 **Muro de Publicaciones y Dedicatorias:** Espacio tipo *feed* para compartir notas, cartas conmemorativas (cumpleaños/aniversarios), fotos, videos y etiquetas personalizadas.
-* 🎵 **Reproductor de Música de Fondo:** Módulo de audio integrado para acompañar la navegación con una banda sonora especial.
-* 📸 **Galería Fotográfica:** Álbum de fotos interactivo estilo tarjetas Polaroid organizadas por fechas y momentos memorables.
-* 🎨 **Diseño Moderno & Responsivo:** Interfaz en modo oscuro (Dark Mode) adaptada para computadoras y teléfonos móviles.
+
+* ⏳ **Contador en Tiempo Real:** Reloj dinámico que calcula los días, horas, minutos y segundos exactos transcurridos desde una fecha especial.
+
+* 📝 **Muro de Publicaciones:** Sección interactiva para compartir mensajes, cartas de amor, pensamientos, fotos y videos con fechas conmemorativas.
+
+* 🎵 **Reproductor de Música:** Módulo multimedia integrado para reproducir canciones y notas de voz significativas.
+
+* 🖼️ **Galería de Recuerdos:** Álbum de fotos interactivo con diseño estilo *polaroid*, organizado cronológicamente.
+
+* 🔒 **Entorno Exclusivo:** Plataforma web con diseño personalizado orientada a la privacidad y la experiencia en pareja.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **HTML5:** Estructura de la plataforma, formularios e integración multimedia.
-* **CSS3:** Diseño visual, paleta de colores oscura, diseño adaptable (*responsive design*) y animaciones.
-* **JavaScript:** Cálculo y actualización en tiempo real del contador, interactividad y control de reproducción.
+* **HTML5:** Maquetación e infraestructura de la plataforma.
+* **CSS3:** Diseño responsivo, efectos visuales tipo Polaroid y paleta de colores personalizada.
+* **JavaScript:** Lógica del contador dinámico en tiempo real y componentes interactivos del muro y reproductor.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 💻 Ejecución Local
 
-* `index.html` — Código y maquetación principal de la plataforma.
-* `foto.jpg` — Imagen de portada / recursos multimedia.
-* `robots.txt` — Configuración de rastreo y privacidad web.
-* `README.md` — Documentación oficial del repositorio.
+Para visualizar o editar el proyecto de forma local en tu equipo:
 
----
-
-## 🚀 Cómo ejecutarlo de forma local
-
-1. Clona el repositorio en tu equipo:
+1. Clona el repositorio:
    ```bash
    git clone [https://github.com/andryus0312-collab/espacio-x92.git](https://github.com/andryus0312-collab/espacio-x92.git)
-   
