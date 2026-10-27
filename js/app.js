@@ -1,5 +1,7 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+import { initMusicPlayer } from './music-player.js';
 import { firebaseConfig } from './config.js';
 import { initDatabase, setupDatabaseListeners } from './database.js';
 import { startClock, updateTimeElapsed } from './clock.js';
