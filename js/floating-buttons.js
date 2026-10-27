@@ -1,7 +1,8 @@
-export function initFloatingButtons(app) {
+export function initFloatingButtons() {
     // Crear contenedor de botones flotantes
     const controlsContainer = document.createElement('div');
-    controlsContainer.className = 'floating-controls';
+    controlsContainer.className = 'floating-controls hidden-before-login';
+    controlsContainer.id = 'floatingControls';
     
     // Botón de modo oscuro/claro
     const themeBtn = document.createElement('button');
@@ -21,8 +22,8 @@ export function initFloatingButtons(app) {
     
     // Estado inicial
     let isLightMode = false;
-    let fontSizePercent = 100; // Porcentaje base
-    const fontSizeStep = 10; // Incremento/decremento
+    let fontSizePercent = 100;
+    const fontSizeStep = 10;
     const minFontSize = 50;
     const maxFontSize = 150;
     
@@ -46,19 +47,34 @@ export function initFloatingButtons(app) {
         fontSizeBtn.title = `Tamaño de texto: ${fontSizePercent}% (clic para cambiar)`;
     });
     
+    // Función para mostrar botones (llamar después del login)
+    window.showFloatingButtons = function() {
+        controlsContainer.classList.remove('hidden-before-login');
+    };
+    
+    // Función para ocultar botones (llamar al abrir lightbox)
+    window.hideFloatingButtons = function() {
+        controlsContainer.style.display = 'none';
+    };
+    
+    // Función para mostrar botones (llamar al cerrar lightbox)
+    window.showFloatingButtonsAfterLightbox = function() {
+        controlsContainer.style.display = 'flex';
+    };
+    
     // Observar cambios en el lightbox para ocultar botones
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                 const lightbox = document.querySelector('[class*="z-\\[300\\]"]');
                 if (lightbox && lightbox.style.display !== 'none') {
-                    document.body.classList.add('lightbox-active');
+                    controlsContainer.style.display = 'none';
                 } else {
-                    document.body.classList.remove('lightbox-active');
+                    controlsContainer.style.display = 'flex';
                 }
             }
         });
     });
     
     observer.observe(document.body, { attributes: true, subtree: true });
-                                 }
+}
