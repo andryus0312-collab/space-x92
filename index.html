@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/styles.css">
     <!-- Botones flotantes -->
 <link rel="stylesheet" href="css/floating-buttons.css">
+    <!-- Reproductor de música -->
+<link rel="stylesheet" href="css/music-player.css">
 </head>
 <body class="text-slate-100 min-h-screen relative font-sans selection:bg-rose-500 selection:text-white">
 
@@ -25,10 +27,7 @@
     <div id="app" class="min-h-screen flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4 mx-auto relative z-10">
 
         <!-- AUDIO NATIVO -->
-        <audio ref="bgMusic" loop preload="auto">
-            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-guitars-112134.mp3" type="audio/mpeg">
-            Tu navegador no soporta elementos de audio.
-        </audio>
+        <audio ref="bgMusic"></audio>
 
         <!-- PANTALLA DE BLOQUEO -->
         <transition name="fade" mode="out-in">
