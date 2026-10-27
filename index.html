@@ -261,23 +261,79 @@
                     <!-- COLUMNA DERECHA: MÚSICA Y GALERÍA -->
                     <aside class="lg:col-span-3 space-y-4">
                         
-                        <!-- REPRODUCTOR DE MÚSICA -->
-                        <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-4 rounded-2xl space-y-3 shadow-xl text-center">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
-                                    <span> Melodía de Paz</span>
-                                </h4>
-                                <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-full">Reproduciendo 🎧</span>
-                            </div>
-                            
-                            <p class="text-xs text-slate-300 italic">"Guitarras Románticas y Tranquilas"</p>
-
-                            <div class="flex items-center justify-center gap-3 pt-1">
-                                <button @click="toggleMusicPlay" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all flex items-center gap-2 mx-auto">
-                                    <span>{{ isMusicPlaying ? '️ Pausar Música' : '▶️ Reproducir Música' }}</span>
-                                </button>
-                            </div>
-                        </div>
+                        <!-- REPRODUCTOR DE MÚSICA PROFESIONAL -->
+<div class="music-player-container">
+    <!-- Header -->
+    <div class="music-player-header">
+        <div class="music-player-title">
+            <span>🎵</span>
+            <span>Mi Música</span>
+        </div>
+        <span id="musicStatus" class="music-player-status">Detenido</span>
+    </div>
+    
+    <!-- Información de la canción -->
+    <div class="song-info">
+        <div id="songTitle" class="song-title">Sin canción</div>
+        <div id="songArtist" class="song-artist">Sube una canción</div>
+    </div>
+    
+    <!-- Ecualizador -->
+    <div id="equalizer" class="equalizer">
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+        <div class="equalizer-bar"></div>
+    </div>
+    
+    <!-- Línea de tiempo -->
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <div class="time-display">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+        </div>
+    </div>
+    
+    <!-- Controles principales -->
+    <div class="controls">
+        <button id="shuffleBtn" class="control-btn" title="Aleatorio">🔀</button>
+        <button id="prevBtn" class="control-btn" title="Anterior">⏮️</button>
+        <button id="playPauseBtn" class="control-btn play-btn" title="Play/Pause">▶️</button>
+        <button id="nextBtn" class="control-btn" title="Siguiente">⏭️</button>
+        <button id="repeatBtn" class="control-btn" title="Repetir">🔁</button>
+    </div>
+    
+    <!-- Calificación -->
+    <div class="rating">
+        <button class="heart-btn" data-rating="1">🤍</button>
+        <button class="heart-btn" data-rating="2">🤍</button>
+        <button class="heart-btn" data-rating="3">🤍</button>
+        <button class="heart-btn" data-rating="4">🤍</button>
+        <button class="heart-btn" data-rating="5">🤍</button>
+    </div>
+    
+    <!-- Lista de canciones -->
+    <div id="playlistContainer" class="playlist"></div>
+    
+    <!-- Botón de subir -->
+    <label class="upload-song-btn">
+        <span>📤 Subir Canción</span>
+        <input type="file" id="uploadSongInput" accept="audio/*" class="hidden">
+    </label>
+    
+    <!-- Advertencia -->
+    <div class="upload-warning">
+        <span>⚠️</span>
+        <span>Solo archivos de audio (MP3, WAV, OGG). Máximo 10MB por canción. Máximo 10 canciones.</span>
+    </div>
+</div>
 
                         <!-- GALERÍA DE RECUERDOS -->
                         <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-4 rounded-2xl space-y-3 shadow-xl">
