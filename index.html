@@ -385,12 +385,16 @@
 
     <!-- Scripts modulares -->
     <script type="module" src="js/app.js"></script>
-    <!-- Scripts de botones flotantes -->
-<script type="module">
+    <!-- Scripts de botones flotantes (carga diferida) -->
+<script type="module" defer>
     import { initFloatingButtons } from './js/floating-buttons.js';
     
-    // Inicializar botones (ocultos hasta el login)
-    initFloatingButtons();
-                                              </script>
+    // Esperar a que Vue esté completamente montado
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            initFloatingButtons();
+        }, 1000);
+    });
+</script>
 </body>
 </html>
