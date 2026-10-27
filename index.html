@@ -385,5 +385,14 @@
 
     <!-- Scripts modulares -->
     <script type="module" src="js/app.js"></script>
+    <!-- Scripts de botones flotantes -->
+<script type="module">
+    import { initFloatingButtons } from './js/floating-buttons.js';
+    
+    // Esperar a que Vue esté montado
+    setTimeout(() => {
+        initFloatingButtons();
+    }, 500);
+</script>
 </body>
 </html>
