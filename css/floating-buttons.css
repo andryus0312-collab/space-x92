@@ -1,4 +1,80 @@
 /* ============================================ */
+/* MODO CLARO - POR DEFECTO (TODO BLANCO)      */
+/* ============================================ */
+
+/* Fondo general claro */
+body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%) !important;
+    color: #212529 !important;
+}
+
+body::before {
+    background-image: radial-gradient(rgba(244, 114, 182, 0.15) 1.5px, transparent 1.5px) !important;
+}
+
+/* FORZAR modo claro en TODAS las tarjetas - Sobrescribir Tailwind */
+.bg-\[\#22101e\]\/90,
+.bg-\[\#20101c\]\/85,
+.bg-\[\#1f0e1a\],
+.bg-\[\#180a18\],
+.bg-\[\#130812\] {
+    background: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Textos en modo claro */
+.text-white,
+.text-slate-100,
+.text-slate-200,
+.text-slate-300 {
+    color: #212529 !important;
+}
+
+.text-slate-400,
+.text-slate-500 {
+    color: #6c757d !important;
+}
+
+.text-rose-200,
+.text-rose-300,
+.text-rose-400 {
+    color: #e11d48 !important;
+}
+
+/* Bordes en modo claro */
+.border-rose-500\/20,
+.border-rose-500\/30,
+.border-rose-950,
+.border-white\/20 {
+    border-color: rgba(244, 114, 182, 0.3) !important;
+}
+
+/* ============================================ */
+/* BOTONES DEL CONTADOR - MODO CLARO           */
+/* ============================================ */
+.btn-3d-oval {
+    background: linear-gradient(145deg, #ffffff, #f1f3f5) !important;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08), 
+                -3px -3px 8px rgba(255, 255, 255, 0.9), 
+                inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    border: 1px solid rgba(244, 114, 182, 0.2) !important;
+}
+
+/* Números del contador en negro */
+.btn-3d-oval .text-xl {
+    color: #212529 !important;
+}
+
+/* Labels (Días, Horas, etc) en gris oscuro */
+.btn-3d-oval .text-\[10px\] {
+    color: #495057 !important;
+}
+
+/* Segundos en rosa fuerte */
+.btn-3d-oval .text-rose-400 {
+    color: #e11d48 !important;
+}
+
+/* ============================================ */
 /* BOTONES FLOTANTES - LADO DERECHO            */
 /* ============================================ */
 .floating-controls {
@@ -40,10 +116,6 @@
 .floating-btn:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(244, 114, 182, 0.4);
-}
-
-.floating-btn:active {
-    transform: scale(0.95);
 }
 
 /* ============================================ */
@@ -117,59 +189,75 @@
 }
 
 /* ============================================ */
-/* MODO CLARO - POR DEFECTO (sin clase)        */
+/* MODO OSCURO (solo cuando se activa)         */
 /* ============================================ */
-
-/* Tarjetas y contenedores */
-.bg-card-light {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #212529 !important;
-}
-
-.text-dark-light {
-    color: #212529 !important;
-}
-
-.text-muted-light {
-    color: #6c757d !important;
-}
-
-.border-light {
-    border-color: rgba(244, 114, 182, 0.3) !important;
-}
-
-/* Botones del contador en modo claro */
-.btn-counter-light {
-    background: linear-gradient(145deg, #ffffff, #f1f3f5) !important;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08), 
-                -3px -3px 8px rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid rgba(244, 114, 182, 0.2) !important;
-}
-
-.btn-counter-light .counter-number {
-    color: #212529 !important;
-}
-
-.btn-counter-light .counter-label {
-    color: #6c757d !important;
-}
-
-.btn-counter-light .counter-seconds {
-    color: #e11d48 !important;
-}
-
-/* ============================================ */
-/* MODO OSCURO (clase dark-mode)               */
-/* ============================================ */
-
 body.dark-mode {
     background: linear-gradient(135deg, #321626 0%, #1d101e 50%, #120814 100%) !important;
+    color: #f8fafc !important;
 }
 
 body.dark-mode::before {
     background-image: radial-gradient(rgba(244, 114, 182, 0.08) 1.5px, transparent 1.5px) !important;
 }
 
+/* Tarjetas oscuras */
+body.dark-mode .bg-\[\#22101e\]\/90,
+body.dark-mode .bg-\[\#20101c\]\/85,
+body.dark-mode .bg-\[\#1f0e1a\],
+body.dark-mode .bg-\[\#180a18\],
+body.dark-mode .bg-\[\#130812\] {
+    background: rgba(32, 16, 28, 0.85) !important;
+}
+
+/* Textos claros */
+body.dark-mode .text-white,
+body.dark-mode .text-slate-100,
+body.dark-mode .text-slate-200,
+body.dark-mode .text-slate-300 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .text-slate-400,
+body.dark-mode .text-slate-500 {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .text-rose-200,
+body.dark-mode .text-rose-300,
+body.dark-mode .text-rose-400 {
+    color: #fb7185 !important;
+}
+
+/* Bordes oscuros */
+body.dark-mode .border-rose-500\/20,
+body.dark-mode .border-rose-500\/30,
+body.dark-mode .border-rose-950,
+body.dark-mode .border-white\/20 {
+    border-color: rgba(244, 114, 182, 0.2) !important;
+}
+
+/* Botones del contador en modo oscuro */
+body.dark-mode .btn-3d-oval {
+    background: linear-gradient(145deg, #2b1424, #180a18) !important;
+    box-shadow: 3px 3px 8px #0b040a, 
+                -3px -3px 8px #3b1d2f, 
+                inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.dark-mode .btn-3d-oval .text-xl {
+    color: #ffffff !important;
+}
+
+body.dark-mode .btn-3d-oval .text-\[10px\] {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .btn-3d-oval .text-rose-400 {
+    color: #fb7185 !important;
+}
+
+/* Botones flotantes en modo oscuro */
 body.dark-mode .floating-btn {
     background: rgba(32, 16, 28, 0.9);
     border-color: rgba(244, 114, 182, 0.5);
@@ -196,4 +284,4 @@ body.lightbox-active .floating-controls,
 body.lightbox-active .font-size-slider-popup {
     opacity: 0 !important;
     pointer-events: none !important;
-                                      }
+    }
