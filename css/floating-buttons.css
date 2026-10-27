@@ -1,7 +1,7 @@
-/* Botones flotantes */
+/* Botones flotantes - LADO DERECHO */
 .floating-controls {
     position: fixed;
-    left: 20px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 100;
@@ -88,5 +88,10 @@ body.light-mode .floating-btn:hover {
 
 /* Ocultar botones flotantes en lightbox */
 body.lightbox-active .floating-controls {
+    display: none !important;
+}
+
+/* Ocultar botones antes del login */
+.floating-controls.hidden-before-login {
     display: none !important;
 }
