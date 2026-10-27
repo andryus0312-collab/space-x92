@@ -111,22 +111,23 @@ createApp({
 
     methods: {
         checkPassword() {
-            if (checkPassword(this.passwordInput)) {
-                this.isUnlocked = true;
-                triggerConfetti();
-                
-                this.$nextTick(() => {
-                    const audio = this.$refs.bgMusic;
-                    if (audio) {
-                        audio.play().then(() => {
-                            this.isMusicPlaying = true;
-                        }).catch(() => {
-                            this.isMusicPlaying = false;
-                        });
-                    }
+    if (checkPassword(this.passwordInput)) {
+        this.isUnlocked = true;
+        triggerConfetti();
+        window.showFloatingButtons(); // ← AGREGAR ESTA LÍNEA
+        
+        this.$nextTick(() => {
+            const audio = this.$refs.bgMusic;
+            if (audio) {
+                audio.play().then(() => {
+                    this.isMusicPlaying = true;
+                }).catch(() => {
+                    this.isMusicPlaying = false;
                 });
             }
-        },
+        });
+    }
+},
 
         toggleMusicPlay() {
             const audio = this.$refs.bgMusic;
