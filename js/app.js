@@ -18,6 +18,7 @@ import { processImage } from './utils.js';
 // Inicializar Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const db = initDatabase(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 // Crear aplicación Vue
 createApp({
