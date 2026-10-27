@@ -4,73 +4,113 @@ export function initFloatingButtons() {
     controlsContainer.className = 'floating-controls hidden-before-login';
     controlsContainer.id = 'floatingControls';
     
-    // Botón de modo oscuro/claro
+    // Botón de modo oscuro/claro (inicia como sol porque el modo claro es por defecto)
     const themeBtn = document.createElement('button');
     themeBtn.className = 'floating-btn';
-    themeBtn.innerHTML = '🌙';
-    themeBtn.title = 'Cambiar modo (Oscuro/Claro)';
+    themeBtn.innerHTML = '☀️';
+    themeBtn.title = 'Cambiar a modo oscuro';
     
     // Botón de tamaño de texto
     const fontSizeBtn = document.createElement('button');
     fontSizeBtn.className = 'floating-btn';
-    fontSizeBtn.innerHTML = '🔤';
+    fontSizeBtn.innerHTML = '';
     fontSizeBtn.title = 'Ajustar tamaño de texto';
     
     controlsContainer.appendChild(themeBtn);
     controlsContainer.appendChild(fontSizeBtn);
     document.body.appendChild(controlsContainer);
     
-    // Estado inicial
-    let isLightMode = false;
-    let fontSizePercent = 100;
-    const fontSizeStep = 10;
-    const minFontSize = 50;
-    const maxFontSize = 150;
+    // ============================================
+    // POPUP DEL SLIDER DE TAMAÑO DE TEXTO
+    // ============================================
+    const sliderPopup = document.createElement('div');
+    sliderPopup.className = 'font-size-slider-popup hidden-before-login hidden';
+    sliderPopup.id = 'fontSizeSliderPopup';
     
-    // Toggle modo oscuro/claro
+    const valueLabel = document.createElement('div');
+    valueLabel.className = 'font-size-value';
+    valueLabel.textContent = '100%';
+    
+    const sliderContainer = document.createElement('div');
+    sliderContainer.className = 'vertical-slider-container';
+    
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.className = 'vertical-slider';
+    slider.min = '50';
+    slider.max = '150';
+    slider.value = '100';
+    slider.step = '5';
+    
+    sliderContainer.appendChild(slider);
+    sliderPopup.appendChild(valueLabel);
+    sliderPopup.appendChild(sliderContainer);
+    document.body.appendChild(sliderPopup);
+    
+    // ============================================
+    // ESTADO
+    // ============================================
+    let isDarkMode = false; // Por defecto modo claro
+    let sliderVisible = false;
+    
+    // ============================================
+    // TOGGLE MODO CLARO/OSCURO
+    // ============================================
     themeBtn.addEventListener('click', () => {
-        isLightMode = !isLightMode;
-        document.body.classList.toggle('light-mode', isLightMode);
-        themeBtn.innerHTML = isLightMode ? '☀️' : '🌙';
-        themeBtn.title = isLightMode ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro';
-    });
-    
-    // Ajustar tamaño de texto
-    fontSizeBtn.addEventListener('click', () => {
-        fontSizePercent += fontSizeStep;
-        if (fontSizePercent > maxFontSize) {
-            fontSizePercent = minFontSize;
-        }
+        isDarkMode = !isDarkMode;
+        document.body.classList.toggle('dark-mode', isDarkMode);
         
-        document.documentElement.style.fontSize = `${fontSizePercent}%`;
-        fontSizeBtn.innerHTML = `${fontSizePercent}%`;
-        fontSizeBtn.title = `Tamaño de texto: ${fontSizePercent}% (clic para cambiar)`;
+        if (isDarkMode) {
+            themeBtn.innerHTML = '🌙';
+            themeBtn.title = 'Cambiar a modo claro';
+        } else {
+            themeBtn.innerHTML = '☀️';
+            themeBtn.title = 'Cambiar a modo oscuro';
+        }
     });
     
-    // Función para mostrar botones (llamar después del login)
+    // ============================================
+    // SLIDER DE TAMAÑO DE TEXTO
+    // ============================================
+    fontSizeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sliderVisible = !sliderVisible;
+        sliderPopup.classList.toggle('hidden', !sliderVisible);
+    });
+    
+    slider.addEventListener('input', (e) => {
+        const percent = e.target.value;
+        document.documentElement.style.fontSize = `${percent}%`;
+        valueLabel.textContent = `${percent}%`;
+    });
+    
+    // Cerrar slider al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!sliderPopup.contains(e.target) && e.target !== fontSizeBtn) {
+            sliderVisible = false;
+            sliderPopup.classList.add('hidden');
+        }
+    });
+    
+    // ============================================
+    // FUNCIONES GLOBALES
+    // ============================================
+    
+    // Mostrar botones (llamar después del login)
     window.showFloatingButtons = function() {
         controlsContainer.classList.remove('hidden-before-login');
+        sliderPopup.classList.remove('hidden-before-login');
     };
     
-    // Función para ocultar botones (llamar al abrir lightbox)
-    window.hideFloatingButtons = function() {
-        controlsContainer.style.display = 'none';
-    };
-    
-    // Función para mostrar botones (llamar al cerrar lightbox)
-    window.showFloatingButtonsAfterLightbox = function() {
-        controlsContainer.style.display = 'flex';
-    };
-    
-    // Observar cambios en el lightbox para ocultar botones
+    // Ocultar/mostrar botones en lightbox
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                 const lightbox = document.querySelector('[class*="z-\\[300\\]"]');
-                if (lightbox && lightbox.style.display !== 'none') {
-                    controlsContainer.style.display = 'none';
+                if (lightbox && !lightbox.classList.contains('hidden')) {
+                    document.body.classList.add('lightbox-active');
                 } else {
-                    controlsContainer.style.display = 'flex';
+                    document.body.classList.remove('lightbox-active');
                 }
             }
         });
