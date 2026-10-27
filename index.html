@@ -6,95 +6,15 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Espacio Privado 🔒</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <style>
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
-        .fade-enter-from, .fade-leave-to { opacity: 0; }
-        
-        body {
-            background: linear-gradient(135deg, #321626 0%, #1d101e 50%, #120814 100%);
-            background-attachment: fixed;
-            position: relative;
-        }
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(244, 114, 182, 0.08) 1.5px, transparent 1.5px);
-            background-size: 32px 32px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .clock-face {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: linear-gradient(to bottom, rgba(44, 22, 36, 0.5), rgba(20, 10, 20, 0.7)), 
-                        url('https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=400&q=80') center/cover no-repeat;
-            border: 4px solid rgba(255, 255, 255, 0.85);
-            box-shadow: 0 0 20px rgba(244, 114, 182, 0.3), 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0,0,0,0.8);
-            margin: 0 auto;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .clock-face:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(244, 114, 182, 0.6), inset 0 0 15px rgba(0,0,0,0.8);
-            border-color: #f472b6;
-        }
-        .clock-number {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            font-size: 11px;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 0 4px #000, 0 0 8px #000;
-            padding: 4px;
-        }
-        .hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: bottom;
-            border-radius: 4px;
-        }
-        .hand-hour { width: 4px; height: 40px; background: #ffffff; margin-left: -2px; z-index: 7; box-shadow: 0 0 4px rgba(0,0,0,0.8); }
-        .hand-minute { width: 3px; height: 55px; background: #f472b6; margin-left: -1.5px; z-index: 8; box-shadow: 0 0 4px rgba(0,0,0,0.8); }
-        .hand-second { width: 1.5px; height: 65px; background: #fb7185; margin-left: -0.75px; z-index: 9; }
-        .clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #ffffff; border-radius: 50%; z-index: 10; border: 2px solid #f472b6; }
-
-        .profile-border-gradient {
-            padding: 4px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #3b82f6 100%);
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .btn-3d-oval {
-            background: linear-gradient(145deg, #2b1424, #180a18);
-            box-shadow: 3px 3px 8px #0b040a, -3px -3px 8px #3b1d2f, inset 0 1px 0 rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 9999px;
-        }
-
-        @keyframes float { 0% { transform: translateY(-10px) rotate(0deg); opacity: 0.8; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
-        .floating-icon { position: fixed; top: -20px; pointer-events: none; z-index: 10; animation: float linear infinite; }
-        
-        .fit-cover { object-fit: cover; }
-        .fit-contain { object-fit: contain; }
-        .fit-fill { object-fit: fill; }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.confetti.browser.min.js"></script>
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="text-slate-100 min-h-screen relative font-sans selection:bg-rose-500 selection:text-white">
 
-    <div class="floating-icon text-lg" style="left: 10%; animation-duration: 8s;">🌈</div>
+    <!-- Iconos flotantes -->
+    <div class="floating-icon text-lg" style="left: 10%; animation-duration: 8s;"></div>
     <div class="floating-icon text-sm" style="left: 25%; animation-duration: 12s;">💖</div>
     <div class="floating-icon text-xs" style="left: 45%; animation-duration: 7s;">🎉</div>
     <div class="floating-icon text-sm" style="left: 70%; animation-duration: 10s;">✨</div>
@@ -177,14 +97,14 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white">Nosotros</h3>
-                                <span class="text-xs bg-rose-500/20 text-rose-300 px-3 py-1 rounded-full border border-rose-500/30 shadow-sm">Conectados siempre 💞</span>
+                                <span class="text-xs bg-rose-500/20 text-rose-300 px-3 py-1 rounded-full border border-rose-500/30 shadow-sm">Conectados siempre </span>
                             </div>
                             <hr class="border-rose-950">
                             <div class="text-left text-sm text-slate-300 space-y-3 font-medium max-h-60 overflow-y-auto pr-1">
                                 <p>Este es un rincón secreto, un espacio al que solo tú y yo podemos acceder. 🔐✨</p>
                                 <p>No importa la distancia física 🌍, no importa la hora 🕰️, el lugar o el dispositivo desde el que entres. Donde quiera que vayas y donde quiera que estés, <strong>siempre estarás aquí conmigo</strong>. 🫂</p>
                                 <p>Construí esto no solo con esfuerzo, sino con un amor inmenso y especial por ti. Un amor que te he tenido, te tengo y siempre te tendré, de manera incondicional, sin importar las circunstancias. ❤️</p>
-                                <p>Feliz cumpleaños, mi niña hermosa. 🎂🎉 No solo celebro hoy, celebro todos los días que vendrán. **Te amo muchísimo**. 🐻💕🐷</p>
+                                <p>Feliz cumpleaños, mi niña hermosa. 🎂🎉 No solo celebro hoy, celebro todos los días que vendrán. **Te amo muchísimo**. 💕🐷</p>
                             </div>
                         </div>
 
@@ -278,6 +198,7 @@
                                 <button @click="removePostImage" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 text-xs px-2">✕</button>
                             </div>
 
+                            
                             <!-- Vista previa de Video -->
                             <div v-if="postVideoPreview" class="relative rounded-xl overflow-hidden border border-rose-500/30 max-h-48 bg-black z-10">
                                 <video :src="postVideoPreview" controls class="w-full h-full object-contain"></video>
@@ -342,7 +263,7 @@
                         <div class="bg-[#20101c]/85 backdrop-blur-md border border-rose-500/20 p-4 rounded-2xl space-y-3 shadow-xl text-center">
                             <div class="flex items-center justify-between">
                                 <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
-                                    <span>🎵 Melodía de Paz</span>
+                                    <span> Melodía de Paz</span>
                                 </h4>
                                 <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-full">Reproduciendo 🎧</span>
                             </div>
@@ -351,7 +272,7 @@
 
                             <div class="flex items-center justify-center gap-3 pt-1">
                                 <button @click="toggleMusicPlay" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all flex items-center gap-2 mx-auto">
-                                    <span>{{ isMusicPlaying ? '⏸️ Pausar Música' : '▶️ Reproducir Música' }}</span>
+                                    <span>{{ isMusicPlaying ? '️ Pausar Música' : '▶️ Reproducir Música' }}</span>
                                 </button>
                             </div>
                         </div>
@@ -382,6 +303,7 @@
             </div>
         </transition>
 
+
         <!-- CALENDARIO MODAL -->
         <transition name="fade">
             <div v-if="showCalendar" class="fixed inset-0 z-[200] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4" @click.self="showCalendar = false">
@@ -391,10 +313,16 @@
                         <h3 class="text-lg font-bold text-white capitalize tracking-wide">{{ calMonthName }} {{ calYear }}</h3>
                         <button @click="nextMonth" class="text-rose-400 hover:text-white bg-[#180a18] hover:bg-[#281126] p-2 rounded-full w-9 h-9 flex items-center justify-center transition-colors">❯</button>
                     </div>
-                    
+
+                    22101e] border border-rose-500/30 rounded-2xl shadow-2xl w-72 p-3 space-y-2">
+                                            <button v-for="e in emojiCategories[activeEmojiCategory].list" :key="e" @click="insertEmoji(e)" class="text-xl hover:bg-[#180a18] p-1 rounded hover:scale-125 transition-transform">
                     <div class="grid grid-cols-7 gap-1 text-center mb-2">
+                                        <input type="file" accept="video/*" @change="handlePostVideo" class="hidden">
                         <span v-for="day in ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']" :key="day" class="text-[10px] uppercase font-bold text-slate-400">{{ day }}</span>
+                                        <div class="flex justify-between border-b border-rose-950 pb-2 text-base">
+                                                {{ e }}
                     </div>
+                                            </button>
                     
                     <div class="grid grid-cols-7 gap-1 text-center">
                         <div v-for="(day, idx) in calendarDays" :key="idx" 
@@ -421,7 +349,7 @@
                 <span class="text-white font-medium text-sm">{{ activeLightboxTitle }}</span>
                 <div class="flex items-center gap-2">
                     <button v-if="currentGalleryIndex !== null" @click="deleteCurrentGalleryImgFromLightbox" class="bg-rose-950/80 hover:bg-rose-600 text-rose-200 hover:text-white text-xs px-3 py-1.5 rounded-lg border border-rose-500/40 transition-colors flex items-center gap-1">
-                        <span>🗑️ Eliminar</span>
+                        <span>️ Eliminar</span>
                     </button>
                     <button @click="cycleFitMode" class="bg-[#180a18] hover:bg-[#281126] text-xs px-3 py-1.5 rounded-lg text-white border border-rose-500/30">
                         Ajuste: {{ currentFitMode }}
@@ -447,478 +375,13 @@
                 <button v-if="gallery.length > 1" @click="toggleSlideshow" class="text-white font-bold text-xs bg-rose-600 hover:bg-rose-500 px-3 py-1.5 rounded-md transition-colors">
                     {{ isSlideshowActive ? '⏸️ Pausa' : '▶️ Presentación' }}
                 </button>
-                <button v-if="gallery.length > 1 && currentGalleryIndex !== null" @click="nextGalleryImg" class="text-white font-bold text-lg px-2">❯</button>
+                <button v-if="gallery.length > 1 && currentGalleryIndex !== null" @click="nextGalleryImg" class="text-white font-bold text-lg px-2"></button>
             </div>
         </div>
 
     </div>
 
-    <!-- SCRIPT PRINCIPAL CON VUE Y FIREBASE EN TIEMPO REAL -->
-    <script type="module">
-        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AlzaSyD4f9rBBqxzyZZPmgNIK_twefNYLQTW4",
-            authDomain: "nuestroespacio-3f541.firebaseapp.com",
-            projectId: "nuestroespacio-3f541",
-            storageBucket: "nuestroespacio-3f541.appspot.com",
-            messagingSenderId: "482638926414",
-            appId: "1:482638926414:web:2182581df2455d95b2a91f",
-            measurementId: "G-LPC6WBQTZ0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        const processImage = (file, callback, eventTarget = null) => {
-            if (!file || !file.type.match('image.*')) {
-                alert('Por favor selecciona un archivo de imagen válido (JPG o PNG).');
-                if (eventTarget) eventTarget.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-                    const maxSize = 1200;
-                    if (width > height && width > maxSize) { height *= maxSize / width; width = maxSize; }
-                    else if (height > maxSize) { width *= maxSize / height; height = maxSize; }
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    if (eventTarget) eventTarget.value = '';
-                    callback(canvas.toDataURL('image/jpeg', 0.8));
-                };
-                img.onerror = () => {
-                    alert('No se pudo procesar la imagen. Intenta con otra.');
-                    if (eventTarget) eventTarget.value = '';
-                };
-                img.src = e.target.result;
-            };
-            reader.onerror = () => {
-                alert('Error al leer el archivo.');
-                if (eventTarget) eventTarget.value = '';
-            };
-            reader.readAsDataURL(file);
-        };
-
-        createApp({
-            data() {
-                return {
-                    isUnlocked: false,
-                    passwordInput: '',
-                    isMusicPlaying: false,
-                    
-                    coverImages: [],
-                    currentCoverIndex: 0,
-
-                    profiles: {
-                        her: { name: 'Piggy 🐷', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
-                        him: { name: 'Bear 🐻', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' }
-                    },
-                    selectedAuthor: 'her',
-
-                    newPostText: '',
-                    postImagePreview: null,
-                    postVideoPreview: null,
-                    posts: [],
-
-                    showEmojiPicker: false,
-                    activeEmojiCategory: 'love',
-                    emojiCategories: {
-                        love: { icon: '❤️', list: ['❤️', '💖', '💕', '💗', '💓', '💞', '🌹', '👩‍❤️‍👨', '👩‍❤️‍💋‍👨', '💋', '💌', '🧸'] },
-                        happy: { icon: '😊', list: ['😊', '😀', '😃', '😄', '😁', '🥳', '😍', '🤩', '😋', '😜', '😇', '🤗'] },
-                        gestures: { icon: '👋', list: ['👍', '🙌', '👏', '🤝', '🙏', '✌️', '🤟', '🤙', '🖐️', '👊', '🤜', '🤛'] }
-                    },
-
-                    gallery: [],
-
-                    clock: { hours: 0, minutes: 0, seconds: 0 },
-                    timeElapsed: { days: 0, hours: 0, minutes: 0, seconds: 0 },
-                    startDate: new Date('2022-07-01T00:00:00'),
-
-                    showCalendar: false,
-                    calDate: new Date(),
-
-                    activeLightbox: false,
-                    activeLightboxUrl: '',
-                    activeLightboxTitle: '',
-                    currentGalleryIndex: null,
-                    zoomLevel: 1,
-                    rotation: 0,
-                    fitModes: ['cover', 'contain', 'fill'],
-                    currentFitIndex: 0,
-                    isSlideshowActive: false,
-                    slideshowTimer: null
-                }
-            },
-            computed: {
-                currentFitMode() { return this.fitModes[this.currentFitIndex]; },
-                calMonthName() { return this.calDate.toLocaleDateString('es-ES', { month: 'long' }); },
-                calYear() { return this.calDate.getFullYear(); },
-                calendarDays() {
-                    const year = this.calDate.getFullYear();
-                    const month = this.calDate.getMonth();
-                    const firstDay = new Date(year, month, 1).getDay();
-                    const daysInMonth = new Date(year, month + 1, 0).getDate();
-                    
-                    let days = [];
-                    let emptyDays = firstDay === 0 ? 6 : firstDay - 1; 
-                    for (let i = 0; i < emptyDays; i++) days.push(null);
-                    for (let i = 1; i <= daysInMonth; i++) days.push(i);
-                    return days;
-                }
-            },
-            mounted() {
-                this.startClock();
-                setInterval(this.updateTimeElapsed, 1000);
-
-                onValue(ref(db, 'posts'), (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        this.posts = Object.keys(data).map(key => ({
-                            firebaseId: key,
-                            ...data[key]
-                        })).reverse();
-                    } else {
-                        this.posts = [];
-                    }
-                });
-
-                onValue(ref(db, 'gallery'), (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        this.gallery = Object.keys(data).map(key => ({
-                            firebaseId: key,
-                            ...data[key]
-                        })).reverse();
-                    } else {
-                        this.gallery = [];
-                    }
-                });
-
-                onValue(ref(db, 'coverImages'), (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        this.coverImages = Object.keys(data).map(key => ({
-                            firebaseId: key,
-                            ...data[key]
-                        }));
-                        if (this.currentCoverIndex >= this.coverImages.length) {
-                            this.currentCoverIndex = Math.max(0, this.coverImages.length - 1);
-                        }
-                    } else {
-                        const defaultCover = 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80';
-                        push(ref(db, 'coverImages'), { url: defaultCover });
-                    }
-                });
-
-                onValue(ref(db, 'profiles'), (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        this.profiles = data;
-                    } else {
-                        set(ref(db, 'profiles'), this.profiles);
-                    }
-                });
-            },
-            methods: {
-                checkPassword() {
-                    if (this.passwordInput.trim() !== '') {
-                        this.isUnlocked = true;
-                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-                        
-                        this.$nextTick(() => {
-                            const audio = this.$refs.bgMusic;
-                            if (audio) {
-                                audio.volume = 0.5;
-                                audio.play().then(() => {
-                                    this.isMusicPlaying = true;
-                                }).catch(err => {
-                                    this.isMusicPlaying = false;
-                                });
-                            }
-                        });
-                    }
-                },
-
-                toggleMusicPlay() {
-                    const audio = this.$refs.bgMusic;
-                    if (!audio) return;
-                    if (this.isMusicPlaying) {
-                        audio.pause();
-                        this.isMusicPlaying = false;
-                    } else {
-                        audio.play().then(() => {
-                            this.isMusicPlaying = true;
-                        });
-                    }
-                },
-
-                startClock() {
-                    const update = () => {
-                        const now = new Date();
-                        const sec = now.getSeconds();
-                        const min = now.getMinutes();
-                        const hr = now.getHours();
-                        this.clock.seconds = sec * 6;
-                        this.clock.minutes = min * 6 + sec * 0.1;
-                        this.clock.hours = (hr % 12) * 30 + min * 0.5;
-                    };
-                    update();
-                    setInterval(update, 1000);
-                },
-                updateTimeElapsed() {
-                    const diff = new Date() - this.startDate;
-                    this.timeElapsed.days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    this.timeElapsed.hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                    this.timeElapsed.minutes = Math.floor((diff / 1000 / 60) % 60);
-                    this.timeElapsed.seconds = Math.floor((diff / 1000) % 60);
-                },
-
-                prevMonth() { this.calDate = new Date(this.calDate.getFullYear(), this.calDate.getMonth() - 1, 1); },
-                nextMonth() { this.calDate = new Date(this.calDate.getFullYear(), this.calDate.getMonth() + 1, 1); },
-                isToday(day) {
-                    if (!day) return false;
-                    const today = new Date();
-                    return day === today.getDate() && 
-                           this.calDate.getMonth() === today.getMonth() && 
-                           this.calDate.getFullYear() === today.getFullYear();
-                },
-
-                prevCover() { 
-                    if (this.coverImages.length > 0) {
-                        this.currentCoverIndex = (this.currentCoverIndex - 1 + this.coverImages.length) % this.coverImages.length; 
-                    }
-                },
-                nextCover() { 
-                    if (this.coverImages.length > 0) {
-                        this.currentCoverIndex = (this.currentCoverIndex + 1) % this.coverImages.length; 
-                    }
-                },
-                uploadCoverImage(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        processImage(file, (base64Url) => {
-                            push(ref(db, 'coverImages'), { url: base64Url }).then(() => {
-                                this.currentCoverIndex = this.coverImages.length;
-                            });
-                        }, e.target);
-                    }
-                },
-                removeCurrentCover() {
-                    if (this.coverImages.length > 1) {
-                        const target = this.coverImages[this.currentCoverIndex];
-                        if (target && target.firebaseId) {
-                            remove(ref(db, `coverImages/${target.firebaseId}`)).then(() => {
-                                this.currentCoverIndex = 0;
-                            });
-                        }
-                    }
-                },
-
-                uploadSpecificProfile(e, key) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        processImage(file, (base64Url) => {
-                            this.profiles[key].img = base64Url;
-                            set(ref(db, 'profiles'), this.profiles);
-                        }, e.target);
-                    }
-                },
-
-                toggleEmojiPicker() { this.showEmojiPicker = !this.showEmojiPicker; },
-                insertEmoji(e) { this.newPostText += e; },
-                
-                handlePostImage(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        processImage(file, (base64Url) => {
-                            this.postImagePreview = base64Url;
-                            this.postVideoPreview = null;
-                        }, e.target);
-                    }
-                },
-                removePostImage() { this.postImagePreview = null; },
-
-                handlePostVideo(e) {
-                    const file = e.target.files[0];
-                    if (!file) return;
-                    if (!file.type.match('video.*')) {
-                        alert('Por favor selecciona un archivo de video válido.');
-                        e.target.value = '';
-                        return;
-                    }
-                    if (file.size > 8 * 1024 * 1024) {
-                        alert('El video es muy pesado (máximo 8 MB recomendado para Firebase). Intenta con uno más corto.');
-                        e.target.value = '';
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = (ev) => {
-                        this.postVideoPreview = ev.target.result;
-                        this.postImagePreview = null;
-                        e.target.value = '';
-                    };
-                    reader.onerror = () => {
-                        alert('Error al leer el archivo de video.');
-                        e.target.value = '';
-                    };
-                    reader.readAsDataURL(file);
-                },
-                removePostVideo() { this.postVideoPreview = null; },
-                
-                createPost() {
-                    if (!this.newPostText.trim() && !this.postImagePreview && !this.postVideoPreview) return;
-                    
-                    const newPost = {
-                        authorKey: this.selectedAuthor,
-                        text: this.newPostText,
-                        image: this.postImagePreview,
-                        video: this.postVideoPreview,
-                        date: new Date().toLocaleDateString('es-ES') + ' ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'}),
-                        likes: 0,
-                        liked: false
-                    };
-
-                    push(ref(db, 'posts'), newPost);
-
-                    this.newPostText = '';
-                    this.postImagePreview = null;
-                    this.postVideoPreview = null;
-                    this.showEmojiPicker = false;
-                },
-
-                deletePost(index) {
-                    const post = this.posts[index];
-                    if (post && post.firebaseId) {
-                        remove(ref(db, `posts/${post.firebaseId}`));
-                    }
-                },
-
-                toggleLike(post) {
-                    post.liked = !post.liked;
-                    post.likes += post.liked ? 1 : -1;
-                    if (post.firebaseId) {
-                        update(ref(db, `posts/${post.firebaseId}`), {
-                            likes: post.likes,
-                            liked: post.liked
-                        });
-                    }
-                },
-
-                uploadGalleryImage(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        processImage(file, (base64Url) => {
-                            push(ref(db, 'gallery'), { url: base64Url });
-                        }, e.target);
-                    }
-                },
-
-                deleteGalleryImage(idx) {
-                    const item = this.gallery[idx];
-                    if (item && item.firebaseId) {
-                        remove(ref(db, `gallery/${item.firebaseId}`));
-                    }
-                },
-
-                deleteCurrentGalleryImgFromLightbox() {
-                    if (this.currentGalleryIndex !== null && this.gallery.length > 0) {
-                        const idx = this.currentGalleryIndex;
-                        const item = this.gallery[idx];
-                        if (item && item.firebaseId) {
-                            remove(ref(db, `gallery/${item.firebaseId}`)).then(() => {
-                                this.stopSlideshow();
-                                if (this.gallery.length <= 1) {
-                                    this.closeLightbox();
-                                } else {
-                                    let nextIdx = idx >= this.gallery.length - 1 ? this.gallery.length - 2 : idx;
-                                    this.openGalleryLightbox(nextIdx);
-                                }
-                            });
-                        }
-                    }
-                },
-
-                openMediaViewer(url, title = 'Visor de Imagen') {
-                    this.stopSlideshow();
-                    this.activeLightboxUrl = url;
-                    this.activeLightboxTitle = title;
-                    this.currentGalleryIndex = null;
-                    this.resetTransforms();
-                    this.activeLightbox = true;
-                },
-                openGalleryLightbox(idx) {
-                    this.stopSlideshow();
-                    if (this.gallery.length === 0) {
-                        this.closeLightbox();
-                        return;
-                    }
-                    this.currentGalleryIndex = Math.min(idx, this.gallery.length - 1);
-                    this.activeLightboxUrl = this.gallery[this.currentGalleryIndex].url;
-                    this.activeLightboxTitle = `Recuerdo ${this.currentGalleryIndex + 1} de ${this.gallery.length}`;
-                    this.resetTransforms();
-                    this.activeLightbox = true;
-                },
-                closeLightbox() { 
-                    this.stopSlideshow();
-                    this.activeLightbox = false; 
-                },
-                prevGalleryImg() {
-                    if (this.currentGalleryIndex !== null && this.gallery.length > 0) {
-                        this.currentGalleryIndex = (this.currentGalleryIndex - 1 + this.gallery.length) % this.gallery.length;
-                        this.openGalleryLightbox(this.currentGalleryIndex);
-                    }
-                },
-                nextGalleryImg() {
-                    if (this.currentGalleryIndex !== null && this.gallery.length > 0) {
-                        this.currentGalleryIndex = (this.currentGalleryIndex + 1) % this.gallery.length;
-                        this.openGalleryLightbox(this.currentGalleryIndex);
-                    }
-                },
-                toggleSlideshow() {
-                    if (this.isSlideshowActive) {
-                        this.stopSlideshow();
-                    } else {
-                        this.startSlideshow();
-                    }
-                },
-                startSlideshow() {
-                    if (this.gallery.length <= 1) return;
-                    this.isSlideshowActive = true;
-                    this.slideshowTimer = setInterval(() => {
-                        this.nextGalleryImg();
-                    }, 5000);
-                },
-                stopSlideshow() {
-                    if (this.slideshowTimer) {
-                        clearInterval(this.slideshowTimer);
-                        this.slideshowTimer = null;
-                    }
-                    this.isSlideshowActive = false;
-                },
-                zoomIn() { this.zoomLevel += 0.2; },
-                zoomOut() { if (this.zoomLevel > 0.4) this.zoomLevel -= 0.2; },
-                rotateImg() { this.rotation = (this.rotation + 90) % 360; },
-                resetTransforms() {
-                    this.zoomLevel = 1;
-                    this.rotation = 0;
-                    this.currentFitIndex = 0;
-                },
-                cycleFitMode() {
-                    this.currentFitIndex = (this.currentFitIndex + 1) % this.fitModes.length;
-                }
-            }
-        }).mount('#app');
-    </script>
+    <!-- Scripts modulares -->
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
