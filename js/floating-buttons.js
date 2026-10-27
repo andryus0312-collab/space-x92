@@ -85,4 +85,4 @@ export function initFloatingButtons() {
     window.restoreFloatingButtons = function() {
         document.body.classList.remove('lightbox-active');
     };
-        }
+}
