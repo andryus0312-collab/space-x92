@@ -110,6 +110,15 @@ createApp({
             const audio = this.$refs.bgMusic;
             if (audio) initMusicPlayer(audio);
         });
+
+        // Inicializar reproductor de música
+this.$nextTick(() => {
+    const audio = this.$refs.bgMusic;
+    if (audio) {
+        initMusicPlayer(db, storage, audio);
+    }
+});
+        
     },
 
     methods: {
