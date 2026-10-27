@@ -114,14 +114,19 @@ createApp({
     if (checkPassword(this.passwordInput)) {
         this.isUnlocked = true;
         triggerConfetti();
-        window.showFloatingButtons(); // ← Esta línea debe estar
+        
+        // Mostrar botones flotantes después del login
+        if (window.showFloatingButtons) {
+            window.showFloatingButtons();
+        }
         
         this.$nextTick(() => {
             const audio = this.$refs.bgMusic;
             if (audio) {
+                audio.volume = 0.5;
                 audio.play().then(() => {
                     this.isMusicPlaying = true;
-                }).catch(() => {
+                }).catch(err => {
                     this.isMusicPlaying = false;
                 });
             }
