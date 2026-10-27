@@ -114,7 +114,7 @@ createApp({
     if (checkPassword(this.passwordInput)) {
         this.isUnlocked = true;
         triggerConfetti();
-        window.showFloatingButtons(); // ← AGREGAR ESTA LÍNEA
+        window.showFloatingButtons(); // ← Esta línea debe estar
         
         this.$nextTick(() => {
             const audio = this.$refs.bgMusic;
