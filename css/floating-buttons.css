@@ -1,4 +1,6 @@
-/* Botones flotantes - LADO DERECHO */
+/* ============================================ */
+/* BOTONES FLOTANTES - LADO DERECHO            */
+/* ============================================ */
 .floating-controls {
     position: fixed;
     right: 20px;
@@ -8,6 +10,14 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.floating-controls.visible {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .floating-btn {
@@ -30,17 +40,18 @@
 .floating-btn:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(244, 114, 182, 0.4);
-    border-color: #f472b6;
 }
 
 .floating-btn:active {
     transform: scale(0.95);
 }
 
-/* Slider de tamaño de texto */
+/* ============================================ */
+/* POPUP SLIDER DE TAMAÑO DE TEXTO             */
+/* ============================================ */
 .font-size-slider-popup {
     position: fixed;
-    right: 80px;
+    right: 85px;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.98);
@@ -53,13 +64,16 @@
     gap: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     z-index: 101;
-    transition: all 0.3s ease;
-}
-
-.font-size-slider-popup.hidden {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-50%) translateX(20px);
+    transition: all 0.3s ease;
+}
+
+.font-size-slider-popup.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) translateX(0);
 }
 
 .font-size-value {
@@ -70,30 +84,20 @@
     text-align: center;
 }
 
-.vertical-slider-container {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
 .vertical-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 150px;
+    width: 120px;
     height: 8px;
     background: linear-gradient(to right, #fbcfe8, #f472b6);
     border-radius: 4px;
     outline: none;
     transform: rotate(-90deg);
-    transform-origin: center;
     cursor: pointer;
 }
 
 .vertical-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    appearance: none;
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -101,11 +105,6 @@
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(244, 114, 182, 0.5);
     border: 2px solid white;
-    transition: transform 0.2s ease;
-}
-
-.vertical-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
 }
 
 .vertical-slider::-moz-range-thumb {
@@ -114,152 +113,63 @@
     border-radius: 50%;
     background: #f472b6;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(244, 114, 182, 0.5);
     border: 2px solid white;
 }
 
 /* ============================================ */
-/* MODO CLARO - POR DEFECTO                    */
+/* MODO CLARO - POR DEFECTO (sin clase)        */
 /* ============================================ */
 
-body {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
-    color: #212529;
-    transition: background 0.5s ease, color 0.5s ease;
-}
-
-body::before {
-    background-image: radial-gradient(rgba(244, 114, 182, 0.15) 1.5px, transparent 1.5px) !important;
-}
-
-/* Tarjetas y contenedores principales en modo claro */
-body .bg-\[\#22101e\]\/90,
-body .bg-\[\#20101c\]\/85,
-body .bg-\[\#1f0e1a\],
-body .bg-\[\#180a18\],
-body .bg-\[\#130812\] {
+/* Tarjetas y contenedores */
+.bg-card-light {
     background: rgba(255, 255, 255, 0.95) !important;
     color: #212529 !important;
 }
 
-/* Textos en modo claro */
-body .text-white,
-body .text-slate-100,
-body .text-slate-200,
-body .text-slate-300 {
+.text-dark-light {
     color: #212529 !important;
 }
 
-body .text-slate-400,
-body .text-slate-500 {
+.text-muted-light {
     color: #6c757d !important;
 }
 
-body .text-rose-200,
-body .text-rose-300,
-body .text-rose-400 {
-    color: #e11d48 !important;
-}
-
-/* Bordes en modo claro */
-body .border-rose-500\/20,
-body .border-rose-500\/30,
-body .border-rose-950 {
+.border-light {
     border-color: rgba(244, 114, 182, 0.3) !important;
 }
 
-body .border-white\/20 {
-    border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* ============================================ */
-/* BOTONES DEL CONTADOR (Días, Horas, Min, Seg)*/
-/* ============================================ */
-
-body .btn-3d-oval {
+/* Botones del contador en modo claro */
+.btn-counter-light {
     background: linear-gradient(145deg, #ffffff, #f1f3f5) !important;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1), 
-                -3px -3px 8px rgba(255, 255, 255, 0.8), 
-                inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08), 
+                -3px -3px 8px rgba(255, 255, 255, 0.9) !important;
     border: 1px solid rgba(244, 114, 182, 0.2) !important;
 }
 
-body .btn-3d-oval span {
+.btn-counter-light .counter-number {
     color: #212529 !important;
 }
 
-/* El contador de segundos en rosa */
-body .btn-3d-oval .text-rose-400 {
+.btn-counter-light .counter-label {
+    color: #6c757d !important;
+}
+
+.btn-counter-light .counter-seconds {
     color: #e11d48 !important;
 }
 
 /* ============================================ */
-/* MODO OSCURO (cuando se activa el botón)     */
+/* MODO OSCURO (clase dark-mode)               */
 /* ============================================ */
 
 body.dark-mode {
     background: linear-gradient(135deg, #321626 0%, #1d101e 50%, #120814 100%) !important;
-    color: #f8fafc !important;
 }
 
 body.dark-mode::before {
     background-image: radial-gradient(rgba(244, 114, 182, 0.08) 1.5px, transparent 1.5px) !important;
 }
 
-body.dark-mode .bg-\[\#22101e\]\/90,
-body.dark-mode .bg-\[\#20101c\]\/85,
-body.dark-mode .bg-\[\#1f0e1a\],
-body.dark-mode .bg-\[\#180a18\],
-body.dark-mode .bg-\[\#130812\] {
-    background: rgba(32, 16, 28, 0.85) !important;
-    color: #f8fafc !important;
-}
-
-body.dark-mode .text-white,
-body.dark-mode .text-slate-100,
-body.dark-mode .text-slate-200,
-body.dark-mode .text-slate-300 {
-    color: #f8fafc !important;
-}
-
-body.dark-mode .text-slate-400,
-body.dark-mode .text-slate-500 {
-    color: #94a3b8 !important;
-}
-
-body.dark-mode .text-rose-200,
-body.dark-mode .text-rose-300,
-body.dark-mode .text-rose-400 {
-    color: #fda4af !important;
-}
-
-body.dark-mode .border-rose-500\/20,
-body.dark-mode .border-rose-500\/30,
-body.dark-mode .border-rose-950 {
-    border-color: rgba(244, 114, 182, 0.2) !important;
-}
-
-body.dark-mode .border-white\/20 {
-    border-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-body.dark-mode .btn-3d-oval {
-    background: linear-gradient(145deg, #2b1424, #180a18) !important;
-    box-shadow: 3px 3px 8px #0b040a, 
-                -3px -3px 8px #3b1d2f, 
-                inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-body.dark-mode .btn-3d-oval span {
-    color: #ffffff !important;
-}
-
-body.dark-mode .btn-3d-oval .text-rose-400 {
-    color: #fb7185 !important;
-}
-
-/* Botones flotantes en modo oscuro */
 body.dark-mode .floating-btn {
     background: rgba(32, 16, 28, 0.9);
     border-color: rgba(244, 114, 182, 0.5);
@@ -269,10 +179,8 @@ body.dark-mode .floating-btn {
 
 body.dark-mode .floating-btn:hover {
     background: rgba(244, 114, 182, 0.2);
-    box-shadow: 0 6px 20px rgba(244, 114, 182, 0.4);
 }
 
-/* Slider en modo oscuro */
 body.dark-mode .font-size-slider-popup {
     background: rgba(32, 16, 28, 0.98);
     border-color: rgba(244, 114, 182, 0.5);
@@ -283,14 +191,9 @@ body.dark-mode .font-size-value {
     color: #f472b6;
 }
 
-/* Ocultar botones flotantes en lightbox */
+/* Ocultar en lightbox */
 body.lightbox-active .floating-controls,
 body.lightbox-active .font-size-slider-popup {
-    display: none !important;
-}
-
-/* Ocultar botones antes del login */
-.floating-controls.hidden-before-login,
-.font-size-slider-popup.hidden-before-login {
-    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
