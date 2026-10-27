@@ -1,9 +1,9 @@
 export function initFloatingButtons() {
-    // Crear contenedor de botones
     const controlsContainer = document.createElement('div');
     controlsContainer.className = 'floating-controls';
     controlsContainer.id = 'floatingControls';
     
+    // Botón inicia como ☀️ porque el modo claro es por defecto
     const themeBtn = document.createElement('button');
     themeBtn.className = 'floating-btn';
     themeBtn.innerHTML = '☀️';
@@ -18,7 +18,7 @@ export function initFloatingButtons() {
     controlsContainer.appendChild(fontSizeBtn);
     document.body.appendChild(controlsContainer);
     
-    // Crear popup del slider
+    // Popup slider
     const sliderPopup = document.createElement('div');
     sliderPopup.className = 'font-size-slider-popup';
     sliderPopup.id = 'fontSizeSliderPopup';
@@ -39,16 +39,21 @@ export function initFloatingButtons() {
     sliderPopup.appendChild(slider);
     document.body.appendChild(sliderPopup);
     
-    // Estado
-    let isDarkMode = false;
+    let isDarkMode = false; // false = modo claro por defecto
     let sliderVisible = false;
     
     // Toggle modo
     themeBtn.addEventListener('click', () => {
         isDarkMode = !isDarkMode;
         document.body.classList.toggle('dark-mode', isDarkMode);
-        themeBtn.innerHTML = isDarkMode ? '🌙' : '☀️';
-        themeBtn.title = isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+        
+        if (isDarkMode) {
+            themeBtn.innerHTML = '🌙';
+            themeBtn.title = 'Cambiar a modo claro';
+        } else {
+            themeBtn.innerHTML = '☀️';
+            themeBtn.title = 'Cambiar a modo oscuro';
+        }
     });
     
     // Toggle slider
@@ -58,7 +63,7 @@ export function initFloatingButtons() {
         sliderPopup.classList.toggle('visible', sliderVisible);
     });
     
-    // Cambio de tamaño
+    // Cambio tamaño
     slider.addEventListener('input', (e) => {
         const percent = e.target.value;
         document.documentElement.style.fontSize = `${percent}%`;
@@ -73,7 +78,7 @@ export function initFloatingButtons() {
         }
     });
     
-    // Funciones globales para Vue
+    // Función global para Vue
     window.showFloatingButtons = function() {
         controlsContainer.classList.add('visible');
     };
