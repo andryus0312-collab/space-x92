@@ -1,7 +1,5 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-import { initMusicPlayer } from './music-player.js';
 import { firebaseConfig } from './config.js';
 import { initDatabase, setupDatabaseListeners } from './database.js';
 import { startClock, updateTimeElapsed } from './clock.js';
@@ -18,7 +16,6 @@ import { processImage } from './utils.js';
 // Inicializar Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const db = initDatabase(firebaseApp);
-const storage = getStorage(firebaseApp);
 
 // Crear aplicación Vue
 createApp({
@@ -104,20 +101,6 @@ createApp({
             },
             onProfilesChange: (profiles) => { this.profiles = profiles; }
         });
-
-        // Inicializar reproductor de música
-        this.$nextTick(() => {
-            const audio = this.$refs.bgMusic;
-            if (audio) initMusicPlayer(audio);
-        });
-
-        // Inicializar reproductor de música
-this.$nextTick(() => {
-    const audio = this.$refs.bgMusic;
-    if (audio) {
-        initMusicPlayer(db, storage, audio);
-    }
-});
         
     },
 
