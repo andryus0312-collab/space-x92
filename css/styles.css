@@ -1,0 +1,81 @@
+.fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+body {
+    background: linear-gradient(135deg, #321626 0%, #1d101e 50%, #120814 100%);
+    background-attachment: fixed;
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(rgba(244, 114, 182, 0.08) 1.5px, transparent 1.5px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.clock-face {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, rgba(44, 22, 36, 0.5), rgba(20, 10, 20, 0.7)), 
+                url('https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=400&q=80') center/cover no-repeat;
+    border: 4px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 20px rgba(244, 114, 182, 0.3), 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0,0,0,0.8);
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.clock-face:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(244, 114, 182, 0.6), inset 0 0 15px rgba(0,0,0,0.8);
+    border-color: #f472b6;
+}
+.clock-number {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 4px #000, 0 0 8px #000;
+    padding: 4px;
+}
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    border-radius: 4px;
+}
+.hand-hour { width: 4px; height: 40px; background: #ffffff; margin-left: -2px; z-index: 7; box-shadow: 0 0 4px rgba(0,0,0,0.8); }
+.hand-minute { width: 3px; height: 55px; background: #f472b6; margin-left: -1.5px; z-index: 8; box-shadow: 0 0 4px rgba(0,0,0,0.8); }
+.hand-second { width: 1.5px; height: 65px; background: #fb7185; margin-left: -0.75px; z-index: 9; }
+.clock-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #ffffff; border-radius: 50%; z-index: 10; border: 2px solid #f472b6; }
+
+.profile-border-gradient {
+    padding: 4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #3b82f6 100%);
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+    overflow: hidden;
+    position: relative;
+}
+
+.btn-3d-oval {
+    background: linear-gradient(145deg, #2b1424, #180a18);
+    box-shadow: 3px 3px 8px #0b040a, -3px -3px 8px #3b1d2f, inset 0 1px 0 rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 9999px;
+}
+
+@keyframes float { 0% { transform: translateY(-10px) rotate(0deg); opacity: 0.8; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+.floating-icon { position: fixed; top: -20px; pointer-events: none; z-index: 10; animation: float linear infinite; }
+
+.fit-cover { object-fit: cover; }
+.fit-contain { object-fit: contain; }
+.fit-fill { object-fit: fill; }
